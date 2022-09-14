@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    tty: true
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 8080:8080
+    command: sh -c "cd next && npm run dev"
+  backend:
+    build: ./backend
+    tty: true
+    volumes:
+      - ./backend:/api
+    ports:
+      - 3000:3000
+  db:
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    # image: mariadb:10-focal
+    # If you really want to use MySQL, uncomment the following line
+    image: mysql:8
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 --password="$$(cat /run/secrets/db-password)" --silent']
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=odekatte
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 3306
+      
+volumes:
+  db-data:
+
+secrets:
+  db-password:
+    file: db/password.txt
