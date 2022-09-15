@@ -2,8 +2,23 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import React, { useState,useEffect } from 'react'
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 const Home: NextPage = () => {
+
+  const [hello, setHello] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000')
+    .then((res: AxiosResponse) => {
+      setHello(res.data)
+    })
+    .catch((e: AxiosError<{ error: string }>) => console.log(e))
+  }, [])
+
+  console.log(hello);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,7 +36,10 @@ const Home: NextPage = () => {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
-
+        <p className={styles.description}>
+          Nest.jsからのレスポンス:{' '}
+          <code className={styles.code}>{hello}</code>
+        </p>        
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
