@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  residence String?
+  imgurl    String?
+  email     String   @unique
+  password  String
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  comment   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  feeling   Feeling  @relation(fields: [feelingId], references: [id])
+  feelingId Int
+  imgurl    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Feeling {
+  id           Int           @id @default(autoincrement())
+  name         String
+  posts        Post[]
+  feelingTypes FeelingType[]
+}
+
+model FeelingType {
+  id        Int     @id @default(autoincrement())
+  type      Type    @relation(fields: [typeId], references: [id])
+  typeId    Int
+  feeling   Feeling @relation(fields: [feelingId], references: [id])
+  feelingId Int
+}
+
+model Type {
+  id           Int           @id @default(autoincrement())
+  name         String
+  feelingTypes FeelingType[]
+}
+
+model OneWord {
+  id      Int    @id @default(autoincrement())
+  comment String
+}
