@@ -41,11 +41,6 @@ model Contract {
   delivery         Delivery[]
 }
 
-model Day {
-  id       Int        @id @default(autoincrement())
-  day      String     @db.VarChar(10)
-  contacts Contract[]
-}
 
 model DeliveryCycle {
   id       Int        @id @default(autoincrement())

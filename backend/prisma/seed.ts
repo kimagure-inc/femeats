@@ -33,19 +33,6 @@ async function main() {
     ],
   });
 
-  await prisma.day.deleteMany();
-  await prisma.day.createMany({
-    data: [
-      { day: '日' },
-      { day: '月' },
-      { day: '火' },
-      { day: '水' },
-      { day: '木' },
-      { day: '金' },
-      { day: '土' },
-    ],
-  });
-
   await prisma.category.deleteMany();
   await prisma.category.createMany({
     data: [
@@ -133,7 +120,6 @@ async function main() {
       user_id: 1,
       deliveryCycle_id: 1,
       timezone_id: 1,
-      day_id: 1,
       first_del_date: new Date('2022-10-02'),
     },
   });
