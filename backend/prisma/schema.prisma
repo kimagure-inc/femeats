@@ -34,9 +34,7 @@ model Contract {
   deliveryCycle_id Int
   deliveryCycle    DeliveryCycle @relation(fields: [deliveryCycle_id], references: [id])
   timezone_id      Int
-  timezone         Timezone      @relation(fields: [timezone_id], references: [id])
-  day_id           Int
-  day              Day           @relation(fields: [day_id], references: [id])
+  timezone         DeliveryTimezone      @relation(fields: [timezone_id], references: [id])
   first_del_date   DateTime      @db.Date
   delivery         Delivery[]
 }
@@ -48,7 +46,7 @@ model DeliveryCycle {
   contacts Contract[]
 }
 
-model Timezone {
+model DeliveryTimezone {
   id       Int        @id @default(autoincrement())
   timezone String     @db.VarChar(10)
   contact  Contract[]

@@ -22,8 +22,8 @@ async function main() {
     data: [{ cycle: 2 }, { cycle: 3 }, { cycle: 4 }],
   });
 
-  await prisma.timezone.deleteMany();
-  await prisma.timezone.createMany({
+  await prisma.deliveryTimezone.deleteMany();
+  await prisma.deliveryTimezone.createMany({
     data: [
       { timezone: '指定なし' },
       { timezone: '午前中(12時まで)' },
