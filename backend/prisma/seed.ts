@@ -27,9 +27,9 @@ async function main() {
     data: [
       { timezone: '指定なし' },
       { timezone: '午前中(12時まで)' },
-      { timezone: '14時から~16時' },
-      { timezone: '16時から~18時' },
-      { timezone: '19時から~21時' },
+      { timezone: '14時から16時' },
+      { timezone: '16時から18時' },
+      { timezone: '19時から21時' },
     ],
   });
 
