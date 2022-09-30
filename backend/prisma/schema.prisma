@@ -33,14 +33,14 @@ model Contract {
   product          Product          @relation(fields: [product_id], references: [id])
   user_id          Int
   user             User             @relation(fields: [user_id], references: [id])
-  contact_at       DateTime         @default(now())
+  contract_at      DateTime         @default(now())
   deliveryCycle_id Int
   deliveryCycle    DeliveryCycle    @relation(fields: [deliveryCycle_id], references: [id])
   timezone_id      Int
   timezone         DeliveryTimezone @relation(fields: [timezone_id], references: [id])
   first_del_date   DateTime         @db.Date
   status_id        Int
-  contractStatus   Status           @relation(fields: [status_id], references: [id])
+  status           Status           @relation(fields: [status_id], references: [id])
   next_del_date    DateTime         @db.Date
   delivery         Delivery[]
 }
