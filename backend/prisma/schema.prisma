@@ -11,64 +11,93 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(50)
-  email     String    @unique
+  id        Int         @id @default(autoincrement())
+  name      String?     @db.VarChar(50)
+  email     String      @unique
   password  String
-  postcode  String   @db.VarChar(10)
-  address   String    @db.VarChar(100)
-  telPhone   String   @db.VarChar(15)
-  create_at DateTime  @default(now())
-  update_at DateTime  @updatedAt
-  status    Boolean   @default(true)
-  Contract  Contract[]
+  postcode  String?     @db.VarChar(10)
+  address   String?     @db.VarChar(100)
+  telPhone  String?     @db.VarChar(15)
+  create_at DateTime    @default(now())
+  update_at DateTime    @updatedAt
+  status    Boolean     @default(true)
+  emailAuth Boolean     @default(false)
+  token     String?     @db.VarChar(255)
+  contract  Contract[]
+  recommend Recommend[]
 }
 
 model Contract {
-  id               Int           @id @default(autoincrement())
+  id               Int              @id @default(autoincrement())
   product_id       Int
-  product          Product       @relation(fields: [product_id], references: [id])
-  user_id          Int           @unique
-  user             User          @relation(fields: [user_id], references: [id])
-  contact_at       DateTime      @default(now())
+  product          Product          @relation(fields: [product_id], references: [id])
+  user_id          Int
+  user             User             @relation(fields: [user_id], references: [id])
+  contact_at       DateTime         @default(now())
   deliveryCycle_id Int
-  deliveryCycle    DeliveryCycle @relation(fields: [deliveryCycle_id], references: [id])
+  deliveryCycle    DeliveryCycle    @relation(fields: [deliveryCycle_id], references: [id])
   timezone_id      Int
-  timezone         DeliveryTimezone      @relation(fields: [timezone_id], references: [id])
-  first_del_date   DateTime      @db.Date
+  timezone         DeliveryTimezone @relation(fields: [timezone_id], references: [id])
+  first_del_date   DateTime         @db.Date
+  status_id        Int
+  contractStatus   Status           @relation(fields: [status_id], references: [id])
+  next_del_date    DateTime         @db.Date
   delivery         Delivery[]
 }
-
 
 model DeliveryCycle {
   id       Int        @id @default(autoincrement())
   cycle    Int
-  contacts Contract[]
+  contract Contract[]
 }
 
 model DeliveryTimezone {
   id       Int        @id @default(autoincrement())
   timezone String     @db.VarChar(10)
-  contact  Contract[]
+  contract Contract[]
+}
+
+model Status {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(10)
+  contract Contract[]
+}
+
+model Recommend {
+  id         Int     @id @default(autoincrement())
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+  user_id    Int     @unique
+  user       User    @relation(fields: [user_id], references: [id])
 }
 
 model Delivery {
   id           Int      @id @default(autoincrement())
   contract_id  Int
-  contact      Contract @relation(fields: [contract_id], references: [id])
+  contract     Contract @relation(fields: [contract_id], references: [id])
+  create_at    DateTime @default(now())
   deliveryDate DateTime @db.Date
-  status       Boolean  @default(true)
+  address      String
+  product_id   Int
+  product      Product  @relation(fields: [product_id], references: [id])
+  name         String
+  price        Int
+  telPhone     String
 }
 
 model Product {
-  id           Int        @id @default(autoincrement())
-  name         String     @db.VarChar(20)
-  introduction String     @db.VarChar(250)
-  price        Int        @db.SmallInt
+  id           Int         @id @default(autoincrement())
+  name         String      @db.VarChar(20)
+  introduction String      @db.VarChar(250)
+  price        Int         @db.SmallInt
   imgUrl       String
   category_id  Int
-  category     Category   @relation(fields: [category_id], references: [id])
-  Contract     Contract[]
+  category     Category    @relation(fields: [category_id], references: [id])
+  stripe_id    String
+  contract     Contract[]
+  recommend    Recommend[]
+
+  Delivery Delivery[]
 }
 
 model Category {
