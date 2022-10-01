@@ -19,18 +19,10 @@ export class ProductsController {
     return this.productsService.product(Number(id));
   }  
 
-  @Get('/category/:category_id')
+  @Get('category/:category_id')
   async findMany(
     @Param('category_id') id: string,
   ): Promise<Product[]> {
     return this.productsService.productsByCategory(Number(id));
-  }  
-
-  // @Get(':id')
-  // async findOne(
-  //   @Param('id') id: string,
-  // ): Promise<Product> {
-  //   return this.productsService.product(Number(id));
-  // }
-      
+  }        
 }
