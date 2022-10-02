@@ -33,7 +33,7 @@ function decideLabel(userAnswer, dataset) {
   const nearestData = [];
 
   for (const x of dataset) {
-      let distance = euclidDistance(userAnswer, x); // 20通りの距離を計算
+      let distance = euclidDistance(userAnswer.data, x); // 20通りの距離を計算
 
       if (nearestData[0] === undefined || distance < nearestData[0].distance) {
           nearestData.splice(0, 1, {'distance': distance, 'label': x.label});
@@ -43,9 +43,8 @@ function decideLabel(userAnswer, dataset) {
 }
 
 function euclidDistance(answer, data) {
-  return Math.sqrt((answer.Q1 - data.Q1) ** 2 + (answer.Q2 - data.Q2) ** 2 + (answer.Q3 - data.Q3) ** 2 + (answer.Q4 - data.Q4) ** 2 + (answer.Q5 - data.Q5) ** 2);
+  return Math.sqrt((answer[0] - data.Q1) ** 2 + (answer[1] - data.Q2) ** 2 + (answer[2] - data.Q3) ** 2 + (answer[3] - data.Q4) ** 2 + (answer[4] - data.Q5) ** 2);
 }
-
 
 @Injectable()
 export class PersonalizeService {
