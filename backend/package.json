@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
@@ -30,9 +31,12 @@
     "cookie-parser": "^1.4.6",
     "nodemailer": "^6.8.0",
     "passport-jwt": "^4.0.0",
+    "@nestjs/mapped-types": "*",
+    "nestjs-stripe": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "stripe": "^10.11.0",
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1"
   },
