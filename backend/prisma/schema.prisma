@@ -22,7 +22,7 @@ model User {
   update_at DateTime    @updatedAt
   status    Boolean     @default(true)
   emailAuth Boolean     @default(false)
-  token     String?     @db.VarChar(255)
+  token     String?     @db.VarChar(255) @unique
   contract  Contract[]
   recommend Recommend[]
 }
