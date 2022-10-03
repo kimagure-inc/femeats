@@ -20,7 +20,7 @@ export default function Auth(props: any) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const token = ctx.query.token;
-  const res = await axios.get(`http://backend:3000/user/auth/${token}`);
+  const res = await axios.get(`${process.env.API_BASE_URL}/user/auth/${token}`);
   const data = res.data;
   return {
     props: {

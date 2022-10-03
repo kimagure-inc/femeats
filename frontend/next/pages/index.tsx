@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   const [hello, setHello] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000')
+    axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}`)
     .then((res: AxiosResponse) => {
       setHello(res.data)
     })
