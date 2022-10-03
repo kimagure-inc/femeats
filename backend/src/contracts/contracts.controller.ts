@@ -11,9 +11,9 @@ export class ContractsController {
     return this.contractsService.contracts();
   }
 
-  @Get(':id')
+  @Get(':user_id')
   async findOne(
-    @Param('id') user_id: string,
+    @Param('user_id') user_id: string,
   ): Promise<Contract> {
     return this.contractsService.contract(Number(user_id));
   }
@@ -31,7 +31,7 @@ export class ContractsController {
     @Body() data: Prisma.ContractUpdateInput,
   ): Promise<Contract> {
     return this.contractsService.updateContract({
-      where: { user_id: Number(user_id) },
+      where: { id: Number(user_id) },
       data: data,
     });
   }
