@@ -64,7 +64,7 @@ export class UsersController {
           from: 'femeats@gmail.com',
           to: email,
           subject: 'femeats',
-          text: `femeatsをご利用いただき誠にありがとうございます。\n 24時間以内に以下のURLをクリックして、認証を行なってください。\n http://localhost:8080/email?token=${jwt}`,
+          text: `femeatsをご利用いただき誠にありがとうございます。\n 24時間以内に以下のURLをクリックして、認証を行なってください。\n ${process.env.FRONT_BASE_URL}/email?token=${jwt}`,
         };
         transporter.sendMail(details, (err) => {
           if (err) {
