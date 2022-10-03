@@ -24,7 +24,6 @@ model User {
   emailAuth Boolean     @default(false)
   token     String?     @db.VarChar(255) @unique
   contract  Contract[]
-  recommend Recommend[]
 }
 
 model Contract {
@@ -67,8 +66,7 @@ model Recommend {
   id         Int     @id @default(autoincrement())
   product_id Int
   product    Product @relation(fields: [product_id], references: [id])
-  user_id    Int     @unique
-  user       User    @relation(fields: [user_id], references: [id])
+  email      String     @unique
 }
 
 model Delivery {

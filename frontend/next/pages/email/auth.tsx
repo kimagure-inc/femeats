@@ -1,3 +1,10 @@
 export default function Sign() {
-  return <>メールを送信しましたのでご確認ください</>;
+  return (
+    <>
+      <div>
+        <h3>認証メールを送信しました</h3>
+        <div>認証メールに記載されたURLから購入手続きに進んでください</div>
+      </div>
+    </>
+  );
 }

@@ -13,12 +13,14 @@ import {
   Redirect,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { RecommendService } from 'src/recommend/recommend.service';
 import { User, Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 const nodemailer = require('nodemailer');
 import { randomBytes } from 'crypto';
+import { runInThisContext } from 'vm';
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -36,12 +38,14 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private jwtService: JwtService,
+    private recommendService: RecommendService,
   ) {}
   // もし1回でも保存していたらupdate
   @Post('signup')
   async authUser(
     @Body('email') email: string,
     @Body('password') password: string,
+    @Body('product_id') product_id: string,
     @Res({ passthrough: true }) response: Response,
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -76,6 +80,12 @@ export class UsersController {
           }
         });
       });
+    const data = {
+      product_id: Number(product_id),
+      email: email,
+    };
+    const recommend = await this.recommendService.createRecommend(data);
+    return recommend;
   }
 
   @Get('auth/:token')
@@ -93,11 +103,12 @@ export class UsersController {
         emailAuth: true,
       },
     });
-
     const { password, ...result } = user;
 
+    const recommend = await this.recommendService.recommend(user.email);
     return {
       user,
+      recommend,
     };
   }
 
@@ -107,6 +118,7 @@ export class UsersController {
     @Body('password') password: string,
     @Res({ passthrough: true }) response: Response,
   ) {
+    console.log('login');
     const user = await this.usersService.findOne(email);
     if (!user) {
       throw new BadRequestException('invalid credentials');

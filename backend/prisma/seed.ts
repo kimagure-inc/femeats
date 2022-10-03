@@ -150,49 +150,48 @@ async function main() {
   await prisma.question.deleteMany();
   await prisma.question.createMany({
     data: [
-      { 
+      {
         question: '栄養バランスを考えた食事をとっていますか？',
         choice1: 'ほぼ毎日',
         choice2: '週に3〜4食',
         choice3: '週に1〜2食',
         choice4: '栄養バランスは考えていない',
-     },
-     { 
-      question: '体を温める食事や生活を実践していますか？',
-      choice1: 'ほぼ毎日',
-      choice2: '週に1〜2回',
-      choice3: '生理前や生理中のみ',
-      choice4: 'ほとんど実践していない',
-    },
-    { 
-      question: '生理前や生理中に、肌荒れが気になりますか？',
-      choice1: 'まったく気にならない',
-      choice2: 'ほとんど気にならない',
-      choice3: '部分的に気になる',
-      choice4: '全身の肌荒れが気になる',
-    },
-    { 
-      question: '生理前や生理中に、不安・緊張・興奮・イライラなどを感じることがありますか？',
-      choice1: 'まったく感じない',
-      choice2: 'ほとんど感じない',
-      choice3: '2〜3回に1度',
-      choice4: 'ほぼ毎回',
-    },
-    { 
-      question: '最近疲れやすいと感じますか？',
-      choice1: 'ほとんど感じない',
-      choice2: '月に1〜2回',
-      choice3: '週に3〜4回',
-      choice4: 'ほぼ毎日',
-    },
-    ]
+      },
+      {
+        question: '体を温める食事や生活を実践していますか？',
+        choice1: 'ほぼ毎日',
+        choice2: '週に1〜2回',
+        choice3: '生理前や生理中のみ',
+        choice4: 'ほとんど実践していない',
+      },
+      {
+        question: '生理前や生理中に、肌荒れが気になりますか？',
+        choice1: 'まったく気にならない',
+        choice2: 'ほとんど気にならない',
+        choice3: '部分的に気になる',
+        choice4: '全身の肌荒れが気になる',
+      },
+      {
+        question:
+          '生理前や生理中に、不安・緊張・興奮・イライラなどを感じることがありますか？',
+        choice1: 'まったく感じない',
+        choice2: 'ほとんど感じない',
+        choice3: '2〜3回に1度',
+        choice4: 'ほぼ毎回',
+      },
+      {
+        question: '最近疲れやすいと感じますか？',
+        choice1: 'ほとんど感じない',
+        choice2: '月に1〜2回',
+        choice3: '週に3〜4回',
+        choice4: 'ほぼ毎日',
+      },
+    ],
   });
-  
+
   await prisma.recommend.deleteMany();
   await prisma.recommend.createMany({
-    data: [
-      { product_id: 1, user_id: 1 },
-    ],
+    data: [{ product_id: 1, email: 'mizue@prisam.io' }],
   });
 
   console.log('💫 seed finished.');
