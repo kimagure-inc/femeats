@@ -82,37 +82,38 @@ export default function App(props: questions) {
 					<button onClick={startBtn}>診断をはじめる</button>
 				</div>				
 			) : (
-			waitingResult ? (
-				<div className='score-section'>
-					{userName}さんにおすすめのプランを診断中・・・
-				</div>				
-			) : (
-				<>
-					<div className='question-section'>
-						<div className='question-count'>
-							<span>Question {currentQuestion + 1}</span>/{questions.length}
+				waitingResult ? (
+					<div className='score-section'>
+						{userName}さんにおすすめのプランを診断中・・・
+					</div>				
+				) : (
+					<>
+						<div className='question-section'>
+							<div className='question-count'>
+								<span>Question {currentQuestion + 1}</span>/{questions.length}
+							</div>
+							<br/>
+							<div className='question-text'>{questions[currentQuestion].question}</div>
+							<br/>
 						</div>
-						<br/>
-						<div className='question-text'>{questions[currentQuestion].question}</div>
-						<br/>
-					</div>
-					<div className='answer-section'>
-                        <button onClick={() => handleAnswerOptionClick(1)}>{questions[currentQuestion].choice1}</button>{" "}
-                        <button onClick={() => handleAnswerOptionClick(2)}>{questions[currentQuestion].choice2}</button>{" "}
-                        <button onClick={() => handleAnswerOptionClick(3)}>{questions[currentQuestion].choice3}</button>{" "}
-                        <button onClick={() => handleAnswerOptionClick(4)}>{questions[currentQuestion].choice4}</button>{" "}
-						<br/>
-						<br/>
-						{finishAnswer ? (
-							<div className='score-section'>
-								<button onClick={submitBtn}>診断結果を見る</button>					
-							</div>							
-						) : (
-							<div></div>
-						)}
-					</div>
-				</>
-			))}
+						<div className='answer-section'>
+							<button onClick={() => handleAnswerOptionClick(1)}>{questions[currentQuestion].choice1}</button>{" "}
+							<button onClick={() => handleAnswerOptionClick(2)}>{questions[currentQuestion].choice2}</button>{" "}
+							<button onClick={() => handleAnswerOptionClick(3)}>{questions[currentQuestion].choice3}</button>{" "}
+							<button onClick={() => handleAnswerOptionClick(4)}>{questions[currentQuestion].choice4}</button>{" "}
+							<br/>
+							<br/>
+							{finishAnswer ? (
+								<div className='score-section'>
+									<button onClick={submitBtn}>診断結果を見る</button>					
+								</div>							
+							) : (
+								<div></div>
+							)}
+						</div>
+					</>
+				)
+			)}
 		</div>
         </>
 	);
