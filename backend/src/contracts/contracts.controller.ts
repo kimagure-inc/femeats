@@ -31,7 +31,7 @@ export class ContractsController {
     @Body() data: Prisma.ContractUpdateInput,
   ): Promise<Contract> {
     return this.contractsService.updateContract({
-      where: { user_id: Number(user_id) },
+      where: { id: Number(user_id) },
       data: data,
     });
   }

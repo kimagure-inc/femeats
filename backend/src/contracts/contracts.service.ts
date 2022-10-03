@@ -10,9 +10,9 @@ export class ContractsService {
     return this.prisma.contract.findMany();
   }
 
-  async contract(user_id: number): Promise<Contract | null> {
+  async contract(id: number): Promise<Contract | null> {
     return this.prisma.contract.findUnique({
-      where: { user_id }
+      where: { id }
     });
   }
 
@@ -33,9 +33,9 @@ export class ContractsService {
     });
   }
 
-  async deleteContract(user_id: number): Promise<Contract> {
+  async deleteContract(id: number): Promise<Contract> {
     return this.prisma.contract.delete({
-      where: { user_id }
+      where: { id }
     });
   }
 }
