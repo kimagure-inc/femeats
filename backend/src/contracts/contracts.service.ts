@@ -10,9 +10,12 @@ export class ContractsService {
     return this.prisma.contract.findMany();
   }
 
-  async contract(id: number): Promise<Contract | null> {
-    return this.prisma.contract.findUnique({
-      where: { id }
+  async contract(user_id: number): Promise<Contract> {
+    return this.prisma.contract.findFirst({
+      where: { user_id },
+      orderBy: {
+        id: "desc"
+      }
     });
   }
 
