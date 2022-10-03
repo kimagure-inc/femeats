@@ -72,12 +72,12 @@ export default function recommend() {
           { products ? (
             <>
               <label>{products[0].name}{" "}{products[0].price}円（税込）</label>
-              <Link href={{ pathname: "/signUpTest", query: {id: products[0].id} }} as="signUpTest">
+              <Link href={{ pathname: "/signup", query: {id: products[0].id} }} as="signup">
                 <button>購入手続きへ</button>
               </Link>{" "}
               <br/>
               <label>{products[1].name}{" "}{products[1].price}円（税込）</label>
-              <Link href={{ pathname: "/signUpTest", query: {id: products[1].id} }} as="signUpTest">
+              <Link href={{ pathname: "/signup", query: {id: products[1].id} }} as="/signup">
               <button>購入手続きへ</button>
               </Link> 
             </>
