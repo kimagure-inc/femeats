@@ -6,19 +6,27 @@ import { User, Prisma } from '@prisma/client';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async users(): Promise<User[]> {
-    return this.prisma.user.findMany();
-  }
-
-  async user(id: number): Promise<User | null> {
+  async userOne(id: number): Promise<User | null> {
     return this.prisma.user.findUnique({
-      where: { id }
+      where: { id },
     });
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async signUpUser(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({
       data,
+    });
+  }
+
+  async findOne(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
+  async tokenOne(token: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: { token },
     });
   }
 
@@ -32,11 +40,4 @@ export class UsersService {
       data,
     });
   }
-
-  async deleteUser(id: number): Promise<User> {
-    return this.prisma.user.delete({
-      where: { id }
-    });
-  }
 }
-
