@@ -1,13 +1,15 @@
-import { useRouter } from 'next/router';
-import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from "next/router";
+import Image from "next/image";
+import Link from "next/link";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import React, { useState,useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent } from "react";
+import Layout from "../layout/Layout";
+import { hasCookie } from "cookies-next";
 
 type category = {
   id: number;
   name: string;
-}
+};
 
 type product = {
   id: number;
@@ -15,80 +17,109 @@ type product = {
   introduction: string;
   price: number;
   imgUrl: string;
-}
+};
 
 export default function recommend() {
+  const router = useRouter();
+  const [category, setCategory] = useState<category>();
+  const [products, setProducts] = useState<product[]>();
+  const [auth, setAuth] = useState(false);
 
-    const router = useRouter();
-    const [category, setCategory] = useState<category>();
-    const [products, setProducts] = useState<product[]>();
+  const categoryNum = Number(router.query.category) - 1;
 
-    const categoryNum = Number(router.query.category) - 1;
+  const comment = [
+    "バランスの取れた食事が必要です！",
+    "タンパク質やビタミンを取りましょう！",
+    "カルシウムを取りましょう！",
+    "鉄やビタミンCを取りましょう！",
+  ];
 
-    const comment = [
-      "バランスの取れた食事が必要です！", "タンパク質やビタミンを取りましょう！", "カルシウムを取りましょう！", "鉄やビタミンCを取りましょう！"
-    ];
-
-    useEffect(() => {
-      if (!router.isReady) return;
-      axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${router.query.category}`)
+  useEffect(() => {
+    if (!router.isReady) return;
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${router.query.category}`
+      )
       .then((res: AxiosResponse) => {
-        setCategory(res.data)
+        setCategory(res.data);
       })
-      .catch((e: AxiosError<{ error: string }>) => console.log(e))
+      .catch((e: AxiosError<{ error: string }>) => console.log(e));
 
-      axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/category/${router.query.category}`)
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/category/${router.query.category}`
+      )
       .then((res: AxiosResponse) => {
-        setProducts(res.data)
+        setProducts(res.data);
       })
-      .catch((e: AxiosError<{ error: string }>) => console.log(e))
-    }, [router.isReady, router.query.category])
+      .catch((e: AxiosError<{ error: string }>) => console.log(e));
+  }, [router.isReady, router.query.category]);
 
-    console.log(category);
-    console.log(products);
+  console.log(category);
+  console.log(products);
 
-    return (
-      <>
+  const signedIn = hasCookie("signedIn");
+  const loginuser = () => {
+    if (signedIn == true) {
+      setAuth(true);
+    }
+  };
+
+  return (
+    <>
+      <Layout auth={loginuser}>
         <div>
-          { router.query.name }さんの診断結果
-          <br/>
-          { comment[categoryNum] }
-          <br/><br/>
-          { category ? (
-            <h2>おすすめプラン  {category.name} plan</h2>) : "" }
-          <br/>
-          { products ? (
-          <>
-          <div>
-            <Image src ={products[0].imgUrl} width={320} height={320} />
-          </div>          
-          <br/>
-          </>
+          {router.query.name}さんの診断結果
+          <br />
+          {comment[categoryNum]}
+          <br />
+          <br />
+          {category ? <h2>おすすめプラン {category.name} plan</h2> : ""}
+          <br />
+          {products ? (
+            <>
+              <div>
+                <Image src={products[0].imgUrl} width={320} height={320} />
+              </div>
+              <br />
+            </>
           ) : (
             <div></div>
           )}
-          { products ?  products[0].introduction : "" }
-          <br/>
-          { products ? (
+          {products ? products[0].introduction : ""}
+          <br />
+          {products ? (
             <>
-              <label>{products[0].name}{" "}{products[0].price}円（税込）</label>
-              <Link href={{ pathname: "/signup", query: {id: products[0].id} }} as="signup">
+              <label>
+                {products[0].name} {products[0].price}円（税込）
+              </label>
+              <Link
+                href={{ pathname: "/signup", query: { id: products[0].id } }}
+                as="signup"
+              >
                 <button>購入手続きへ</button>
               </Link>{" "}
-              <br/>
-              <label>{products[1].name}{" "}{products[1].price}円（税込）</label>
-              <Link href={{ pathname: "/signup", query: {id: products[1].id} }} as="/signup">
-              <button>購入手続きへ</button>
-              </Link> 
+              <br />
+              <label>
+                {products[1].name} {products[1].price}円（税込）
+              </label>
+              <Link
+                href={{ pathname: "/signup", query: { id: products[1].id } }}
+                as="/signup"
+              >
+                <button>購入手続きへ</button>
+              </Link>
             </>
-          ) : ( 
+          ) : (
             <div></div>
           )}
-          <br/><br/>
+          <br />
+          <br />
           <Link href="/questions">
-              <button>もう1度診断する</button>
+            <button>もう1度診断する</button>
           </Link>
         </div>
-      </>
-    );
+      </Layout>
+    </>
+  );
 }

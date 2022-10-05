@@ -4,6 +4,7 @@ import { UsersController } from './users.controller';
 import { PrismaService } from '../prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { RecommendService } from 'src/recommend/recommend.service';
+import { ContractsService } from 'src/contracts/contracts.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { RecommendService } from 'src/recommend/recommend.service';
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, PrismaService, RecommendService],
+  providers: [UsersService, PrismaService, RecommendService, ContractsService],
 })
 export class UsersModule {}
