@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Body, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { ContractsService } from './contracts.service';
 import { Contract, Prisma } from '@prisma/client';
 
@@ -12,15 +20,13 @@ export class ContractsController {
   }
 
   @Get(':user_id')
-  async findOne(
-    @Param('user_id') user_id: string,
-  ): Promise<Contract> {
+  async findOne(@Param('user_id') user_id: string): Promise<Contract> {
     return this.contractsService.contract(Number(user_id));
   }
 
   @Post()
   async createContract(
-    @Body() data: Prisma.ContractCreateInput
+    @Body() data: Prisma.ContractCreateInput,
   ): Promise<Contract> {
     return this.contractsService.createContract(data);
   }
@@ -37,10 +43,7 @@ export class ContractsController {
   }
 
   @Delete(':id')
-  async deletePost(
-    @Param('id') user_id: string
-  ): Promise<Contract> {
+  async deletePost(@Param('id') user_id: string): Promise<Contract> {
     return this.contractsService.deleteContract(Number(user_id));
   }
-
 }

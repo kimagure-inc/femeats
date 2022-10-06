@@ -14,13 +14,13 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { RecommendService } from 'src/recommend/recommend.service';
+import { ContractsService } from 'src/contracts/contracts.service';
 import { User, Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 const nodemailer = require('nodemailer');
 import { randomBytes } from 'crypto';
-import { runInThisContext } from 'vm';
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -39,6 +39,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private jwtService: JwtService,
     private recommendService: RecommendService,
+    private contractsService: ContractsService,
   ) {}
   // もし1回でも保存していたらupdate
   @Post('signup')
@@ -64,7 +65,7 @@ export class UsersController {
           from: 'femeats@gmail.com',
           to: email,
           subject: 'femeats',
-          text: `femeatsをご利用いただき誠にありがとうございます。\n 24時間以内に以下のURLをクリックして、認証を行なってください。\n ${process.env.FRONT_BASE_URL}/email?token=${jwt}`,
+          text: `femeatsをご利用いただき誠にありがとうございます。\n 24時間以内に以下のURLをクリックして、認証を行なってください。\n http://localhost:8080/email?token=${jwt}`,
         };
         transporter.sendMail(details, (err) => {
           if (err) {
@@ -101,6 +102,7 @@ export class UsersController {
       where: { id: user.id },
       data: {
         emailAuth: true,
+        token: null,
       },
     });
     const { password, ...result } = user;
@@ -132,8 +134,29 @@ export class UsersController {
 
     response.cookie('jwt', jwt, { httpOnly: true });
     return {
+      status: 200,
       message: 'success',
     };
+  }
+
+  @Get('/contract')
+  async userContract(@Req() request: Request) {
+    try {
+      const cookie = request.cookies['jwt'];
+      const data = await this.jwtService.verifyAsync(cookie);
+      if (!data) {
+        throw new UnauthorizedException();
+      }
+
+      const user = await this.usersService.userOne(data['id']);
+      const contract = await this.contractsService.contract(user.id);
+
+      const { password, ...result } = user;
+
+      return contract;
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
   }
 
   @Get()
@@ -175,5 +198,26 @@ export class UsersController {
       where: { id: Number(id) },
       data: data,
     });
+  }
+
+  @Patch()
+  async upUser(
+    @Body() data: Prisma.UserUpdateInput,
+    @Req() request: Request,
+  ): Promise<User> {
+    try {
+      const cookie = request.cookies['jwt'];
+      const data = await this.jwtService.verifyAsync(cookie);
+      if (!data) {
+        throw new UnauthorizedException();
+      }
+
+      return this.usersService.updateUser({
+        where: { id: Number(data['id']) },
+        data: data,
+      });
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
   }
 }

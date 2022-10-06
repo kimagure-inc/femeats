@@ -14,8 +14,13 @@ export class ContractsService {
     return this.prisma.contract.findFirst({
       where: { user_id },
       orderBy: {
-        id: "desc"
-      }
+        id: 'desc',
+      },
+      include: {
+        timezone: true,
+        deliveryCycle: true,
+        product: true,
+      },
     });
   }
 
@@ -38,7 +43,7 @@ export class ContractsService {
 
   async deleteContract(id: number): Promise<Contract> {
     return this.prisma.contract.delete({
-      where: { id }
+      where: { id },
     });
   }
 }
