@@ -3,24 +3,8 @@ import axios from 'axios';
 
 const ShippmentForm = (props: any) => {
 
-  // console.log("props :", props)
-  // console.log("props.props.cycle :", props.props.cycle)
-  // console.log("props.props.cycle[0] :", props.props.cycle[0])
-
   return (
     <>
-      <div>
-          <div>
-            <label>配送サイクル</label>
-            <select name="cycle">
-            <option>---選択してください---</option>
-            {props.props.cycle.map((value: any) => (
-                <option key={value.id}>{value.cycle}</option>
-            ))}
-            </select>
-            週間ごと
-          </div>
-      </div>
       <div>
         <div>
           <label>初回お届け日</label>
@@ -47,20 +31,6 @@ const ShippmentForm = (props: any) => {
 }
 
 export default ShippmentForm;
-
-// export async function getServerSideProps() {
-//   const timezoneData = await axios.get(`${process.env.API_BASE_URL}/shippInfo/timezone`);
-//   const timezone = timezoneData.data;
-    
-//   const cycleData = await axios.get(`${process.env.API_BASE_URL}/shippInfo/cycle`);
-//   const cycle = await cycleData.data;
-//   return {
-//     props: {
-//       timezone,
-//       cycle,
-//     },
-//   };
-// }
 
 // 5日後の日程から2週間表示させる（例：今日10/1 => 10/6~10/20の日程）
 const days = [ "日", "月", "火", "水", "木", "金", "土" ];
