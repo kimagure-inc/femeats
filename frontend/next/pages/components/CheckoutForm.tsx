@@ -19,11 +19,10 @@ export default function CheckoutForm(props: { data: any }) {
     <button onClick={async e => {
       e.preventDefault()
       if (!elements || !stripe) return;
-      console.log("elements :", elements) // 追加
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: '/thanks'
+          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thanks`
         }
       })
       console.log(error)
