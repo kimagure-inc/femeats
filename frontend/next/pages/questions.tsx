@@ -38,6 +38,7 @@ export default function App(props: questions) {
       setAuth(true);
     }
   };
+  loginuser();
 
   const startBtn = () => {
     setIsStart(true);
@@ -86,7 +87,7 @@ export default function App(props: questions) {
 
   return (
     <>
-      <Layout auth={loginuser}>
+      <Layout auth={auth}>
         <h2>パーソナライズ診断</h2>
         <div className="app">
           {!isStart ? (

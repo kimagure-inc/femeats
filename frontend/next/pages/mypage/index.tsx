@@ -46,7 +46,7 @@ export default function Top() {
           </ul>
           <ul>
             <div>配送サイクル</div>
-            <div>{data.deliveryCycle.cycle}週間に１回</div>
+            <div>{data.product.deliveryCycle}週間に１回</div>
           </ul>
           <ul>
             <div>次回配送予定日</div>

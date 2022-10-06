@@ -64,10 +64,11 @@ export default function recommend() {
       setAuth(true);
     }
   };
+  loginuser();
 
   return (
     <>
-      <Layout auth={loginuser}>
+      <Layout auth={auth}>
         <div>
           {router.query.name}さんの診断結果
           <br />
