@@ -21,7 +21,6 @@ interface Inputs {
 const Payment: NextPage = (props) => {
   const router = useRouter();
 
-
   // 購入確定ボタンで行うこと
   // DB：userテーブル更新、contractテーブル追加
   // stripe：決済、請求サイクル変更
@@ -64,12 +63,9 @@ export async function getServerSideProps() {
   const timezoneData = await axios.get(`${process.env.API_BASE_URL}/shippInfo/timezone`);
   const timezone = timezoneData.data;
 
-  const cycleData = await axios.get(`${process.env.API_BASE_URL}/shippInfo/cycle`);
-  const cycle = await cycleData.data;
   return {
     props: {
       timezone,
-      cycle,
     },
   };
 }
