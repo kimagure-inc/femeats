@@ -16,7 +16,9 @@ model User {
   email     String      @unique
   password  String
   postcode  String?     @db.VarChar(10)
-  address   String?     @db.VarChar(100)
+  address1  String?     @db.VarChar(100)
+  address2  String?     @db.VarChar(100)
+  address3  String?     @db.VarChar(100)
   telPhone  String?     @db.VarChar(15)
   create_at DateTime    @default(now())
   update_at DateTime    @updatedAt
@@ -33,8 +35,6 @@ model Contract {
   user_id          Int
   user             User             @relation(fields: [user_id], references: [id])
   contract_at      DateTime         @default(now())
-  deliveryCycle_id Int
-  deliveryCycle    DeliveryCycle    @relation(fields: [deliveryCycle_id], references: [id])
   timezone_id      Int
   timezone         DeliveryTimezone @relation(fields: [timezone_id], references: [id])
   first_del_date   DateTime         @db.Date
@@ -44,11 +44,6 @@ model Contract {
   delivery         Delivery[]
 }
 
-model DeliveryCycle {
-  id       Int        @id @default(autoincrement())
-  cycle    Int
-  contract Contract[]
-}
 
 model DeliveryTimezone {
   id       Int        @id @default(autoincrement())
@@ -92,9 +87,9 @@ model Product {
   category_id  Int
   category     Category    @relation(fields: [category_id], references: [id])
   stripe_id    String
+  deliveryCycle Int
   contract     Contract[]
   recommend    Recommend[]
-
   Delivery Delivery[]
 }
 
