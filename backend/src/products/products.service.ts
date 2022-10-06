@@ -16,6 +16,12 @@ export class ProductsService {
     });
   }
 
+  async stripeId(id: number): Promise<Product[] | null> {
+    return this.prisma.product.findMany({
+        where: { id }
+    });
+  }
+
   async productsByCategory(category_id: number): Promise<Product[] | null> {
     return this.prisma.product.findMany({
         where: { category_id }
