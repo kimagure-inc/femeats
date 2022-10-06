@@ -18,7 +18,6 @@ export class ContractsService {
       },
       include: {
         timezone: true,
-        deliveryCycle: true,
         product: true,
       },
     });
