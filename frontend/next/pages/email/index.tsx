@@ -5,15 +5,8 @@ import type { GetServerSideProps } from "next";
 
 export default function Auth(props: any) {
   const router = useRouter();
-  const [status, setStates] = useState(false);
-  // console.log('props :', props)
-  // console.log('props.data :', props.data)
-  // console.log('props.data.recommend.email :', props.data.recommend.email,)
 
-  // ボタンクリックで顧客登録させる
-  // 返り値のclient_secretを遷移先へ渡したい
   const handleClick = (props:any) => {
-    // console.log('func-props :', props)
     const data = {
       email: props.data.recommend.email,
       product_id: props.data.recommend.product_id
@@ -23,8 +16,13 @@ export default function Auth(props: any) {
     .then((res) => {
       console.log(res);
       router.push({
-        pathname: `/purchase`, // 遷移先のページ
-        query: {data: res.data},
+        pathname: `/purchase`,
+        query: {
+          cs: res.data.cs,
+          sub: res.data.subscribe_id,
+          rid: props.data.recommend.id,
+          pid: props.data.recommend.product_id,
+        },
       });
     })
     .catch((error) => {

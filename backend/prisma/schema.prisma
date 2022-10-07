@@ -11,40 +11,40 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  name      String?     @db.VarChar(50)
-  email     String      @unique
-  password  String
-  postcode  String?     @db.VarChar(10)
-  address1  String?     @db.VarChar(100)
-  address2  String?     @db.VarChar(100)
-  address3  String?     @db.VarChar(100)
-  telPhone  String?     @db.VarChar(15)
-  create_at DateTime    @default(now())
-  update_at DateTime    @updatedAt
-  status    Boolean     @default(true)
-  emailAuth Boolean     @default(false)
-  token     String?     @db.VarChar(255) @unique
-  stripe    Int?         
-  contract  Contract[]
+  id            Int        @id @default(autoincrement())
+  name          String?    @db.VarChar(50)
+  email         String     @unique
+  password      String
+  postcode      String?    @db.VarChar(10)
+  address1      String?    @db.VarChar(100)
+  address2      String?    @db.VarChar(100)
+  address3      String?    @db.VarChar(100)
+  telPhone      String?    @db.VarChar(15)
+  create_at     DateTime   @default(now())
+  update_at     DateTime   @updatedAt
+  status        Boolean    @default(true)
+  emailAuth     Boolean    @default(false)
+  token         String?    @unique @db.VarChar(255)
+  stripe_cus_id String?
+  stripe_sub_id String?
+  contract      Contract[]
 }
 
 model Contract {
-  id               Int              @id @default(autoincrement())
-  product_id       Int
-  product          Product          @relation(fields: [product_id], references: [id])
-  user_id          Int
-  user             User             @relation(fields: [user_id], references: [id])
-  contract_at      DateTime         @default(now())
-  timezone_id      Int
-  timezone         DeliveryTimezone @relation(fields: [timezone_id], references: [id])
-  deliveryDate     DateTime         @db.Date
-  status_id        Int
-  status           Status           @relation(fields: [status_id], references: [id])
-  orderDate        DateTime         @db.Date
-  delivery         Delivery[]
+  id           Int              @id @default(autoincrement())
+  product_id   Int
+  product      Product          @relation(fields: [product_id], references: [id])
+  user_id      Int
+  user         User             @relation(fields: [user_id], references: [id])
+  contract_at  DateTime         @default(now())
+  timezone_id  Int
+  timezone     DeliveryTimezone @relation(fields: [timezone_id], references: [id])
+  deliveryDate DateTime         @db.Date
+  status_id    Int
+  status       Status           @relation(fields: [status_id], references: [id])
+  orderDate    DateTime         @db.Date
+  delivery     Delivery[]
 }
-
 
 model DeliveryTimezone {
   id       Int        @id @default(autoincrement())
@@ -62,7 +62,7 @@ model Recommend {
   id         Int     @id @default(autoincrement())
   product_id Int
   product    Product @relation(fields: [product_id], references: [id])
-  email      String     @unique
+  email      String  @unique
 }
 
 model Delivery {
@@ -80,18 +80,18 @@ model Delivery {
 }
 
 model Product {
-  id           Int         @id @default(autoincrement())
-  name         String      @db.VarChar(20)
-  introduction String      @db.VarChar(250)
-  price        Int         @db.SmallInt
-  imgUrl       String
-  category_id  Int
-  category     Category    @relation(fields: [category_id], references: [id])
-  stripe_id    String
+  id            Int         @id @default(autoincrement())
+  name          String      @db.VarChar(20)
+  introduction  String      @db.VarChar(250)
+  price         Int         @db.SmallInt
+  imgUrl        String
+  category_id   Int
+  category      Category    @relation(fields: [category_id], references: [id])
+  stripe_id     String
   deliveryCycle Int
-  contract     Contract[]
-  recommend    Recommend[]
-  Delivery Delivery[]
+  contract      Contract[]
+  recommend     Recommend[]
+  Delivery      Delivery[]
 }
 
 model Category {
