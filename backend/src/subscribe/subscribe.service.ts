@@ -16,17 +16,8 @@ export class SubscribeService {
     return this.stripeClient.customers.retrieve(id);
   }
 
-  // stripeの顧客更新＋契約内容更新を行う関数
-  public async updateCustomerAndContract(
-    id: string,
-    params: Stripe.CustomerUpdateParams
-  ) {
-    return this.stripeClient.customers.update(id, params);
-  }
-
-  // stripeの顧客登録+契約+client_secret取得
-  public async createCS(email, stripe_id) {
-    console.log('stripe_id:', stripe_id)
+  // stripe顧客登録+stripeサブスク契約+client_secret取得
+  public async createCS(email: string, stripe_id: string) {
 
     // 顧客登録
     const customerData = {
@@ -39,9 +30,7 @@ export class SubscribeService {
     // 請求サイクル設定(今日の日付＋5日 => UNIX時間へ)
     let date = new Date();
     date.setDate(date.getDate() + 5);
-    console.log('date:', date);
     const unixDate = Math.round(date.getTime() / 1000);
-    console.log('unix-date:', unixDate);
 
     const subscription = await this.stripeClient.subscriptions.create({
       items: [{
@@ -55,15 +44,17 @@ export class SubscribeService {
       },
       payment_behavior: 'default_incomplete',
       expand: ['latest_invoice.payment_intent'],
+      // billing_cycle_anchor: unixDate,
     })
 
-    return (subscription.latest_invoice as any).payment_intent.client_secret;
+    console.log("payment_intent :", (subscription.latest_invoice as any).payment_intent.client_secret)
+    console.log("subscribe_id :", subscription.id)
 
+    const cs = (subscription.latest_invoice as any).payment_intent.client_secret;
+    const subscribe_id = subscription.id;
+
+    return {cs, subscribe_id}
   }
-
-  // public async createCustomer(params: any) {
-  //   return this.stripeClient.customers.create(params);
-  // }
 
   public async updateCustomer(
     id: string,
@@ -72,15 +63,11 @@ export class SubscribeService {
     return this.stripeClient.customers.update(id, params);
   }
 
-  // public async createSubscription(params: Stripe.SubscriptionCreateParams) {
-  //   const subscription = await this.stripeClient.subscriptions.create(params)
-  //   console.log(subscription.id)
-  //   // console.log( (subscription.latest_invoice as any).payment_intent.client_secret)
-  //   return this.stripeClient.subscriptions.create(params);
-  // }
-
-  public async subscription(customer: string) {
-    return this.stripeClient.subscriptions.retrieve(customer);
+  public async updateSubscription(
+    id: string,
+    params: Stripe.SubscriptionUpdateParams
+  ) {
+    return this.stripeClient.subscriptions.update(id, params);
   }
 
 }
