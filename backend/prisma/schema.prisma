@@ -25,6 +25,7 @@ model User {
   status    Boolean     @default(true)
   emailAuth Boolean     @default(false)
   token     String?     @db.VarChar(255) @unique
+  stripe    Int?         
   contract  Contract[]
 }
 
@@ -37,10 +38,10 @@ model Contract {
   contract_at      DateTime         @default(now())
   timezone_id      Int
   timezone         DeliveryTimezone @relation(fields: [timezone_id], references: [id])
-  first_del_date   DateTime         @db.Date
+  deliveryDate     DateTime         @db.Date
   status_id        Int
   status           Status           @relation(fields: [status_id], references: [id])
-  next_del_date    DateTime         @db.Date
+  orderDate        DateTime         @db.Date
   delivery         Delivery[]
 }
 
