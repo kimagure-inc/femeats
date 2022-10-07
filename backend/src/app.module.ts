@@ -13,9 +13,25 @@ import { CategoriesModule } from './categories/categories.module';
 import { QuestionsModule } from './questions/questions.module';
 import { PersonalizeModule } from './personalize/personalize.module';
 import { RecommendModule } from './recommend/recommend.module';
+import { DeliveryModule } from './delivery/delivery.module';
+import { CronService } from './contracts/cron.service';
 
 @Module({
-  imports: [LoggingModule, UsersModule, ContractsModule, shippInfoModule, SubscribeModule, ConfigModule, StripeModule, ProductsModule, CategoriesModule, QuestionsModule, PersonalizeModule, RecommendModule],
+  imports: [
+    LoggingModule,
+    UsersModule,
+    ContractsModule,
+    shippInfoModule,
+    SubscribeModule,
+    ConfigModule,
+    StripeModule,
+    ProductsModule,
+    CategoriesModule,
+    QuestionsModule,
+    PersonalizeModule,
+    RecommendModule,
+    DeliveryModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
