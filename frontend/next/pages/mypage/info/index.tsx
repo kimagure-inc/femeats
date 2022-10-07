@@ -3,6 +3,7 @@ import MyPage from '../../../layout/mypage';
 import axios from 'axios';
 import Layout from '../../../layout/Layout';
 import { useRouter } from 'next/router';
+import Modal from '../../components/modal';
 
 type userData = {};
 
@@ -10,6 +11,17 @@ export default function Info() {
   const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
+
+  const change: string =
+    '変更するには現行契約の解約が必要ですがよろしいですか？';
+  const cancel: string = '契約を解約します。よろしいですか？';
+  const stop: string = '配送を停止します。よろしいですか？';
+  const name: string = '変更';
+  const name1: string = '停止';
+  const name2: string = '解約';
 
   useEffect(() => {
     setLoading(true);
@@ -47,8 +59,26 @@ export default function Info() {
     '土曜日',
   ];
 
-  const Submit = () => {
-    console.log('sub');
+  const Toggle = () => {
+    setModal(!modal);
+  };
+  const cancelTg = () => {
+    setModal2(!modal2);
+  };
+  const stopTg = () => {
+    setModal1(!modal1);
+  };
+
+  const changeSub = () => {
+    router.push('/mypage/info/contract');
+  };
+
+  const cancelSub = () => {
+    console.log('解約しました');
+  };
+
+  const stopSub = () => {
+    console.log('配送を停止しました');
   };
 
   return (
@@ -98,18 +128,39 @@ export default function Info() {
               <tr>
                 <td>配送の一時停止</td>
                 <td>
-                  <button>停止する</button>
+                  <button onClick={() => stopTg()}>停止する</button>
+                  <Modal
+                    show={modal1}
+                    close={stopTg}
+                    comment={stop}
+                    btName={name1}
+                    submit={stopSub}
+                  />
                 </td>
               </tr>
               <tr>
                 <td>サービスの解約</td>
                 <td>
-                  <button>解約する</button>
+                  <button onClick={() => cancelTg()}>解約する</button>
+                  <Modal
+                    show={modal2}
+                    close={cancelTg}
+                    comment={cancel}
+                    btName={name2}
+                    submit={cancelSub}
+                  />
                 </td>
               </tr>
             </tbody>
           </table>
-          <button onClick={Submit}>変更</button>
+          <button onClick={() => Toggle()}>変更</button>
+          <Modal
+            show={modal}
+            close={Toggle}
+            comment={change}
+            btName={name}
+            submit={changeSub}
+          />
         </>
       </MyPage>
     </Layout>
