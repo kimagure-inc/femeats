@@ -16,9 +16,9 @@ export class CronService {
 
     const data = this.contractsService.onContracts();
     (await data).map((i: any) => {
-      const order = new Date(i.next_del_date);
-      console.log('次回', order);
-      const delivery = new Date(i.first_del_date);
+      const order = new Date(i.orderDate);
+      console.log('注文日', order);
+      const delivery = new Date(i.deliveryDate);
       console.log('配送日', delivery);
       const td = new Date();
       console.log(td);
@@ -32,7 +32,7 @@ export class CronService {
         name: String(i.user.name),
         product_id: Number(i.product_id),
         contract_id: Number(i.id),
-        deliveryDate: new Date(i.first_del_date),
+        deliveryDate: new Date(i.deliveryDate),
         address: String(i.user.address1 + i.user.address2 + i.user.address3),
         telPhone: String(i.user.telPhone),
         price: Number(i.product.price),
@@ -48,7 +48,7 @@ export class CronService {
         const createdel = this.deliveryService.create(data);
         const upOrderdel = this.contractsService.updateContract({
           where: { id: Number(i.id) },
-          data: { next_del_date: next_oderDay },
+          data: { orderDate: next_oderDay },
         });
         return {
           data: createdel,
@@ -65,7 +65,7 @@ export class CronService {
         console.log(next_delDay);
         return this.contractsService.updateContract({
           where: { id: Number(i.id) },
-          data: { first_del_date: next_delDay },
+          data: { deliveryDate: next_delDay },
         });
       }
     });

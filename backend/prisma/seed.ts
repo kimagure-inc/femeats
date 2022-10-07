@@ -321,8 +321,8 @@ async function main() {
       product_id: 1,
       timezone_id: 1,
       status_id: 1,
-      first_del_date: new Date('2022-10-2'),
-      next_del_date: new Date('2022-10-30'),
+      deliveryDate: new Date('2022-10-8'),
+      orderDate: new Date('2022-10-3'),
     },
   });
 
