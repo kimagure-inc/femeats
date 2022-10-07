@@ -1,6 +1,6 @@
 import React from 'react';
 import type { NextPage } from 'next'
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 const Thanks: NextPage = () => {
   const router = useRouter();
@@ -9,8 +9,8 @@ const Thanks: NextPage = () => {
   return (
     <>
       <div>ご購入ありがとうございました！</div>
-      <button onClick={() => router.push("/login")}>
-        マイページTOP
+      <button onClick={() => router.push('/login')}>
+        TOP
       </button>
     </>
   )
