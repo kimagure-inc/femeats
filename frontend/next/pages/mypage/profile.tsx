@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import MyPage from "../../layout/mypage";
-import Layout from "../../layout/Layout";
-import axios from "axios";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import MyPage from '../../layout/mypage';
+import Layout from '../../layout/Layout';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 type FormData = {
   name: string;
@@ -17,17 +17,17 @@ type FormData = {
 export default function Profile() {
   const router = useRouter();
   const [data, setData] = useState();
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const [auth, setAuth] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    address1: "",
-    address2: "",
-    address3: "",
-    postcode: "",
-    telPhone: "",
+    name: '',
+    email: '',
+    address1: '',
+    address2: '',
+    address3: '',
+    postcode: '',
+    telPhone: '',
   });
 
   const handleChange = (e: any) => {
@@ -58,22 +58,22 @@ export default function Profile() {
       .catch((e) => {
         console.log(e);
         setAuth(false);
-        // router.push("/login");
+        router.push('/login');
       });
   }, []);
 
   const Submit = async (e: any) => {
     e.preventDefault();
-    console.log(formData, "id", id);
+    console.log(formData, 'id', id);
 
     axios
       .patch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${id}`, formData, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("success");
+        console.log('success');
         console.log(res);
-        alert("保存しました");
+        alert('保存しました');
       })
       .catch((e) => {
         console.log(e);
@@ -93,18 +93,27 @@ export default function Profile() {
               <div>
                 <label>お名前</label>
                 <input
-                  type="text"
-                  name="name"
+                  type='text'
+                  name='name'
                   value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label>メールアドレス</label>
+                <input
+                  type='text'
+                  name='name'
+                  value={formData.email}
                   onChange={handleChange}
                 />
               </div>
               <div>
                 <label>郵便番号</label>
                 <input
-                  type="text"
+                  type='text'
                   value={formData.postcode}
-                  name="postcode"
+                  name='postcode'
                   onChange={handleChange}
                 />
               </div>
@@ -112,8 +121,8 @@ export default function Profile() {
                 <div>
                   <label>都道府県</label>
                   <input
-                    type="text"
-                    name="address1"
+                    type='text'
+                    name='address1'
                     value={formData.address1}
                     onChange={handleChange}
                   />
@@ -123,8 +132,8 @@ export default function Profile() {
                 <div>
                   <label>市町村番地・号</label>
                   <input
-                    type="text"
-                    name="address2"
+                    type='text'
+                    name='address2'
                     value={formData.address2}
                     onChange={handleChange}
                   />
@@ -134,8 +143,8 @@ export default function Profile() {
                 <div>
                   <label>建物</label>
                   <input
-                    type="text"
-                    name="address3"
+                    type='text'
+                    name='address3'
                     value={formData.address3}
                     onChange={handleChange}
                   />
@@ -145,9 +154,9 @@ export default function Profile() {
                 <div>
                   <label>お電話番号</label>
                   <input
-                    type="tel"
+                    type='tel'
                     value={formData.telPhone}
-                    name="telPhone"
+                    name='telPhone'
                     onChange={handleChange}
                   />
                 </div>

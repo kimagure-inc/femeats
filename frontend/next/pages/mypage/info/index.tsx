@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import MyPage from '../../layout/mypage';
+import MyPage from '../../../layout/mypage';
 import axios from 'axios';
-import Layout from '../../layout/Layout';
+import Layout from '../../../layout/Layout';
 import { useRouter } from 'next/router';
-import { setRevalidateHeaders } from 'next/dist/server/send-payload';
 
 type userData = {};
 
-export default function Top() {
+export default function Info() {
   const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(false);
@@ -37,8 +36,6 @@ export default function Top() {
     );
   if (!data) return <p>No profile data</p>;
   const date = new Date(data.deliveryDate);
-  const mt = date.getMonth() + 1;
-  const dt = date.getDate();
   const dy = date.getDay();
   const weekChars = [
     '日曜日',
@@ -50,15 +47,19 @@ export default function Top() {
     '土曜日',
   ];
 
+  const Submit = () => {
+    console.log('sub');
+  };
+
   return (
     <Layout auth={true}>
       <MyPage>
+        <>{console.log(data)}</>
         <>
-          {console.log(data)}
           <table>
             <thead>
               <tr>
-                <th>ご契約プラン情報</th>
+                <th>お申し込み中のプラン</th>
               </tr>
             </thead>
             <tbody>
@@ -68,21 +69,47 @@ export default function Top() {
               </tr>
               <tr>
                 <td>金額(税込)</td>
-                <td>{Number(data.product.price).toLocaleString()}円</td>
-              </tr>
-              <tr>
-                <td>配送サイクル</td>
-                <td>{data.product.deliveryCycle}週間に１回</td>
-              </tr>
-              <tr>
-                <td>次回配送予定日</td>
-                <td>
-                  {mt}月{dt}日{weekChars[dy]}
-                </td>
-                <td>{data.timezone.timezone}</td>
+                <td>{Number(data.product.price).toLocaleString()}円(税込)</td>
               </tr>
             </tbody>
           </table>
+          <table>
+            <thead>
+              <tr>
+                <th>お届けサイクル</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>サイクル</td>
+                <td>{data.product.deliveryCycle}週間おき</td>
+                <td>{weekChars[dy]}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th>サービスの利用状況</th>
+                <th>(停止・解約申込)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>配送の一時停止</td>
+                <td>
+                  <button>停止する</button>
+                </td>
+              </tr>
+              <tr>
+                <td>サービスの解約</td>
+                <td>
+                  <button>解約する</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button onClick={Submit}>変更</button>
         </>
       </MyPage>
     </Layout>

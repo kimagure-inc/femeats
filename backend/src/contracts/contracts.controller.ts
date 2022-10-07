@@ -8,16 +8,16 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ContractsService } from './contracts.service';
+
 import { Contract, Prisma } from '@prisma/client';
+import { DeliveryService } from 'src/delivery/delivery.service';
 
 @Controller('contracts')
 export class ContractsController {
-  constructor(private readonly contractsService: ContractsService) {}
-
-  @Get()
-  async findAll(): Promise<Contract[]> {
-    return this.contractsService.contracts();
-  }
+  constructor(
+    private readonly contractsService: ContractsService,
+    private deliveryService: DeliveryService,
+  ) {}
 
   @Get(':user_id')
   async findOne(@Param('user_id') user_id: string): Promise<Contract> {

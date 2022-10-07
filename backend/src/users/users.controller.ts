@@ -5,12 +5,10 @@ import {
   Post,
   Body,
   Patch,
-  Delete,
   BadRequestException,
   Res,
   Req,
   UnauthorizedException,
-  Redirect,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { RecommendService } from 'src/recommend/recommend.service';
