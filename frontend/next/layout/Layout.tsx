@@ -47,7 +47,7 @@ export default function Layout({ children, auth }: any) {
       <nav>
         <div>
           <Link href='/questions'>
-            <a>feameats</a>
+            <a>femeats</a>
           </Link>
           <div>{menu}</div>
         </div>
