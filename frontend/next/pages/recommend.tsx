@@ -5,23 +5,14 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import Layout from '../layout/Layout';
 import { hasCookie } from 'cookies-next';
-import {
-  Button,
-  TextField,
-  Fab,
-  Box,
-  Container,
-  Stack,
-  Paper,
-  Grid,
-} from '@mui/material';
-import { styled } from '@mui/system';
-import {
-  ShoppingCart,
-  KeyboardArrowRight,
-  KeyboardArrowLeft,
-} from '@mui/icons-material';
-import InputLabel from '@mui/material/InputLabel';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import styled from '@mui/system/styled';
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
