@@ -4,7 +4,7 @@ import { ProductsService } from '../products/products.service';
 import { UsersService } from '../users/users.service';
 import { ContractsService } from '../contracts/contracts.service';
 import Stripe from 'stripe';
-import { Prisma } from '@prisma/client';
+import { LoggingService } from '../logging/logging.service';
 
 @Controller('subscribe')
 export class SubscribeController {
@@ -14,6 +14,7 @@ export class SubscribeController {
     private productsService: ProductsService,
     private contractsService: ContractsService,
     private usersService: UsersService,
+    private logger: LoggingService
   ) { }
 
   @Get('products')
@@ -36,26 +37,26 @@ export class SubscribeController {
     return this.subscribeService.createCS(email, stripe_id[0].stripe_id);
   }
 
-  // users更新+contract作成+stripe顧客更新
+  // users更新+contract作成
   @Post('user/:id')
   async updateCustomerAndCreateContract(
-    @Param('id') id: Prisma.UserCreateInput,
+    @Param('id') id: string,
     @Body() data
   ) {
-    // console.log(data)
-    const userInfo = await this.usersService.updateUser({
-      where: { id: Number(id) },
-      data: data.userData,
-    });
-    const contractInfo = await this.contractsService.createContract(data.contractData);
-    const stripeCustomerInfo = await this.subscribeService.updateCustomer(data.userData.stripe_cus_id, data.stripeCusData);
-    // const stripeSubscribeInfo = await this.subscribeService.updateSubscription(data.userData.stripe_sub_id, data.stripeSubData);
-    return {
-      userInfo,
-      contractInfo,
-      stripeCustomerInfo,
-      // stripeSubscribeInfo
-    }
+    try {
+      const userInfo = await this.usersService.updateUser({
+        where: { id: Number(id) },
+        data: data.userData,
+      });
+      const contractInfo = await this.contractsService.createContract(data.contractData);
+      return {
+        userInfo,
+        contractInfo,
+      }
+
+    } catch (error) {
+      throw console.error(error);
+   }
   }
 
   @Patch('customer/:id')

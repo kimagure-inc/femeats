@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   PaymentElement,
   useStripe,
   useElements,
-} from "@stripe/react-stripe-js";
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRouter } from "next/router";
+} from '@stripe/react-stripe-js';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import { useRouter } from 'next/router';
 
 export default function CheckoutForm(props: any) {
   const stripe = useStripe();
@@ -13,7 +13,9 @@ export default function CheckoutForm(props: any) {
 
   const router = useRouter();
 
-  console.log("props :", props);
+  let orderDate = new Date(props.deliveryDate);
+  orderDate.setDate(orderDate.getDate() - 5);
+
   const data = {
     userData: {
       name: props.userName,
@@ -22,24 +24,17 @@ export default function CheckoutForm(props: any) {
       address2: props.address2,
       address3: props.address3,
       telPhone: props.tel,
-      stripe_sub_id : "sub_1Lp16YAdWjJU6gVu2p2hGRmJ",
-      stripe_cus_id: "cus_MZGy9gMJbNxUrl"
+      stripe_sub_id: props.stripe_sub_id,
     },
     contractData: {
-      product_id: 1,
-      user_id: 2,
-      timezone_id: 2,
-      deliveryDate: "2022-10-02T00:00:00.000Z",
+      product_id: Number(props.product_id),
+      user_id: Number(props.user_id),
+      timezone_id: Number(props.delTime),
+      deliveryDate: new Date(props.deliveryDate),
       status_id: 1,
-      orderDate: "2022-10-07T00:00:00.000Z"
+      orderDate: orderDate,
     },
-    stripeCusData: {
-      name: props.userName,
-    },
-    // stripeSubData: {
-    //   billing_cycle_anchor: 1665400607
-    // }
-  }
+  };
 
   return (
     <>
@@ -52,18 +47,21 @@ export default function CheckoutForm(props: any) {
         onClick={async (e) => {
           e.preventDefault();
           if (!elements || !stripe) return;
+          axios
+            .post(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/subscribe/user/${props.user_id}`,
+              data
+            )
+            .then((res: AxiosResponse) => {
+              console.log(res);
+            })
+            .catch((e: AxiosError<{ error: string }>) => console.log(e));
           const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
               return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thanks`,
             },
           });
-          axios
-          .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${router.query.pid}`)
-          .then((res: AxiosResponse) => {
-          console.log(res);
-          })
-          .catch((e: AxiosError<{ error: string }>) => console.log(e));
           console.log(error);
         }}
       >

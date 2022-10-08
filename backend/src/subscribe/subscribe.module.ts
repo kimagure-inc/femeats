@@ -7,6 +7,7 @@ import { ProductsService } from '../products/products.service';
 import { ContractsService } from '../contracts/contracts.service';
 import { UsersService } from '../users/users.service';
 import { PrismaService } from '../prisma.service';
+import { LoggingService } from '../logging/logging.service';
 
 @Module({
   imports: [
@@ -23,6 +24,13 @@ import { PrismaService } from '../prisma.service';
     }),
   ],
   controllers: [SubscribeController],
-  providers: [SubscribeService, ProductsService, ContractsService, UsersService, PrismaService]
+  providers: [
+    SubscribeService,
+    ProductsService,
+    ContractsService,
+    UsersService,
+    PrismaService,
+    LoggingService,
+  ],
 })
 export class SubscribeModule {}
