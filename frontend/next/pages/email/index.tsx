@@ -20,6 +20,7 @@ export default function Auth(props: any) {
         query: {
           cs: res.data.cs,
           sub: res.data.subscribe_id,
+          uid: props.data.user.id,
           rid: props.data.recommend.id,
           pid: props.data.recommend.product_id,
         },
