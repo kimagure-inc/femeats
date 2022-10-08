@@ -5,16 +5,12 @@ import { useRouter } from 'next/router';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import Layout from '../layout/Layout';
 import { hasCookie } from 'cookies-next';
-import {
-  Button,
-  TextField,
-  Fab,
-  Box,
-  Container,
-  Stack,
-  Paper,
-} from '@mui/material';
-import { styled } from '@mui/system';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import styled from '@mui/system/styled';
 
 type questions = {
   questions: question[];
