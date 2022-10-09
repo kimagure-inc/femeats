@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from "react";
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import CustomerForm from './components/CustomerForm';
-import ShippmentForm from './components/ShippmentForm';
-import CheckoutForm from './components/CheckoutForm';
-import Product from './components/Product';
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import Layout from '../layout/Layout';
+import React, { useEffect, useState } from 'react';
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import CustomerForm from "./components/CustomerForm";
+import ShippmentForm from "./components/ShippmentForm";
+import CheckoutForm from "./components/CheckoutForm";
+import Product from "./components/Product";
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Layout from "../layout/Layout";
+import Box from "@mui/material/Box";
+import styled from "@mui/system/styled";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 
 const Payment: NextPage = (props) => {
   const router = useRouter();
-  const [img, setImg] = useState('');
-  const [productName, setProductName] = useState('');
+  const [img, setImg] = useState("");
+  const [productName, setProductName] = useState("");
   const [price, setPrice] = useState();
-  const [userName, setUserName] = useState('');
-  const [postcode, setPostcode] = useState('');
-  const [address1, setAddress1] = useState('');
-  const [address2, setAddress2] = useState('');
-  const [address3, setAddress3] = useState('');
-  const [tel, setTel] = useState('');
-  const [deliveryDate, setDeliveryDate] = useState('');
+  const [userName, setUserName] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [address3, setAddress3] = useState("");
+  const [tel, setTel] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
   const [delTime, setDelTime] = useState(1);
 
   const nameChange = (value: React.SetStateAction<string>) => {
@@ -71,12 +76,27 @@ const Payment: NextPage = (props) => {
   }, []);
 
   const stripePromise = loadStripe(
-    'pk_test_51Lj08EAdWjJU6gVu0jSZOsBWC8979STy2xBzS9poCK7L6mQ9LmqRgyusN9LULZyJuReMYzeeJHm5yrfnPVV1m9j400j1qUc3QL'
+    "pk_test_51Lj08EAdWjJU6gVu0jSZOsBWC8979STy2xBzS9poCK7L6mQ9LmqRgyusN9LULZyJuReMYzeeJHm5yrfnPVV1m9j400j1qUc3QL"
   );
+
+  const StyledBox = styled(Box)(({ theme }) => ({
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: "#333333",
+  }));
 
   return (
     <>
       <Layout>
+        <StyledBox
+          sx={{
+            fontSize: "24px",
+            fontWeight: "700",
+            marginTop: "16px",
+          }}
+        >
+          ご購入手続き
+        </StyledBox>
         <form>
           <CustomerForm
             setUserName={setUserName}
@@ -122,7 +142,42 @@ const Payment: NextPage = (props) => {
             />
           </Elements>
         </form>
-        <button onClick={() => router.push("/")}>キャンセルする</button>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          direction="column"
+        >
+          <Button
+            onClick={() => router.push("/recommend")}
+            sx={{
+              borderRadius: 16,
+              fontSize: "0.875rem",
+              fontWeight: "700",
+              top: 40,
+              backgroundColor: "#333333",
+              marginBottom: "16px",
+            }}
+            variant="contained"
+            color="primary"
+          >
+            キャンセル
+          </Button>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "12px",
+              fontWeight: "400",
+              marginTop: "32px",
+              marginBottom: "64px",
+            }}
+          >
+            購入には、利用規約とプライバシーポリシーへの同意が必要です。
+          </Box>
+        </Grid>
       </Layout>
     </>
   );
