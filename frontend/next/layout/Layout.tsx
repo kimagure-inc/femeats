@@ -13,6 +13,7 @@ export default function Layout({ children, auth }: any) {
     });
     console.log('logout');
     deleteCookie('signedIn');
+    deleteCookie('jwt');
     await router.push('/login');
   };
   let menu;
