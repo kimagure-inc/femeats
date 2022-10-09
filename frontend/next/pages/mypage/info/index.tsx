@@ -27,6 +27,7 @@ export default function Info() {
   const cancel: string = '契約を解約します。よろしいですか？';
   const start: string = '再契約をします。よろしいですか？';
   const stop: string = '配送を停止します。よろしいですか？';
+  const restart: string = '配送を再開します。よろしいですか？';
   const name: string = '変更';
   const name1: string = '停止する';
   const name2: string = '解約する';
@@ -49,6 +50,7 @@ export default function Info() {
       })
       .then((res) => {
         setData(res.data);
+        status(res.data.status_id);
         setLoading(false);
       })
       .catch((e) => {
@@ -87,6 +89,10 @@ export default function Info() {
   };
   const stopTg = () => {
     setModal1(!modal1);
+  };
+
+  const restartTg = () => {
+    setModal4(!modal4);
   };
   const postData = {
     id: data.user.stripe_sub_id,
@@ -140,6 +146,7 @@ export default function Info() {
         console.log(e);
       });
     console.log('再開');
+    close();
   };
 
   const changeSub = () => {

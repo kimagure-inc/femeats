@@ -18,7 +18,6 @@ import { Router } from '@mui/icons-material';
 type userData = {};
 
 export default function Info() {
-  const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(false);
   const [selectPlan, setSelectPlan] = useState('');
@@ -60,7 +59,7 @@ export default function Info() {
     setSelectPlan(event.target.value);
   };
 
-  const select = (plan, cycle, data) => {
+  const select = (plan: string, cycle: string, data: any) => {
     for (let i = 0; i < data.product.length; i++) {
       if (
         cycle == data.product[i].deliveryCycle &&
@@ -116,7 +115,6 @@ export default function Info() {
       .then((res) => {
         console.log(res);
         setCs(res.data.subsuc.cs);
-        setStripe(res.data.subsuc.subscribe_id);
         setPage(true);
       })
       .catch((e) => {
