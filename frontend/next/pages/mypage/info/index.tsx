@@ -3,7 +3,11 @@ import MyPage from '../../../layout/mypage';
 import axios from 'axios';
 import Layout from '../../../layout/Layout';
 import { useRouter } from 'next/router';
-import Modal from '../../components/modal';
+import Confirmation from '../../components/modal';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 
 type userData = {};
 
@@ -16,20 +20,25 @@ export default function Info() {
   const [modal2, setModal2] = useState(false);
   const [modal4, setModal4] = useState(false);
   const [stopState, setStopState] = useState(false);
+  const [contract, setContract] = useState(false);
 
   const change: string =
     '変更するには現行契約の解約が必要ですがよろしいですか？';
   const cancel: string = '契約を解約します。よろしいですか？';
+  const start: string = '再契約をします。よろしいですか？';
   const stop: string = '配送を停止します。よろしいですか？';
   const restart: string = '配送を再開します。よろしいですか？';
   const name: string = '変更';
   const name1: string = '停止する';
   const name2: string = '解約する';
   const name3: string = '再開する';
+  const startbt: string = 'はい';
 
   const status = (condition: string) => {
     if (condition == '2') {
       setStopState(true);
+    } else if (condition == '3') {
+      setContract(true);
     }
   };
 
@@ -46,6 +55,7 @@ export default function Info() {
       })
       .catch((e) => {
         console.log(e);
+        router.push('/login');
       });
   }, []);
 
@@ -58,6 +68,7 @@ export default function Info() {
       </Layout>
     );
   if (!data) return <p>No profile data</p>;
+
   const date = new Date(data.deliveryDate);
   const dy = date.getDay();
   const weekChars = [
@@ -96,6 +107,7 @@ export default function Info() {
       .then((res) => {
         console.log(res);
         setStopState(true);
+        setModal1(!modal1);
         alert('配送を停止しました');
       })
       .catch((e) => {
@@ -110,7 +122,9 @@ export default function Info() {
       })
       .then((res) => {
         console.log(res);
+        setModal2(!modal2);
         alert('解約しました');
+        router.push('/mypage');
       })
       .catch((e) => {
         console.log(e);
@@ -125,6 +139,7 @@ export default function Info() {
       .then((res) => {
         console.log(res);
         setStopState(false);
+        setModal4(!modal4);
         alert('配送を再開しました');
       })
       .catch((e) => {
@@ -148,18 +163,56 @@ export default function Info() {
     router.push('/mypage/info/contract');
   };
 
+  if (contract)
+    return (
+      <Layout>
+        <MyPage>
+          <table>
+            <thead>
+              <tr>
+                <th>サービスの利用状況</th>
+                <th>(停止・解約申込)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>サービスの解約</td>
+                <td>解約中</td>
+              </tr>
+            </tbody>
+          </table>
+          <button onClick={() => Toggle()}>変更</button>
+          <Confirmation
+            show={modal}
+            close={Toggle}
+            comment={start}
+            btName={startbt}
+            submit={changeSub}
+          />
+        </MyPage>
+      </Layout>
+    );
+
   return (
     <Layout auth={true}>
       <MyPage>
-        <>{console.log(data)}</>
-        <>{console.log(stopState)}</>
         <>
           {!stopState ? (
             <>
+              <Box
+                sx={{
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  marginTop: '32px',
+                }}
+              >
+                お申し込み中のプラン
+              </Box>
+
               <table>
                 <thead>
                   <tr>
-                    <th>お申し込み中のプラン</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -175,6 +228,7 @@ export default function Info() {
                   </tr>
                 </tbody>
               </table>
+
               <table>
                 <thead>
                   <tr>
@@ -201,7 +255,7 @@ export default function Info() {
                     <td>配送の一時停止</td>
                     <td>
                       <button onClick={() => stopTg()}>停止する</button>
-                      <Modal
+                      <Confirmation
                         show={modal1}
                         close={stopTg}
                         comment={stop}
@@ -214,7 +268,7 @@ export default function Info() {
                     <td>サービスの解約</td>
                     <td>
                       <button onClick={() => cancelTg()}>解約する</button>
-                      <Modal
+                      <Confirmation
                         show={modal2}
                         close={cancelTg}
                         comment={cancel}
@@ -226,7 +280,7 @@ export default function Info() {
                 </tbody>
               </table>
               <button onClick={() => Toggle()}>変更</button>
-              <Modal
+              <Confirmation
                 show={modal}
                 close={Toggle}
                 comment={change}
@@ -281,7 +335,7 @@ export default function Info() {
                     <td>配送の一時停止</td>
                     <td>
                       <button onClick={() => restartTg()}>再開する</button>
-                      <Modal
+                      <Confirmation
                         show={modal4}
                         close={restartTg}
                         comment={restart}
@@ -294,7 +348,7 @@ export default function Info() {
                     <td>サービスの解約</td>
                     <td>
                       <button onClick={() => cancelTg()}>解約する</button>
-                      <Modal
+                      <Confirmation
                         show={modal2}
                         close={cancelTg}
                         comment={cancel}
@@ -306,7 +360,7 @@ export default function Info() {
                 </tbody>
               </table>
               <button onClick={() => Toggle()}>変更</button>
-              <Modal
+              <Confirmation
                 show={modal}
                 close={Toggle}
                 comment={change}

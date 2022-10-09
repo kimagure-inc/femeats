@@ -8,10 +8,17 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import ShippmentForm from '../../components/ShippmentForm';
 import ChangeoutForm from '../../components/ChangeoutForm';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Router } from '@mui/icons-material';
 
 type userData = {};
 
 export default function Info() {
+  const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(false);
   const [selectPlan, setSelectPlan] = useState('');
@@ -20,6 +27,7 @@ export default function Info() {
   const [page, setPage] = useState(false);
   const [selectCycle, setSelectCycle] = useState('');
   const [cs, setCs] = useState('');
+  const [contract, setContract] = useState(false);
   let product;
 
   useEffect(() => {
@@ -34,6 +42,7 @@ export default function Info() {
       })
       .catch((e) => {
         console.log(e);
+        router.push('/login');
       });
   }, []);
 
@@ -80,7 +89,10 @@ export default function Info() {
   );
 
   let orderDate = new Date(deliveryDate);
-  orderDate.setDate(orderDate.getDate() - 5);
+  orderDate.setDate(orderDate.getDate() - 4);
+
+  let delDate = new Date(deliveryDate);
+  delDate.setDate(delDate.getDate() + 1);
 
   const postData = {
     email: data.contract.user.email,
@@ -89,7 +101,7 @@ export default function Info() {
     contractData: {
       product_id: select(selectPlan, selectCycle, data),
       timezone_id: Number(delTime),
-      deliveryDate: new Date(deliveryDate),
+      deliveryDate: delDate,
       status_id: 1,
       orderDate: orderDate,
     },
@@ -117,13 +129,14 @@ export default function Info() {
         <>{console.log(data)}</>
         {!page ? (
           <div>
+            {/* <FormControl sx={{ m: 1, width: 350, mt: 3 }}> */}
             <div>お申し込み中のプラン</div>
             <label>契約プラン</label>
 
             <select name='product' value={selectPlan} onChange={planChange}>
-              {data.product.map((value: any) => (
+              {data.product.slice(0, 8).map((value: any) => (
                 <option value={value.name} key={value.id}>
-                  {value.name} -{Number(value.price).toLocaleString()}
+                  {value.name} {Number(value.price).toLocaleString()}
                   円（税込）
                 </option>
               ))}
@@ -145,6 +158,7 @@ export default function Info() {
                 delTimeChange={delTimeChange}
               />
             </div>
+            {/* </FormControl> */}
             <button onClick={Submit}>プラン決定</button>
           </div>
         ) : (
