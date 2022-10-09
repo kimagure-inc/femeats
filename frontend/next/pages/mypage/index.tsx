@@ -49,14 +49,6 @@ export default function Top() {
     );
   if (!data) return <p>No profile data</p>;
 
-  if (contract)
-    return (
-      <Layout>
-        <MyPage>
-          <p>解約しています</p>
-        </MyPage>
-      </Layout>
-    );
   const date = new Date(data.deliveryDate);
   const mt = date.getMonth() + 1;
   const dt = date.getDate();
@@ -70,6 +62,27 @@ export default function Top() {
     '金曜日',
     '土曜日',
   ];
+
+  if (contract)
+    return (
+      <Layout>
+        <MyPage>
+          <table>
+            <thead>
+              <tr>
+                <th>ご契約プラン情報</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>契約プラン</td>
+                <td>解約しています</td>
+              </tr>
+            </tbody>
+          </table>
+        </MyPage>
+      </Layout>
+    );
 
   return (
     <Layout auth={true}>
@@ -121,7 +134,19 @@ export default function Top() {
                 <tbody>
                   <tr>
                     <td>契約プラン</td>
-                    <td>解約しています</td>
+                    <td>{data.product.name}</td>
+                  </tr>
+                  <tr>
+                    <td>金額(税込)</td>
+                    <td>{Number(data.product.price).toLocaleString()}円</td>
+                  </tr>
+                  <tr>
+                    <td>配送サイクル</td>
+                    <td>{data.product.deliveryCycle}週間に１回</td>
+                  </tr>
+                  <tr>
+                    <td>次回配送予定日</td>
+                    <td>停止中</td>
                   </tr>
                 </tbody>
               </table>
