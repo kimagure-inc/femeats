@@ -62,4 +62,20 @@ export class SubscribeService {
   ) {
     return this.stripeClient.subscriptions.update(id, params);
   }
+
+  public async cancel(id: string) {
+    return await this.stripeClient.subscriptions.del(id);
+  }
+
+  public async stop(id: string) {
+    return await this.stripeClient.subscriptions.update(id, {
+      pause_collection: { behavior: 'void' },
+    });
+  }
+
+  public async restart(id: string) {
+    return await this.stripeClient.subscriptions.update(id, {
+      pause_collection: '',
+    });
+  }
 }

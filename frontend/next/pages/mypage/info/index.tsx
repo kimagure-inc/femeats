@@ -68,17 +68,63 @@ export default function Info() {
   const stopTg = () => {
     setModal1(!modal1);
   };
-
-  const changeSub = () => {
-    router.push('/mypage/info/contract');
-  };
-
-  const cancelSub = () => {
-    console.log('解約しました');
+  const postData = {
+    id: data.user.stripe_sub_id,
+    userId: data.id,
   };
 
   const stopSub = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/stop`, postData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     console.log('配送を停止しました');
+  };
+  const cancelSub = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/cancel`, postData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    console.log('解約しました');
+  };
+  const restartSub = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/restart`, postData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    console.log('再開');
+  };
+
+  const changeSub = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/cancel`, postData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    router.push('/mypage/info/contract');
   };
 
   return (
@@ -153,6 +199,7 @@ export default function Info() {
               </tr>
             </tbody>
           </table>
+          <button onClick={() => restartSub()}>再開</button>
           <button onClick={() => Toggle()}>変更</button>
           <Modal
             show={modal}
