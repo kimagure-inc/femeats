@@ -3,7 +3,7 @@ import MyPage from '../../layout/mypage';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { useRouter } from 'next/router';
-import { setRevalidateHeaders } from 'next/dist/server/send-payload';
+import Image from 'next/image';
 
 type userData = {};
 
@@ -55,6 +55,7 @@ export default function Top() {
       <MyPage>
         <>
           {console.log(data)}
+          <Image src={data.product.imgUrl} width={320} height={320} />
           <table>
             <thead>
               <tr>
