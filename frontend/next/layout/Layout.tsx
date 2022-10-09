@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import MyPage from './mypage';
+import MyPageDrawer from './drawer';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { deleteCookie } from 'cookies-next';
@@ -118,7 +118,7 @@ export default function Layout({ children, auth }: any, props: Props) {
                     >
                       <CloseIcon />
                     </IconButton>
-                    <MyPage />
+                    <MyPageDrawer />
                   </Drawer>
                 </>
               ) : (
@@ -131,8 +131,6 @@ export default function Layout({ children, auth }: any, props: Props) {
                   flexGrow: 1,
                   fontFamily: 'adobe-garamond-pro',
                   justifyContent: 'center',
-                  // align: 'center',
-                  // textAlign: 'center',
                   fontSize: '32px',
                   fontWeight: '600',
                   color: '#182222',

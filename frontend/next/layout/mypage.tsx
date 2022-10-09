@@ -22,39 +22,49 @@ export default function MyPage({ children }: any) {
   };
 
   return (
-    <Box sx={{ width: 264, marginLeft: '16px' }}>
-      <a>マイページ</a>
+    <>
+      <Box
+        sx={{
+          width: 264,
+          marginLeft: '16px',
+        }}
+      >
+        <List
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+          }}
+        >
+          <a>マイページ</a>
+          <ListItem>
+            <Link href='/mypage'>
+              <div>TOP</div>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link href='/mypage/profile'>
+              <div>お客様情報</div>
+            </Link>
+          </ListItem>
+          <ListItem>
+            {/* <Link href="/top"> */}
+            <>請求先情報</>
+            {/* </Link> */}
+          </ListItem>
+          <ListItem>
+            <Link href='/mypage/info'>
+              <div>契約情報</div>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link href='/questions'>
+              <div>パーソナライズ診断</div>
+            </Link>
+          </ListItem>
+          <ListItem onClick={logout}>ログアウト</ListItem>
+        </List>
 
-      <List>
-        <ListItem>
-          <Link href='/mypage'>
-            <div>TOP</div>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link href='/mypage/profile'>
-            <div>お客様情報</div>
-          </Link>
-        </ListItem>
-        <ListItem>
-          {/* <Link href="/top"> */}
-          <>請求先情報</>
-          {/* </Link> */}
-        </ListItem>
-        <ListItem>
-          <Link href='/mypage/info'>
-            <div>契約情報</div>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link href='/questions'>
-            <div>パーソナライズ診断</div>
-          </Link>
-        </ListItem>
-        <ListItem onClick={logout}>ログアウト</ListItem>
-      </List>
-
-      <main>{children}</main>
-    </Box>
+        <main>{children}</main>
+      </Box>
+    </>
   );
 }
