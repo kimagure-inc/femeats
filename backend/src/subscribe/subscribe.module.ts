@@ -3,6 +3,11 @@ import { SubscribeService } from './subscribe.service';
 import { SubscribeController } from './subscribe.controller';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { StripeModule } from 'nestjs-stripe';
+import { ProductsService } from '../products/products.service';
+import { ContractsService } from '../contracts/contracts.service';
+import { UsersService } from '../users/users.service';
+import { PrismaService } from '../prisma.service';
+import { LoggingService } from '../logging/logging.service';
 
 @Module({
   imports: [
@@ -19,6 +24,13 @@ import { StripeModule } from 'nestjs-stripe';
     }),
   ],
   controllers: [SubscribeController],
-  providers: [SubscribeService]
+  providers: [
+    SubscribeService,
+    ProductsService,
+    ContractsService,
+    UsersService,
+    PrismaService,
+    LoggingService,
+  ],
 })
 export class SubscribeModule {}

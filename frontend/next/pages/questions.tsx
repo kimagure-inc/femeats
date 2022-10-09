@@ -1,9 +1,16 @@
-import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import axios, { AxiosResponse, AxiosError } from "axios";
-import Layout from "../layout/Layout";
-import { hasCookie } from "cookies-next";
+import Link from 'next/link';
+import styles from '../styles/Home.module.css';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import Layout from '../layout/Layout';
+import { hasCookie } from 'cookies-next';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import styled from '@mui/system/styled';
 
 type questions = {
   questions: question[];
@@ -21,23 +28,59 @@ type question = {
 
 type allAnswer = number[];
 
+const StyledTextField = styled(TextField, {
+  name: 'StyledTextField',
+})({
+  backgroundColor: 'white',
+  position: 'absolute',
+  width: 288,
+  marginTop: 64,
+  '& .MuiInputBase-root': {
+    height: 40,
+  },
+});
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: '#333333',
+}));
+
+const SelectBtn = styled(Button, {
+  name: 'SelectBtn',
+})({
+  width: 360,
+  height: 48,
+  margin: 16,
+  borderRadius: 2,
+  fontWeight: '600',
+  '&:hover': {
+    background: '#FFF262',
+  },
+});
+
 export default function App(props: questions) {
   const questions: question[] = props.questions;
   const router = useRouter();
   const [isStart, setIsStart] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState('');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [finishAnswer, setFinishAnswer] = useState(false); // Q5を答えたらtrueに変わる
   const [waitingResult, setWaitingResult] = useState(false); //Trueになったら診断中の画面に変わる
   const [allAnswer, setAllAnswer] = useState<allAnswer>([]); //ユーザーの回答をQ1〜Q5まで溜めておく
   const [auth, setAuth] = useState(false);
 
-  const signedIn = hasCookie("signedIn");
-  const loginuser = () => {
-    if (signedIn == true) {
-      setAuth(true);
-    }
-  };
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const signedIn = hasCookie('signedIn');
+    const loginuser = () => {
+      if (signedIn == true) {
+        setAuth(true);
+      }
+    };
+    loginuser();
+  }, []);
 
   const startBtn = () => {
     setIsStart(true);
@@ -66,7 +109,7 @@ export default function App(props: questions) {
         data: allAnswer,
       })
       .then((res: AxiosResponse) => {
-        console.log("Posting data", res);
+        console.log('Posting data', res);
         showResult(res.data);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e.message, 500));
@@ -76,75 +119,184 @@ export default function App(props: questions) {
     setTimeout(() => {
       router.push(
         {
-          pathname: "/recommend",
+          pathname: '/recommend',
           query: { name: userName, category: recommendCategory },
         },
-        "recommend"
+        'recommend'
       );
     }, 3 * 1000);
   };
 
   return (
     <>
-      <Layout auth={loginuser}>
-        <h2>パーソナライズ診断</h2>
-        <div className="app">
-          {!isStart ? (
-            <div className="score-section">
-              お名前を教えてください（ニックネーム可）
-              <br />
-              <input
-                type="text"
-                value={userName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setUserName(e.currentTarget.value)
-                }
-              />
-              <br />
-              <button onClick={startBtn}>診断をはじめる</button>
-            </div>
-          ) : waitingResult ? (
-            <div className="score-section">
-              {userName}さんにおすすめのプランを診断中・・・
-            </div>
-          ) : (
-            <>
-              <div className="question-section">
-                <div className="question-count">
-                  <span>Question {currentQuestion + 1}</span>/{questions.length}
-                </div>
-                <br />
-                <div className="question-text">
-                  {questions[currentQuestion].question}
-                </div>
-                <br />
-              </div>
-              <div className="answer-section">
-                <button onClick={() => handleAnswerOptionClick(1)}>
-                  {questions[currentQuestion].choice1}
-                </button>{" "}
-                <button onClick={() => handleAnswerOptionClick(2)}>
-                  {questions[currentQuestion].choice2}
-                </button>{" "}
-                <button onClick={() => handleAnswerOptionClick(3)}>
-                  {questions[currentQuestion].choice3}
-                </button>{" "}
-                <button onClick={() => handleAnswerOptionClick(4)}>
-                  {questions[currentQuestion].choice4}
-                </button>{" "}
+      <Layout auth={auth}>
+        <Container maxWidth='lg'>
+          <Box
+            sx={{
+              my: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {!isStart ? (
+              <Box
+                sx={{
+                  my: 4,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '14px',
+                }}
+              >
+                <h2>パーソナライズ診断</h2>
+                <p>お名前を教えてください（ニックネーム可）</p>
+                <StyledTextField
+                  id='outlined-basic'
+                  variant='outlined'
+                  value={userName}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUserName(e.currentTarget.value)
+                  }
+                />
                 <br />
                 <br />
-                {finishAnswer ? (
-                  <div className="score-section">
-                    <button onClick={submitBtn}>診断結果を見る</button>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            </>
-          )}
-        </div>
+                <Button
+                  sx={{
+                    borderRadius: 16,
+                    fontSize: '0.875rem',
+                    fontWeight: '700',
+                    top: 40,
+                    '&:hover': {
+                      color: 'primary.main',
+                      background: '#FFF262',
+                    },
+                  }}
+                  onClick={startBtn}
+                  variant='contained'
+                  color='primary'
+                >
+                  診断をはじめる
+                </Button>
+              </Box>
+            ) : waitingResult ? (
+              <Box
+                sx={{
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  marginTop: '16px',
+                }}
+              >
+                {userName}さんにおすすめのプランを診断中・・・
+              </Box>
+            ) : (
+              <>
+                <Box
+                  sx={{
+                    my: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignQuestions: 'center',
+                    fontSize: '14px',
+                  }}
+                >
+                  <Stack spacing={1}>
+                    <StyledBox
+                      sx={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                      }}
+                    >
+                      Question
+                    </StyledBox>
+                    <StyledBox
+                      sx={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                      }}
+                    >
+                      0{currentQuestion + 1}
+                    </StyledBox>
+                    <StyledBox
+                      sx={{
+                        fontSize: '15px',
+                        fontWeight: '600',
+                      }}
+                    >
+                      {questions[currentQuestion].question}
+                    </StyledBox>
+                  </Stack>
+                </Box>
+                <Box
+                  sx={{
+                    // my: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: '14px',
+                  }}
+                >
+                  <SelectBtn
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleAnswerOptionClick(1)}
+                  >
+                    {questions[currentQuestion].choice1}
+                  </SelectBtn>
+                  <SelectBtn
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleAnswerOptionClick(2)}
+                  >
+                    {questions[currentQuestion].choice2}
+                  </SelectBtn>
+                  <SelectBtn
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleAnswerOptionClick(3)}
+                  >
+                    {questions[currentQuestion].choice3}
+                  </SelectBtn>
+                  <SelectBtn
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleAnswerOptionClick(4)}
+                  >
+                    {questions[currentQuestion].choice4}
+                  </SelectBtn>
+                  <br />
+                  <br />
+                  {finishAnswer ? (
+                    <>
+                      <SelectBtn
+                        sx={{
+                          borderRadius: 16,
+                          fontSize: '0.875rem',
+                          fontWeight: '700',
+                          '&:hover': {
+                            color: 'primary.main',
+                            background: '#FFF262',
+                          },
+                        }}
+                        onClick={submitBtn}
+                        variant='contained'
+                        color='primary'
+                      >
+                        診断結果を見る
+                      </SelectBtn>
+                    </>
+                  ) : (
+                    <Box></Box>
+                  )}
+                </Box>
+              </>
+            )}
+          </Box>
+        </Container>
       </Layout>
     </>
   );

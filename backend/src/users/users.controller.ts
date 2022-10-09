@@ -5,22 +5,23 @@ import {
   Post,
   Body,
   Patch,
-  Delete,
   BadRequestException,
   Res,
   Req,
   UnauthorizedException,
-  Redirect,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { RecommendService } from 'src/recommend/recommend.service';
 import { ContractsService } from 'src/contracts/contracts.service';
+import { SubscribeService } from 'src/subscribe/subscribe.service';
+import { ProductsService } from 'src/products/products.service';
 import { User, Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 const nodemailer = require('nodemailer');
 import { randomBytes } from 'crypto';
+import { shippInfoService } from 'src/shippInfo/shippInfo.service';
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -40,6 +41,9 @@ export class UsersController {
     private jwtService: JwtService,
     private recommendService: RecommendService,
     private contractsService: ContractsService,
+    private subscribeService: SubscribeService,
+    private productsService: ProductsService,
+    private shippInfoService: shippInfoService,
   ) {}
   // もし1回でも保存していたらupdate
   @Post('signup')
@@ -165,7 +169,7 @@ export class UsersController {
       const cookie = request.cookies['jwt'];
       const data = await this.jwtService.verifyAsync(cookie);
       if (!data) {
-        throw new UnauthorizedException();
+        throw new BadRequestException('invalid credentials');
       }
 
       const user = await this.usersService.userOne(data['id']);
@@ -173,6 +177,25 @@ export class UsersController {
       const { password, ...result } = user;
 
       return result;
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  @Get('all')
+  async all(@Req() request: Request) {
+    try {
+      const cookie = request.cookies['jwt'];
+      const data = await this.jwtService.verifyAsync(cookie);
+      if (!data) {
+        throw new BadRequestException('invalid credentials');
+      }
+      const user = await this.usersService.userOne(data['id']);
+      const contract = await this.contractsService.contract(user.id);
+      const product = await this.productsService.products();
+      const timezone = await this.shippInfoService.timezone();
+
+      return { contract, product, timezone };
     } catch (e) {
       throw new UnauthorizedException();
     }
@@ -188,7 +211,6 @@ export class UsersController {
   }
 
   // 会員登録
-  // tokenをnullにする
   @Patch(':id')
   async updateUser(
     @Param('id') id: string,
@@ -199,7 +221,7 @@ export class UsersController {
       data: data,
     });
   }
-
+  //  会員更新
   @Patch()
   async upUser(
     @Body() data: Prisma.UserUpdateInput,
@@ -209,7 +231,7 @@ export class UsersController {
       const cookie = request.cookies['jwt'];
       const data = await this.jwtService.verifyAsync(cookie);
       if (!data) {
-        throw new UnauthorizedException();
+        throw new BadRequestException('invalid credentials');
       }
 
       return this.usersService.updateUser({
@@ -219,5 +241,117 @@ export class UsersController {
     } catch (e) {
       throw new UnauthorizedException();
     }
+  }
+  //  解約
+  @Post('cancel')
+  async cancel(
+    @Body('id') id: string,
+    @Body('userId') userId: string,
+    @Req() request: Request,
+  ) {
+    console.log(id, userId);
+    const cookie = request.cookies['jwt'];
+    const user = await this.jwtService.verifyAsync(cookie);
+    if (!user) {
+      throw new BadRequestException('invalid credentials');
+    }
+
+    const contract = await this.contractsService.updateContract({
+      where: { id: Number(userId) },
+      data: {
+        status_id: 3,
+      },
+    });
+
+    const cancel = await this.subscribeService.cancel(id);
+
+    return {
+      cancel,
+      contract,
+    };
+  }
+  // 停止
+  @Post('stop')
+  async stop(
+    @Body('id') id: string,
+    @Body('userId') userId: string,
+    @Req() request: Request,
+  ) {
+    console.log(id, userId);
+    const cookie = request.cookies['jwt'];
+    const user = await this.jwtService.verifyAsync(cookie);
+    if (!user) {
+      throw new BadRequestException('invalid credentials');
+    }
+
+    const contract = await this.contractsService.updateContract({
+      where: { id: Number(userId) },
+      data: { status_id: 2 },
+    });
+
+    const stop = await this.subscribeService.stop(id);
+
+    return {
+      stop,
+      contract,
+    };
+  }
+  // 再開
+  @Post('restart')
+  async restart(
+    @Body('id') id: string,
+    @Body('userId') userId: string,
+    @Req() request: Request,
+  ) {
+    console.log(id, userId);
+    const cookie = request.cookies['jwt'];
+    const user = await this.jwtService.verifyAsync(cookie);
+    if (!user) {
+      throw new BadRequestException('invalid credentials');
+    }
+
+    const contract = await this.contractsService.updateContract({
+      where: { id: Number(userId) },
+      data: { status_id: 1 },
+    });
+
+    const restart = await this.subscribeService.restart(id);
+
+    return {
+      restart,
+      contract,
+    };
+  }
+
+  // 変更
+  @Post('cs')
+  async createCS(
+    @Body('email') email: string,
+    @Body('product_id') product_id: number,
+    @Body('userid') userid: number,
+    @Body('contractData') contractData,
+    @Req() request: Request,
+  ) {
+    {
+      console.log(userid);
+    }
+    const cookie = request.cookies['jwt'];
+    const user = await this.jwtService.verifyAsync(cookie);
+    if (!user) {
+      throw new BadRequestException('invalid credentials');
+    }
+    const stripe_id = await this.productsService.stripeId(Number(product_id));
+    const subsuc = await this.subscribeService.createCS(
+      email,
+      stripe_id[0].stripe_id,
+    );
+    // stripeidをuserにupdate
+    console.log(subsuc);
+    const contract = await this.contractsService.updateContract({
+      where: { id: Number(userid) },
+      data: contractData,
+    });
+
+    return { subsuc, contract };
   }
 }

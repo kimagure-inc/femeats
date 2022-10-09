@@ -7,7 +7,19 @@ export class ContractsService {
   constructor(private prisma: PrismaService) {}
 
   async contracts(): Promise<Contract[]> {
-    return this.prisma.contract.findMany();
+    return this.prisma.contract.findMany({});
+  }
+
+  async onContracts(): Promise<Contract[]> {
+    return this.prisma.contract.findMany({
+      where: {
+        status_id: 1,
+      },
+      include: {
+        user: true,
+        product: true,
+      },
+    });
   }
 
   async contract(user_id: number): Promise<Contract> {
@@ -18,7 +30,6 @@ export class ContractsService {
       },
       include: {
         timezone: true,
-        deliveryCycle: true,
         product: true,
       },
     });
