@@ -12,6 +12,7 @@ import ChangeoutForm from '../../components/ChangeoutForm';
 type userData = {};
 
 export default function Info() {
+  const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(false);
   const [selectPlan, setSelectPlan] = useState('');
@@ -20,6 +21,7 @@ export default function Info() {
   const [page, setPage] = useState(false);
   const [selectCycle, setSelectCycle] = useState('');
   const [cs, setCs] = useState('');
+  const [stripe, setStripe] = useState('');
   let product;
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export default function Info() {
     setSelectPlan(event.target.value);
   };
 
-  const select = (plan: string, cycle: string, data: any) => {
+  const select = (plan, cycle, data) => {
     for (let i = 0; i < data.product.length; i++) {
       if (
         cycle == data.product[i].deliveryCycle &&
@@ -104,6 +106,7 @@ export default function Info() {
       .then((res) => {
         console.log(res);
         setCs(res.data.subsuc.cs);
+        setStripe(res.data.subsuc.subscribe_id);
         setPage(true);
       })
       .catch((e) => {
