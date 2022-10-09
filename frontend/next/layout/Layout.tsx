@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import MyPage from './mypage';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { deleteCookie } from 'cookies-next';
@@ -15,6 +16,8 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface Props {
   window?: () => Window;
@@ -52,9 +55,24 @@ export default function Layout({ children, auth }: any, props: Props) {
         <div>login</div>
       </Link>
     );
-  } else {
-    menu = <div onClick={logout}>logout</div>;
+    // } else {
+    //   menu = <div onClick={logout}>logout</div>;
   }
+
+  const [drawerState, setDrawerState] = useState(false);
+
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+
+      setDrawerState(open);
+    };
 
   return (
     <>
@@ -73,15 +91,35 @@ export default function Layout({ children, auth }: any, props: Props) {
           <AppBar color='default' sx={{ flexGrow: 1 }}>
             <Toolbar>
               {auth ? (
-                <IconButton
-                  size='large'
-                  edge='start'
-                  color='inherit'
-                  aria-label='menu'
-                  sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
-                >
-                  <DragHandleIcon fontSize='large' />
-                </IconButton>
+                <>
+                  <IconButton
+                    size='large'
+                    edge='start'
+                    color='inherit'
+                    aria-label='menu'
+                    sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
+                    onClick={toggleDrawer(true)}
+                  >
+                    <DragHandleIcon fontSize='large' />
+                  </IconButton>
+                  <Drawer open={drawerState} onClose={toggleDrawer(false)}>
+                    <IconButton
+                      size='large'
+                      edge='end'
+                      color='inherit'
+                      sx={{
+                        justifyContent: 'right',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        marginRight: '8px',
+                      }}
+                      onClick={toggleDrawer(false)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                    <MyPage />
+                  </Drawer>
+                </>
               ) : (
                 <></>
               )}
