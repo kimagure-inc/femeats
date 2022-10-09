@@ -13,6 +13,7 @@ export default function Layout({ children, auth }: any) {
     });
     console.log('logout');
     deleteCookie('signedIn');
+    deleteCookie('jwt');
     await router.push('/login');
   };
   let menu;
@@ -46,7 +47,7 @@ export default function Layout({ children, auth }: any) {
 
       <nav>
         <div>
-          <Link href='/questions'>
+          <Link href='/'>
             <a>femeats</a>
           </Link>
           <div>{menu}</div>
