@@ -3,7 +3,8 @@ import MyPage from '../../layout/mypage';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { useRouter } from 'next/router';
-import { setRevalidateHeaders } from 'next/dist/server/send-payload';
+import Image from 'next/image';
+import Box from '@mui/material/Box';
 
 type userData = {};
 
@@ -11,6 +12,15 @@ export default function Top() {
   const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(false);
+  const [contract, setContract] = useState(false);
+  const [stopState, setStopState] = useState(false);
+  const status = (condition: string) => {
+    if (condition == '2') {
+      setStopState(true);
+    } else if (condition == '3') {
+      setContract(true);
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -21,9 +31,11 @@ export default function Top() {
       .then((res) => {
         setData(res.data);
         setLoading(false);
+        status(res.data.status_id);
       })
       .catch((e) => {
         console.log(e);
+        router.push('/login');
       });
   }, []);
 
@@ -36,6 +48,15 @@ export default function Top() {
       </Layout>
     );
   if (!data) return <p>No profile data</p>;
+
+  if (contract)
+    return (
+      <Layout>
+        <MyPage>
+          <p>解約しています</p>
+        </MyPage>
+      </Layout>
+    );
   const date = new Date(data.deliveryDate);
   const mt = date.getMonth() + 1;
   const dt = date.getDate();
@@ -55,34 +76,57 @@ export default function Top() {
       <MyPage>
         <>
           {console.log(data)}
-          <table>
-            <thead>
-              <tr>
-                <th>ご契約プラン情報</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>契約プラン</td>
-                <td>{data.product.name}</td>
-              </tr>
-              <tr>
-                <td>金額(税込)</td>
-                <td>{Number(data.product.price).toLocaleString()}円</td>
-              </tr>
-              <tr>
-                <td>配送サイクル</td>
-                <td>{data.product.deliveryCycle}週間に１回</td>
-              </tr>
-              <tr>
-                <td>次回配送予定日</td>
-                <td>
-                  {mt}月{dt}日{weekChars[dy]}
-                </td>
-                <td>{data.timezone.timezone}</td>
-              </tr>
-            </tbody>
-          </table>
+          {!stopState ? (
+            <>
+              <Box sx={{ padding: '16px' }}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ご契約プラン情報</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>契約プラン</td>
+                      <td>{data.product.name}</td>
+                    </tr>
+                    <tr>
+                      <td>金額(税込)</td>
+                      <td>{Number(data.product.price).toLocaleString()}円</td>
+                    </tr>
+                    <tr>
+                      <td>配送サイクル</td>
+                      <td>{data.product.deliveryCycle}週間に１回</td>
+                    </tr>
+                    <tr>
+                      <td>次回配送予定日</td>
+                      <td>
+                        {mt}月{dt}日{weekChars[dy]}
+                      </td>
+                      <td>{data.timezone.timezone}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Image src={data.product.imgUrl} width={272} height={147} />
+              </Box>
+            </>
+          ) : (
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    <th>ご契約プラン情報</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>契約プラン</td>
+                    <td>解約しています</td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          )}
         </>
       </MyPage>
     </Layout>

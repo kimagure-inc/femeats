@@ -3,6 +3,13 @@ import MyPage from '../../layout/mypage';
 import Layout from '../../layout/Layout';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import Grid from '@mui/material/Grid';
 
 type FormData = {
   name: string;
@@ -82,87 +89,135 @@ export default function Profile() {
 
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
+
+  const StyledBox = styled(Box)(({ theme }) => ({
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: 'primary',
+    backgroundColor: '#FFFFFF',
+    width: '350px',
+    marginBottom: '32px',
+  }));
+
+  const StyledTextField = styled(TextField, {
+    name: 'StyledTextField',
+  })({
+    backgroundColor: 'white',
+    width: 288,
+    marginTop: 8,
+    '& .MuiInputBase-root': {
+      height: 40,
+    },
+    marginBottom: '24px',
+  });
   return (
     <>
       <Layout auth={auth}>
         <MyPage>
           <>
             {console.log(data)}
+            <Grid
+              container
+              alignItems='center'
+              justifyContent='center'
+              direction='column'
+            >
+              <StyledBox>
+                <Box
+                  sx={{
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    marginTop: '32px',
+                  }}
+                >
+                  お客様情報の変更
+                </Box>
+                <FormControl sx={{ m: 1, minWidth: 288 }}>
+                  <FormHelperText
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      marginTop: '24px',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    お名前
+                  </FormHelperText>
 
-            <form>
-              <div>
-                <label>お名前</label>
-                <input
-                  type='text'
-                  name='name'
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label>メールアドレス</label>
-                <input
-                  type='text'
-                  name='name'
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label>郵便番号</label>
-                <input
-                  type='text'
-                  value={formData.postcode}
-                  name='postcode'
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <div>
-                  <label>都道府県</label>
-                  <input
-                    type='text'
-                    name='address1'
-                    value={formData.address1}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <label>市町村番地・号</label>
-                  <input
-                    type='text'
-                    name='address2'
-                    value={formData.address2}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <label>建物</label>
-                  <input
-                    type='text'
-                    name='address3'
-                    value={formData.address3}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <label>お電話番号</label>
-                  <input
-                    type='tel'
-                    value={formData.telPhone}
-                    name='telPhone'
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <button onClick={Submit}>保存</button>
-            </form>
+                  <div>
+                    <input
+                      type='text'
+                      name='name'
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <label>メールアドレス</label>
+                    <input
+                      type='text'
+                      name='email'
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <label>郵便番号</label>
+                    <input
+                      type='text'
+                      value={formData.postcode}
+                      name='postcode'
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <div>
+                      <label>都道府県</label>
+                      <input
+                        type='text'
+                        name='address1'
+                        value={formData.address1}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label>市町村番地・号</label>
+                      <input
+                        type='text'
+                        name='address2'
+                        value={formData.address2}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label>建物</label>
+                      <input
+                        type='text'
+                        name='address3'
+                        value={formData.address3}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label>お電話番号</label>
+                      <input
+                        type='tel'
+                        value={formData.telPhone}
+                        name='telPhone'
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <button onClick={Submit}>保存</button>
+                </FormControl>
+              </StyledBox>
+            </Grid>
           </>
         </MyPage>
       </Layout>

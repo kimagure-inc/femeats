@@ -4,7 +4,7 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-import { useRouter } from 'next/router';
+import { ThemeContext } from '@emotion/react';
 
 export default function ChangeoutForm({ price }) {
   const stripe = useStripe();
@@ -24,16 +24,20 @@ export default function ChangeoutForm({ price }) {
         onClick={async (e) => {
           e.preventDefault();
           if (!elements || !stripe) return;
-          const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-              return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thanks/`,
-            },
-          });
+          const { error } = await stripe
+            .confirmPayment({
+              elements,
+              confirmParams: {
+                return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/mypage/`,
+              },
+            })
+            .then((res) => {
+              alert('変更を保存しました');
+            });
           console.log(error);
         }}
       >
-        購入を確定する
+        保存
       </button>
     </>
   );
