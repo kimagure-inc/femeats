@@ -17,10 +17,6 @@ function MyApp(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
-        <link
-          rel='stylesheet'
-          href='https://use.typekit.net/pyu1rly.css'
-        ></link>
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

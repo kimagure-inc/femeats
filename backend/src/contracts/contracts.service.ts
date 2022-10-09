@@ -31,7 +31,6 @@ export class ContractsService {
       include: {
         timezone: true,
         product: true,
-        user: true,
       },
     });
   }
@@ -44,7 +43,7 @@ export class ContractsService {
 
   async updateContract(params: {
     where: Prisma.ContractWhereUniqueInput;
-    data: Prisma.ContractUncheckedUpdateInput;
+    data: Prisma.ContractUpdateInput;
   }): Promise<Contract> {
     const { where, data } = params;
     return this.prisma.contract.update({

@@ -345,18 +345,13 @@ export class UsersController {
       email,
       stripe_id[0].stripe_id,
     );
+    // stripeidをuserにupdate
     console.log(subsuc);
-    // contract更新
     const contract = await this.contractsService.updateContract({
       where: { id: Number(userid) },
       data: contractData,
     });
-    // subsuc_id更新
-    const updateUser = await this.usersService.updateUser({
-      where: { id: Number(contract.user_id) },
-      data: { stripe_sub_id: subsuc.subscribe_id },
-    });
 
-    return { subsuc, contract, updateUser };
+    return { subsuc, contract };
   }
 }
