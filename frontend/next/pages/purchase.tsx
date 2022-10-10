@@ -1,33 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import CustomerForm from "./components/CustomerForm";
-import ShippmentForm from "./components/ShippmentForm";
-import CheckoutForm from "./components/CheckoutForm";
-import Product from "./components/Product";
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import Layout from "../layout/Layout";
-import Box from "@mui/material/Box";
-import styled from "@mui/system/styled";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import CustomerForm from './components/CustomerForm';
+import ShippmentForm from './components/ShippmentForm';
+import CheckoutForm from './components/CheckoutForm';
+import Product from './components/Product';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import Layout from '../layout/Layout';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
-const Payment: NextPage = (props) => {
+const Payment: NextPage = () => {
   const router = useRouter();
-  const [img, setImg] = useState("");
-  const [productName, setProductName] = useState("");
-  const [price, setPrice] = useState();
-  const [userName, setUserName] = useState("");
-  const [postcode, setPostcode] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [address3, setAddress3] = useState("");
-  const [tel, setTel] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState("");
+  const [img, setImg] = useState('');
+  const [productName, setProductName] = useState('');
+  const [price, setPrice] = useState('');
+  const [deliveryCycle, setDeliveryCycle] = useState('');
+
+  const [userName, setUserName] = useState('');
+  const [postcode, setPostcode] = useState('');
+  const [address1, setAddress1] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [address3, setAddress3] = useState('');
+  const [tel, setTel] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState('');
   const [delTime, setDelTime] = useState(1);
+  const [timezone, setTimezone] = useState([]);
+
+  // TODO：エラー回避できず
+  // console.log(img);
+  // console.log(productName);
+  // console.log(price);
+  // console.log(deliveryCycle);
+
+  // console.log(userName);
+  // console.log(postcode);
+  // console.log(address1);
+  // console.log(address2);
+  // console.log(address3);
+  // console.log(tel);
+  // console.log(deliveryDate);
+  // console.log(delTime);
+  // console.log(timezone);
 
   const nameChange = (value: React.SetStateAction<string>) => {
     setUserName(value);
@@ -67,22 +86,31 @@ const Payment: NextPage = (props) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${router.query.pid}`
       )
       .then((res: AxiosResponse) => {
-        console.log(res);
         setImg(res.data.imgUrl);
         setProductName(res.data.name);
         setPrice(res.data.price);
+        setDeliveryCycle(res.data.deliveryCycle);
+      })
+      .catch((e: AxiosError<{ error: string }>) => console.log(e));
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/shippInfo/timezone`)
+      .then((res: AxiosResponse) => {
+        console.log('res :', res);
+        console.log('res.data :', res.data);
+        setTimezone(res.data);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e));
   }, []);
 
   const stripePromise = loadStripe(
-    "pk_test_51Lj08EAdWjJU6gVu0jSZOsBWC8979STy2xBzS9poCK7L6mQ9LmqRgyusN9LULZyJuReMYzeeJHm5yrfnPVV1m9j400j1qUc3QL"
+    'pk_test_51Lj08EAdWjJU6gVu0jSZOsBWC8979STy2xBzS9poCK7L6mQ9LmqRgyusN9LULZyJuReMYzeeJHm5yrfnPVV1m9j400j1qUc3QL'
   );
 
   const StyledBox = styled(Box)(({ theme }) => ({
     padding: theme.spacing(1),
-    textAlign: "center",
-    color: "#333333",
+    textAlign: 'center',
+    color: '#333333',
   }));
 
   return (
@@ -90,13 +118,29 @@ const Payment: NextPage = (props) => {
       <Layout>
         <StyledBox
           sx={{
-            fontSize: "24px",
-            fontWeight: "700",
-            marginTop: "16px",
+            fontSize: '24px',
+            fontWeight: '700',
+            marginTop: '16px',
+            marginBottom: '24px',
           }}
         >
           ご購入手続き
         </StyledBox>
+        <Grid
+          container
+          alignItems='center'
+          justifyContent='center'
+          direction='column'
+        >
+          <Divider
+            sx={{
+              width: '40px',
+              marginBottom: '24px',
+              height: '4px',
+              backgroundColor: '#182222',
+            }}
+          ></Divider>
+        </Grid>
         <form>
           <CustomerForm
             setUserName={setUserName}
@@ -113,13 +157,18 @@ const Payment: NextPage = (props) => {
             telChange={telChange}
           />
           <ShippmentForm
-            props={props}
+            timezone={timezone}
             setDeliveryDate={setDeliveryDate}
             setDelTime={setDelTime}
             deliveryDateChange={deliveryDateChange}
             delTimeChange={delTimeChange}
           />
-          <Product img={img} productName={productName} price={price} />
+          <Product
+            img={img}
+            productName={productName}
+            price={price}
+            deliveryCycle={deliveryCycle}
+          />
           <Elements
             stripe={stripePromise}
             options={{
@@ -144,38 +193,40 @@ const Payment: NextPage = (props) => {
         </form>
         <Grid
           container
-          alignItems="center"
-          justifyContent="center"
-          direction="column"
+          alignItems='center'
+          justifyContent='center'
+          direction='column'
         >
           <Button
-            onClick={() => router.push("/recommend")}
+            onClick={() => router.push('/recommend')}
             sx={{
               borderRadius: 16,
-              fontSize: "0.875rem",
-              fontWeight: "700",
-              top: 40,
-              backgroundColor: "#333333",
-              marginBottom: "16px",
+              fontSize: '0.875rem',
+              fontWeight: '700',
+              top: 32,
+              backgroundColor: '#333333',
+              marginBottom: '16px',
             }}
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
           >
             キャンセル
           </Button>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "12px",
-              fontWeight: "400",
-              marginTop: "32px",
-              marginBottom: "64px",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: '12px',
+              fontWeight: '400',
+              marginTop: '32px',
+              marginBottom: '64px',
             }}
           >
-            購入には、利用規約とプライバシーポリシーへの同意が必要です。
+            購入には、利用規約とプライバシーポリシーへの
+            <br />
+            同意が必要です。
           </Box>
         </Grid>
       </Layout>
@@ -184,16 +235,3 @@ const Payment: NextPage = (props) => {
 };
 
 export default Payment;
-
-export async function getServerSideProps() {
-  const timezoneData = await axios.get(
-    `${process.env.API_BASE_URL}/shippInfo/timezone`
-  );
-  const timezone = timezoneData.data;
-
-  return {
-    props: {
-      timezone,
-    },
-  };
-}

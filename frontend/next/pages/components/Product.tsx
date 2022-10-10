@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
 import Grid from '@mui/material/Grid';
@@ -48,17 +47,26 @@ const Product = (props: any) => {
                 fontSize: '14px',
                 fontWeight: '500',
                 marginTop: '8px',
-                marginBottom: '16px',
               }}
             >
               <div>{Number(props.price).toLocaleString()}円（税込）</div>
             </Box>
             <Box
               sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginTop: '8px',
+                marginBottom: '16px',
+              }}
+            >
+              <div>{props.deliveryCycle}週間に1回</div>
+            </Box>
+            <Box
+              sx={{
                 marginBottom: '48px',
               }}
             >
-              <Image src={props.img} width={196} height={216} />
+              {props.img && (<Image src={props.img} width={196} height={216} />)}
             </Box>
           </StyledBox>
         </Grid>
