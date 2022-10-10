@@ -5,13 +5,19 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { useRouter } from 'next/router';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
 
 export default function CheckoutForm(props: any) {
   const stripe = useStripe();
   const elements = useElements();
-
-  const router = useRouter();
 
   let orderDate = new Date(props.deliveryDate);
   orderDate.setDate(orderDate.getDate() - 5);
@@ -36,37 +42,160 @@ export default function CheckoutForm(props: any) {
     },
   };
 
+  const StyledBox = styled(Box)(({ theme }) => ({
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: 'primary',
+    backgroundColor: '#FFFFFF',
+    width: '350px',
+    marginBottom: '32px',
+  }));
+
   return (
     <>
-      <PaymentElement />
-      <div>金額</div>
-      <div>小計　{props.price}円（税込）</div>
-      <div>送料　500円（税込）</div>
-      <div>合計　{props.price + 500}円（税込）</div>
-      <button
-        onClick={async (e) => {
-          e.preventDefault();
-          if (!elements || !stripe) return;
-          axios
-            .post(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/subscribe/user/${props.user_id}`,
-              data
-            )
-            .then((res: AxiosResponse) => {
-              console.log(res);
-            })
-            .catch((e: AxiosError<{ error: string }>) => console.log(e));
-          const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-              return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thanks`,
-            },
-          });
-          console.log(error);
-        }}
+      <Grid
+        container
+        alignItems='center'
+        justifyContent='center'
+        direction='column'
       >
-        購入を確定する
-      </button>
+        <StyledBox>
+          <Box
+            sx={{
+              fontSize: '16px',
+              fontWeight: '700',
+              marginTop: '32px',
+            }}
+          >
+            支払い情報
+          </Box>
+          <Box
+            sx={{
+              fontSize: '14px',
+              fontWeight: '700',
+              marginTop: '8px',
+              marginBottom: '24px',
+            }}
+          >
+            クレジットカード情報
+          </Box>
+          <Box
+            sx={{
+              marginBottom: '48px',
+            }}
+          >
+            <PaymentElement />
+          </Box>
+        </StyledBox>
+        <StyledBox>
+          <Box
+            sx={{
+              fontSize: '16px',
+              fontWeight: '700',
+              marginTop: '32px',
+              marginBottom: '24px',
+            }}
+          >
+            金額
+          </Box>
+          <Grid
+            container
+            alignItems='center'
+            justifyContent='center'
+            direction='column'
+          >
+            <TableContainer
+              sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginBottom: '48px',
+              }}
+            >
+              <Table sx={{ minWidth: 300 }}>
+                <TableBody>
+                  <TableRow>
+                    <TableCell
+                      sx={{
+                        border: 'none',
+                      }}
+                    >
+                      小計:
+                    </TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{
+                        border: 'none',
+                      }}
+                    >
+                      {Number(props.price).toLocaleString()}円
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>送料:</TableCell>
+                    <TableCell align='right'>500円</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell
+                      sx={{
+                        fontWeight: '700',
+                        border: 'none',
+                      }}
+                    >
+                      総合計(税込):
+                    </TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{
+                        fontWeight: '700',
+                        border: 'none',
+                      }}
+                    >
+                      {Number(props.price + 500).toLocaleString()}円
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </StyledBox>
+        <Button
+          onClick={async (e) => {
+            e.preventDefault();
+            if (!elements || !stripe) return;
+            axios
+              .post(
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/subscribe/user/${props.user_id}`,
+                data
+              )
+              .then((res: AxiosResponse) => {
+                console.log(res);
+              })
+              .catch((e: AxiosError<{ error: string }>) => console.log(e));
+            const { error } = await stripe.confirmPayment({
+              elements,
+              confirmParams: {
+                return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thanks`,
+              },
+            });
+            console.log(error);
+          }}
+          sx={{
+            borderRadius: 16,
+            fontSize: '0.875rem',
+            fontWeight: '700',
+            color: '#333333',
+            backgroundColor: '#FFF262',
+            width: '242px',
+            height: '48px',
+            '&:hover': {
+              background: '#FFF262',
+            },
+          }}
+          variant='contained'
+        >
+          購入を確定する
+        </Button>
+      </Grid>
     </>
   );
 }
