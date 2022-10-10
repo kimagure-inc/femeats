@@ -49,6 +49,9 @@ export default function CheckoutForm(props: any) {
     backgroundColor: '#FFFFFF',
     width: '350px',
     marginBottom: '32px',
+    '@media screen and (min-width:600px)': {
+      width: '432px',
+    },
   }));
 
   return (
@@ -81,10 +84,17 @@ export default function CheckoutForm(props: any) {
           </Box>
           <Box
             sx={{
-              marginBottom: '48px',
+              marginLeft: '16px',
+              marginRight: '16px',
             }}
           >
-            <PaymentElement />
+            <Box
+              sx={{
+                marginBottom: '48px',
+              }}
+            >
+              <PaymentElement />
+            </Box>
           </Box>
         </StyledBox>
         <StyledBox>
@@ -181,7 +191,7 @@ export default function CheckoutForm(props: any) {
           }}
           sx={{
             borderRadius: 16,
-            fontSize: '0.875rem',
+            fontSize: '16px',
             fontWeight: '700',
             color: '#333333',
             backgroundColor: '#FFF262',
@@ -189,6 +199,11 @@ export default function CheckoutForm(props: any) {
             height: '48px',
             '&:hover': {
               background: '#FFF262',
+            },
+            '@media screen and (min-width:600px)': {
+              width: '168px',
+              height: '32px',
+              fontSize: '12px',
             },
           }}
           variant='contained'
