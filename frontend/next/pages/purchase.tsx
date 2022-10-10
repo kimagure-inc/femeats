@@ -32,22 +32,6 @@ const Payment: NextPage = () => {
   const [delTime, setDelTime] = useState(1);
   const [timezone, setTimezone] = useState([]);
 
-  // TODO：エラー回避できず
-  // console.log(img);
-  // console.log(productName);
-  // console.log(price);
-  // console.log(deliveryCycle);
-
-  // console.log(userName);
-  // console.log(postcode);
-  // console.log(address1);
-  // console.log(address2);
-  // console.log(address3);
-  // console.log(tel);
-  // console.log(deliveryDate);
-  // console.log(delTime);
-  // console.log(timezone);
-
   const nameChange = (value: React.SetStateAction<string>) => {
     setUserName(value);
   };
@@ -198,7 +182,7 @@ const Payment: NextPage = () => {
           direction='column'
         >
           <Button
-            onClick={() => router.push('/recommend')}
+            onClick={() => router.push('/login')}
             sx={{
               borderRadius: 16,
               fontSize: '0.875rem',
