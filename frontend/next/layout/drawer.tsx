@@ -30,8 +30,6 @@ export default function MyPageDrawer({ children }: any) {
         }}
       >
         <>
-          <a>My Page</a>
-
           <List>
             <ListItem>
               <Link href='/mypage'>

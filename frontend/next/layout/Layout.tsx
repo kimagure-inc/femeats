@@ -53,11 +53,9 @@ export default function Layout({ children, auth }: any, props: Props) {
   if (!auth) {
     menu = (
       <Link href='/login'>
-        <div>login</div>
+        <div>ログイン</div>
       </Link>
     );
-    // } else {
-    //   menu = <div onClick={logout}>logout</div>;
   }
 
   const [drawerState, setDrawerState] = useState(false);
@@ -90,7 +88,7 @@ export default function Layout({ children, auth }: any, props: Props) {
         <CssBaseline />
         <ElevationScroll {...props}>
           <AppBar color='transparent' sx={{ flexGrow: 1 }}>
-            <Toolbar>
+            <Toolbar sx={{ padding: 0 }}>
               {auth ? (
                 <>
                   <IconButton
@@ -98,7 +96,14 @@ export default function Layout({ children, auth }: any, props: Props) {
                     edge='start'
                     color='inherit'
                     aria-label='menu'
-                    sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
+                    sx={{
+                      mr: 2,
+                      display: { xs: 'block', sm: 'none' },
+                      position: 'absolute',
+                      top: '55%',
+                      right: '70%',
+                      transform: 'translate(-50%, -50%)',
+                    }}
                     onClick={toggleDrawer(true)}
                   >
                     <DragHandleIcon fontSize='large' />
@@ -110,9 +115,8 @@ export default function Layout({ children, auth }: any, props: Props) {
                       color='inherit'
                       sx={{
                         justifyContent: 'right',
-                        fontSize: '14px',
-                        fontWeight: '600',
-                        marginRight: '8px',
+                        marginRight: '16px',
+                        marginTop: '16px',
                       }}
                       onClick={toggleDrawer(false)}
                     >
@@ -131,6 +135,7 @@ export default function Layout({ children, auth }: any, props: Props) {
                   flexGrow: 1,
                   fontFamily: 'adobe-garamond-pro',
                   justifyContent: 'center',
+                  textAlign: 'center',
                   fontSize: '32px',
                   fontWeight: '600',
                   color: '#182222',
@@ -143,11 +148,14 @@ export default function Layout({ children, auth }: any, props: Props) {
               <Button
                 color='inherit'
                 sx={{
-                  fontFamily: 'adobe-garamond-pro',
                   justifyContent: 'right',
-                  fontSize: '14px',
+                  fontSize: '12px',
                   fontWeight: '600',
                   color: '#182222',
+                  position: 'absolute',
+                  top: '50%',
+                  left: '85%',
+                  transform: 'translate(-50%, -50%)',
                 }}
               >
                 {menu}

@@ -19,6 +19,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: [
+      'adobe-garamond-pro',
       '游ゴシック体',
       'YuGothic',
       '游ゴシック',
