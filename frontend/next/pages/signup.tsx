@@ -127,6 +127,7 @@ export default function SignUp() {
               type='text'
               {...register('mail', { required: true, maxLength: 30 })}
               placeholder='mail@example.com'
+              autoComplete='off'
               onChange={(e) => setEmail(e.currentTarget.value)}
             />
           </FormControl>
@@ -151,6 +152,7 @@ export default function SignUp() {
             <StyledOutlinedInput
               type={showPassword ? 'text' : 'password'}
               value={password}
+              autoComplete='off'
               onChange={(e) => setPassword(e.currentTarget.value)}
               endAdornment={
                 <InputAdornment position='end'>
@@ -186,6 +188,7 @@ export default function SignUp() {
             <StyledOutlinedInput
               type={showPass ? 'text' : 'password'}
               value={pass}
+              autoComplete='off'
               onChange={(e) => setPass(e.currentTarget.value)}
               endAdornment={
                 <InputAdornment position='end'>
