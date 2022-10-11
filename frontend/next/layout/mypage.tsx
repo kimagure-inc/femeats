@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
+import Grid from '@mui/material/Grid';
 
 export default function MyPage({ children }: any) {
   const [data, setData] = useState();
@@ -25,45 +26,53 @@ export default function MyPage({ children }: any) {
     <>
       <Box
         sx={{
-          width: 264,
-          marginLeft: '16px',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
         }}
       >
-        <List
+        <Box
           sx={{
             display: { xs: 'none', sm: 'block' },
           }}
         >
-          <a>マイページ</a>
-          <ListItem>
-            <Link href='/mypage'>
-              <div>TOP</div>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href='/mypage/profile'>
-              <div>お客様情報</div>
-            </Link>
-          </ListItem>
-          <ListItem>
-            {/* <Link href="/top"> */}
-            <>請求先情報</>
-            {/* </Link> */}
-          </ListItem>
-          <ListItem>
-            <Link href='/mypage/info'>
-              <div>契約情報</div>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href='/questions'>
-              <div>パーソナライズ診断</div>
-            </Link>
-          </ListItem>
-          <ListItem onClick={logout}>ログアウト</ListItem>
-        </List>
-
-        <main>{children}</main>
+          <List
+          // sx={{
+          //   display: { xs: 'none', sm: 'block' },
+          // }}
+          >
+            <a>マイページ</a>
+            <ListItem>
+              <Link href='/mypage'>
+                <div>TOP</div>
+              </Link>
+            </ListItem>
+            <ListItem>
+              <Link href='/mypage/profile'>
+                <div>お客様情報</div>
+              </Link>
+            </ListItem>
+            <ListItem>
+              {/* <Link href="/top"> */}
+              <>請求先情報</>
+              {/* </Link> */}
+            </ListItem>
+            <ListItem>
+              <Link href='/mypage/info'>
+                <div>契約情報</div>
+              </Link>
+            </ListItem>
+            <ListItem>
+              <Link href='/questions'>
+                <div>パーソナライズ診断</div>
+              </Link>
+            </ListItem>
+            <ListItem onClick={logout}>ログアウト</ListItem>
+          </List>
+        </Box>
+        <Box>
+          <main>{children}</main>
+        </Box>
       </Box>
     </>
   );

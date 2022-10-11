@@ -8,12 +8,13 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import ShippmentForm from '../../components/ShippmentForm';
 import ChangeoutForm from '../../components/ChangeoutForm';
-import { Theme, useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Router } from '@mui/icons-material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { autocompleteClasses } from '@mui/material';
 
 type userData = {};
 
@@ -72,12 +73,12 @@ export default function Info() {
     }
   };
 
-  const deliveryDateChange = (value: React.SetStateAction<string>) => {
-    setDeliveryDate(value);
+  const deliveryDateChange = (e: SelectChangeEvent) => {
+    setDeliveryDate(e.target.value);
   };
 
-  const delTimeChange = (value: React.SetStateAction<number>) => {
-    setDelTime(value);
+  const delTimeChange = (e) => {
+    setDelTime(e.target.value);
   };
 
   const cycleChange = (event: SelectChangeEvent) => {
@@ -128,59 +129,218 @@ export default function Info() {
       <MyPage>
         <>{console.log(data)}</>
         {!page ? (
-          <div>
-            {/* <FormControl sx={{ m: 1, width: 350, mt: 3 }}> */}
-            <div>お申し込み中のプラン</div>
-            <label>契約プラン</label>
+          <>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+              <Box
+                sx={{
+                  width: 350,
+                  backgroundColor: '#ffffff',
+                  p: '40px',
+                  mt: '16px',
+                }}
+              >
+                <Box
+                  sx={{
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    mb: '16px',
+                  }}
+                >
+                  お申し込み中のプラン
+                </Box>
 
-            <select name='product' value={selectPlan} onChange={planChange}>
-              {data.product.slice(0, 8).map((value: any) => (
-                <option value={value.name} key={value.id}>
-                  {value.name} {Number(value.price).toLocaleString()}
-                  円（税込）
-                </option>
-              ))}
-            </select>
-            <div>
-              <div>お届けサイクル</div>
-              <label>配送サイクル</label>
-              <select name='product' value={selectCycle} onChange={cycleChange}>
-                <option value={2}>2週間ごと</option>
-                <option value={3}>3週間ごと</option>
-                <option value={4}>4週間ごと</option>
-              </select>
+                <FormControl
+                  sx={{
+                    minWidth: 260,
+                  }}
+                >
+                  <FormHelperText
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    契約プラン
+                  </FormHelperText>
+                  <Select name='datelist' onChange={planChange}>
+                    {data.product.slice(0, 8).map((value: any) => (
+                      <MenuItem key={value.name} value={value.name}>
+                        {value.name}
+                        {Number(value.price).toLocaleString()}(税込)
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box
+                sx={{
+                  width: 350,
+                  backgroundColor: '#ffffff',
+                  p: '40px',
+                }}
+              >
+                <Box
+                  sx={{
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    textAlign: 'center',
+                    mb: '16px',
+                  }}
+                >
+                  お届けサイクル
+                </Box>
 
-              <ShippmentForm
-                props={data}
-                setDeliveryDate={setDeliveryDate}
-                setDelTime={setDelTime}
-                deliveryDateChange={deliveryDateChange}
-                delTimeChange={delTimeChange}
-              />
-            </div>
-            {/* </FormControl> */}
-            <button onClick={Submit}>プラン決定</button>
-          </div>
+                <FormControl
+                  sx={{
+                    minWidth: 260,
+                  }}
+                >
+                  <FormHelperText
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      mb: '8px',
+                      mt: '16px',
+                    }}
+                  >
+                    配送サイクル
+                  </FormHelperText>
+
+                  <Select name='datelist' onChange={cycleChange}>
+                    <MenuItem value={2}>2週間ごと</MenuItem>
+                    <MenuItem value={3}>3週間ごと</MenuItem>
+                    <MenuItem value={4}>4週間ごと</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl
+                  sx={{
+                    minWidth: 260,
+                  }}
+                >
+                  <FormHelperText
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      mt: '16px',
+                      mb: '8px',
+                    }}
+                  >
+                    初回お届け日
+                  </FormHelperText>
+                  <Select name='datelist' onChange={deliveryDateChange}>
+                    {dataSet.map((value: any) => (
+                      <MenuItem key={value} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl
+                  sx={{
+                    minWidth: 260,
+                    mt: '16px',
+                  }}
+                >
+                  <FormHelperText
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    お届け時間帯
+                  </FormHelperText>
+
+                  <Select name='timezone' onChange={delTimeChange}>
+                    {data.timezone.map((value: any) => (
+                      <MenuItem value={value.id} key={value.id}>
+                        {value.timezone}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  mb: '16px',
+                }}
+              >
+                <Button
+                  sx={{
+                    borderRadius: 16,
+                    fontSize: '0.875rem',
+                    fontWeight: '700',
+                    color: '#333333',
+                    backgroundColor: '#FFF262',
+                    width: '242px',
+                    height: '48px',
+                    '&:hover': {
+                      background: '#FFF262',
+                    },
+                  }}
+                  variant='contained'
+                  onClick={Submit}
+                >
+                  プラン決定
+                </Button>
+              </Box>
+            </Box>
+          </>
         ) : (
           <>
             {console.log(product)}
-            <div>支払い情報入力</div>
-            <Product
-              img={product.imgUrl}
-              productName={product.name}
-              price={product.price}
-            />
-            <Elements
-              stripe={stripePromise}
-              options={{
-                clientSecret: cs,
-              }}
-            >
-              <ChangeoutForm price={product.price} />
-            </Elements>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  m: '32px',
+                  fontSize: '24px',
+                  fontWeight: 700,
+                }}
+              >
+                <div>支払い情報入力</div>
+              </Box>
+              <Product
+                img={product.imgUrl}
+                productName={product.name}
+                price={product.price}
+                deliveryCycle={product.deliveryCycle}
+              />
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  clientSecret: cs,
+                }}
+              >
+                <ChangeoutForm price={product.price} />
+              </Elements>
+            </Box>
           </>
         )}
       </MyPage>
     </Layout>
   );
+}
+
+// 5日後の日程から2週間表示させる（例：今日10/1 => 10/6~10/20の日程）
+const days = ['日', '月', '火', '水', '木', '金', '土'];
+const dataSet: any[] = [];
+let start = Date.now() + 5 * 86400000; // 基準日=5日後の日程
+let max = 14; // 何回繰り返すか
+for (let i = 0; i < max; i++) {
+  let newDay = new Date(start + i * 86400000);
+  let year = newDay.getFullYear();
+  let month = newDay.getMonth() + 1;
+  let date = newDay.getDate();
+  let day = days[newDay.getDay()];
+
+  let selectDay = year + '/' + month + '/' + date + '(' + day + ')';
+
+  dataSet.push(selectDay);
 }

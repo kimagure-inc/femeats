@@ -5,9 +5,11 @@ import Layout from '../../../layout/Layout';
 import { useRouter } from 'next/router';
 import Confirmation from '../../components/modal';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { fontSize, fontStyle } from '@mui/system';
 
 type userData = {};
 
@@ -167,28 +169,68 @@ export default function Info() {
     return (
       <Layout>
         <MyPage>
-          <table>
-            <thead>
-              <tr>
-                <th>サービスの利用状況</th>
-                <th>(停止・解約申込)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>サービスの解約</td>
-                <td>解約中</td>
-              </tr>
-            </tbody>
-          </table>
-          <button onClick={() => Toggle()}>変更</button>
-          <Confirmation
-            show={modal}
-            close={Toggle}
-            comment={start}
-            btName={startbt}
-            submit={changeSub}
-          />
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <Box
+              sx={{
+                width: 350,
+                backgroundColor: '#ffffff',
+                p: '40px',
+                mt: '16px',
+              }}
+            >
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  mb: '16px',
+                }}
+              >
+                サービスの利用状況 <div>(停止・解約申込)</div>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  mb: '6px',
+                }}
+              >
+                <div>サービスの解約</div>
+                <div>解約中</div>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Button
+                sx={{
+                  borderRadius: 16,
+                  fontSize: '0.875rem',
+                  fontWeight: '700',
+                  backgroundColor: '#333333',
+                  width: '242px',
+                  height: '48px',
+                }}
+                variant='contained'
+                color='primary'
+                onClick={() => Toggle()}
+              >
+                変更
+              </Button>
+              <Confirmation
+                show={modal}
+                close={Toggle}
+                comment={start}
+                btName={startbt}
+                submit={changeSub}
+              />
+            </Box>
+          </Box>
         </MyPage>
       </Layout>
     );
@@ -200,173 +242,407 @@ export default function Info() {
           {!stopState ? (
             <>
               <Box
-                sx={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  marginTop: '32px',
-                }}
+                sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
               >
-                お申し込み中のプラン
-              </Box>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>契約プラン</td>
-                    <td>{data.product.name}</td>
-                  </tr>
-                  <tr>
-                    <td>金額(税込)</td>
-                    <td>
+                <Box
+                  sx={{
+                    width: 350,
+                    backgroundColor: '#ffffff',
+                    p: '40px',
+                    mt: '16px',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      mb: '16px',
+                    }}
+                  >
+                    お申し込み中のプラン
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      mb: '6px',
+                    }}
+                  >
+                    <div>契約プラン</div>
+                    <div>{data.product.name}</div>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    <div>金額(税込)</div>
+                    <div>
+                      {' '}
                       {Number(data.product.price).toLocaleString()}円(税込)
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    </div>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    width: 350,
+                    backgroundColor: '#ffffff',
+                    p: '40px',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      mb: '16px',
+                    }}
+                  >
+                    お届けサイクル
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    <div>サイクル</div>
+                    <div>
+                      {data.product.deliveryCycle}週間おき{''}
+                      {''} {weekChars[dy]}
+                    </div>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    width: 350,
+                    backgroundColor: '#ffffff',
+                    p: '32px',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      mb: '16px',
+                    }}
+                  >
+                    サービスの利用状況 <div>(停止・解約申込)</div>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      mb: '16px',
+                    }}
+                  >
+                    <div>配送の一時停止</div>
 
-              <table>
-                <thead>
-                  <tr>
-                    <th>お届けサイクル</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>サイクル</td>
-                    <td>{data.product.deliveryCycle}週間おき</td>
-                    <td>{weekChars[dy]}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <table>
-                <thead>
-                  <tr>
-                    <th>サービスの利用状況</th>
-                    <th>(停止・解約申込)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>配送の一時停止</td>
-                    <td>
-                      <button onClick={() => stopTg()}>停止する</button>
-                      <Confirmation
-                        show={modal1}
-                        close={stopTg}
-                        comment={stop}
-                        btName={name1}
-                        submit={stopSub}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>サービスの解約</td>
-                    <td>
-                      <button onClick={() => cancelTg()}>解約する</button>
-                      <Confirmation
-                        show={modal2}
-                        close={cancelTg}
-                        comment={cancel}
-                        btName={name2}
-                        submit={cancelSub}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <button onClick={() => Toggle()}>変更</button>
-              <Confirmation
-                show={modal}
-                close={Toggle}
-                comment={change}
-                btName={name}
-                submit={changeSub}
-              />
+                    <Button
+                      sx={{
+                        borderRadius: 16,
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        backgroundColor: '#333333',
+                        width: '80px',
+                        height: '28px',
+                      }}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => stopTg()}
+                    >
+                      停止する
+                    </Button>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {' '}
+                    <div>サービスの解約</div>
+                    <Confirmation
+                      show={modal1}
+                      close={stopTg}
+                      comment={stop}
+                      btName={name1}
+                      submit={stopSub}
+                    />
+                    <Button
+                      sx={{
+                        borderRadius: 16,
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        backgroundColor: '#333333',
+                        width: '80px',
+                        height: '28px',
+                      }}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => cancelTg()}
+                    >
+                      解約する
+                    </Button>
+                  </Box>
+                  <Confirmation
+                    show={modal2}
+                    close={cancelTg}
+                    comment={cancel}
+                    btName={name2}
+                    submit={cancelSub}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Button
+                    sx={{
+                      borderRadius: 16,
+                      fontSize: '0.875rem',
+                      fontWeight: '700',
+                      backgroundColor: '#333333',
+                      width: '242px',
+                      height: '48px',
+                    }}
+                    variant='contained'
+                    color='primary'
+                    onClick={() => Toggle()}
+                  >
+                    変更
+                  </Button>
+                  <Confirmation
+                    show={modal}
+                    close={Toggle}
+                    comment={change}
+                    btName={name}
+                    submit={changeSub}
+                  />
+                </Box>
+              </Box>
             </>
           ) : (
             <>
-              <table>
-                <thead>
-                  <tr>
-                    <th>お申し込み中のプラン</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>契約プラン</td>
-                    <td>{data.product.name}</td>
-                  </tr>
-                  <tr>
-                    <td>金額(税込)</td>
-                    <td>
+              <Box
+                sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
+              >
+                <Box
+                  sx={{
+                    width: 350,
+                    backgroundColor: '#ffffff',
+                    p: '40px',
+                    mt: '16px',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      mb: '16px',
+                    }}
+                  >
+                    お申し込み中のプラン
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      mb: '6px',
+                    }}
+                  >
+                    <div>契約プラン</div>
+                    <div>{data.product.name}</div>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    <div>金額(税込)</div>
+                    <div>
+                      {' '}
                       {Number(data.product.price).toLocaleString()}円(税込)
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table>
-                <thead>
-                  <tr>
-                    <th>お届けサイクル</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>サイクル</td>
-                    <td>{data.product.deliveryCycle}週間おき</td>
-                    <td>{weekChars[dy]}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <table>
-                <thead>
-                  <tr>
-                    <th>サービスの利用状況</th>
-                    <th>(停止・解約申込)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>配送の一時停止</td>
-                    <td>
-                      <button onClick={() => restartTg()}>再開する</button>
-                      <Confirmation
-                        show={modal4}
-                        close={restartTg}
-                        comment={restart}
-                        btName={name3}
-                        submit={restartSub}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>サービスの解約</td>
-                    <td>
-                      <button onClick={() => cancelTg()}>解約する</button>
-                      <Confirmation
-                        show={modal2}
-                        close={cancelTg}
-                        comment={cancel}
-                        btName={name2}
-                        submit={cancelSub}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <button onClick={() => Toggle()}>変更</button>
-              <Confirmation
-                show={modal}
-                close={Toggle}
-                comment={change}
-                btName={name}
-                submit={changeSub}
-              />
+                    </div>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    width: 350,
+                    backgroundColor: '#ffffff',
+                    p: '40px',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      mb: '16px',
+                    }}
+                  >
+                    お届けサイクル
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    <div>サイクル</div>
+                    <div>
+                      {data.product.deliveryCycle}週間おき{''}
+                      {''} {weekChars[dy]}
+                    </div>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    width: 350,
+                    backgroundColor: '#ffffff',
+                    p: '32px',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      m: '8px',
+                    }}
+                  >
+                    サービスの利用状況 <div>(再開・解約申込)</div>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      mb: '16px',
+                    }}
+                  >
+                    <div>配送の一時停止</div>
+                    <Button
+                      sx={{
+                        borderRadius: 16,
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        backgroundColor: '#333333',
+                        width: '80px',
+                        height: '28px',
+                      }}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => restartTg()}
+                    >
+                      再開する
+                    </Button>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      mb: '16px',
+                    }}
+                  >
+                    <div>サービスの解約</div>
+                    <Confirmation
+                      show={modal4}
+                      close={restartTg}
+                      comment={restart}
+                      btName={name3}
+                      submit={restartSub}
+                    />
+
+                    <Button
+                      sx={{
+                        borderRadius: 16,
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        backgroundColor: '#333333',
+                        width: '80px',
+                        height: '28px',
+                      }}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => cancelTg()}
+                    >
+                      解約する
+                    </Button>
+                  </Box>
+                  <Confirmation
+                    show={modal2}
+                    close={cancelTg}
+                    comment={cancel}
+                    btName={name2}
+                    submit={cancelSub}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Button
+                    sx={{
+                      borderRadius: 16,
+                      fontSize: '0.875rem',
+                      fontWeight: '700',
+                      backgroundColor: '#333333',
+                      width: '242px',
+                      height: '48px',
+                    }}
+                    variant='contained'
+                    color='primary'
+                    onClick={() => Toggle()}
+                  >
+                    変更
+                  </Button>
+                  <Confirmation
+                    show={modal}
+                    close={Toggle}
+                    comment={change}
+                    btName={name}
+                    submit={changeSub}
+                  />
+                </Box>
+              </Box>
             </>
           )}
         </>

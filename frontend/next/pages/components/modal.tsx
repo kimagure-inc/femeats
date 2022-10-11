@@ -30,28 +30,52 @@ export default function Confirmation({ show, close, comment, btName, submit }) {
           {console.log(close)}
           <Modal open={show}>
             <Box sx={style}>
-              <Typography variant='subtitle1' component='h2'>
-                {comment}
-              </Typography>
-              <Stack spacing={2} direction='row'>
-                <Button
-                  variant='outlined'
-                  size='small'
-                  sx={{ borderRadius: 16 }}
-                  onClick={() => close()}
-                >
-                  キャンセル
-                </Button>
-                <Button
-                  variant='contained'
-                  size='small'
-                  color='secondary'
-                  sx={{ borderRadius: 16 }}
-                  onClick={submit}
-                >
-                  {btName}
-                </Button>
-              </Stack>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Typography variant='subtitle1' component='h2'>
+                  {comment}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  mt: '24px',
+                }}
+              >
+                <Stack spacing={4} direction='row'>
+                  <Button
+                    variant='outlined'
+                    sx={{
+                      borderRadius: 16,
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      width: '96px',
+                      height: '28px',
+                    }}
+                    onClick={() => close()}
+                  >
+                    キャンセル
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    sx={{
+                      borderRadius: 16,
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      width: '96px',
+                      height: '28px',
+                      '&:hover': {
+                        color: 'primary.main',
+                        background: '#FFF262',
+                      },
+                    }}
+                    onClick={submit}
+                  >
+                    {btName}
+                  </Button>
+                </Stack>
+              </Box>
             </Box>
           </Modal>
         </>
