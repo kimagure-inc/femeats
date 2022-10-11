@@ -18,7 +18,15 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Yu Gothic Pr6N'].join(','),
+    fontFamily: [
+      '游ゴシック体',
+      'YuGothic',
+      '游ゴシック',
+      'Yu Gothic',
+      'sans-serif',
+      'Kaisei Opti',
+      'serif',
+    ].join(','),
     fontSize: 14,
   },
 });
