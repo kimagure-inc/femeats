@@ -26,6 +26,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: '#FFFFFF',
   width: '350px',
   marginBottom: '32px',
+  '@media screen and (min-width:600px)': {
+    width: '432px',
+  },
 }));
 
 const StyledTextField = styled(TextField, {
