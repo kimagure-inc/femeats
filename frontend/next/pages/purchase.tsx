@@ -80,8 +80,6 @@ const Payment: NextPage = () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/shippInfo/timezone`)
       .then((res: AxiosResponse) => {
-        console.log('res :', res);
-        console.log('res.data :', res.data);
         setTimezone(res.data);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e));
@@ -105,7 +103,7 @@ const Payment: NextPage = () => {
             fontSize: '24px',
             fontWeight: '700',
             marginTop: '16px',
-            marginBottom: '24px',
+            marginBottom: '8px',
           }}
         >
           ご購入手続き
@@ -185,11 +183,18 @@ const Payment: NextPage = () => {
             onClick={() => router.push('/login')}
             sx={{
               borderRadius: 16,
-              fontSize: '0.875rem',
+              fontSize: '16px',
               fontWeight: '700',
-              top: 32,
+              top: 24,
               backgroundColor: '#333333',
               marginBottom: '16px',
+              width: '242px',
+              height: '48px',
+              '@media screen and (min-width:600px)': {
+                width: '168px',
+                height: '32px',
+                fontSize: '12px',
+              },
             }}
             variant='contained'
             color='primary'
@@ -198,7 +203,6 @@ const Payment: NextPage = () => {
           </Button>
           <Box
             sx={{
-              display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
@@ -206,11 +210,28 @@ const Payment: NextPage = () => {
               fontWeight: '400',
               marginTop: '32px',
               marginBottom: '64px',
+              textAlign: 'center',
+              display: { xs: 'block', sm: 'none' },
             }}
           >
             購入には、利用規約とプライバシーポリシーへの
             <br />
             同意が必要です。
+          </Box>
+          <Box
+            sx={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: '12px',
+              fontWeight: '400',
+              marginTop: '32px',
+              marginBottom: '64px',
+              textAlign: 'center',
+              display: { xs: 'none', sm: 'block' },
+            }}
+          >
+            購入には、利用規約とプライバシーポリシーへの同意が必要です。
           </Box>
         </Grid>
       </Layout>

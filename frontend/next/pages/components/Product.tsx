@@ -11,6 +11,9 @@ const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: '#FFFFFF',
   width: '350px',
   marginBottom: '32px',
+  '@media screen and (min-width:600px)': {
+    width: '432px',
+  },
 }));
 
 const Product = (props: any) => {
@@ -66,7 +69,7 @@ const Product = (props: any) => {
                 marginBottom: '48px',
               }}
             >
-              {props.img && (<Image src={props.img} width={196} height={216} />)}
+              {props.img && <Image src={props.img} width={196} height={216} style={{ borderRadius: 8 }}/>}
             </Box>
           </StyledBox>
         </Grid>

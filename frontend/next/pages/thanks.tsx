@@ -39,12 +39,17 @@ const Thanks: NextPage = () => {
           <Button
             sx={{
               borderRadius: 16,
-              fontSize: '0.875rem',
+              fontSize: '16px',
               fontWeight: '700',
               top: 40,
               backgroundColor: "#333333",
               width: '242px',
               height: '48px',
+              "@media screen and (min-width:600px)": {
+                fontSize: '12px',
+                width: '168px',
+                height: '32px',
+            },
             }}
             onClick={() => router.push('/login')}
             variant='contained'
