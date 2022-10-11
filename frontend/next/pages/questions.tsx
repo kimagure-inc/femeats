@@ -51,10 +51,14 @@ const SelectBtn = styled(Button, {
 })({
   width: 360,
   height: 48,
-  margin: 16,
-  borderRadius: 2,
+  margin: 8,
+  borderRadius: 8,
   fontWeight: '600',
+  backgroundColor: '#FFFFFF',
   '&:hover': {
+    background: '#FFFFFF',
+  },
+  '&:active': {
     background: '#FFF262',
   },
 });
@@ -109,7 +113,6 @@ export default function App(props: questions) {
         data: allAnswer,
       })
       .then((res: AxiosResponse) => {
-        console.log('Posting data', res);
         showResult(res.data);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e.message, 500));
@@ -151,8 +154,8 @@ export default function App(props: questions) {
                   fontSize: '14px',
                 }}
               >
-                <h2>パーソナライズ診断</h2>
-                <p>お名前を教えてください（ニックネーム可）</p>
+                <h2>診断をはじめる</h2>
+                <p>ニックネームを入力してください</p>
                 <StyledTextField
                   id='outlined-basic'
                   variant='outlined'
@@ -169,6 +172,9 @@ export default function App(props: questions) {
                     fontSize: '0.875rem',
                     fontWeight: '700',
                     top: 40,
+                    backgroundColor: '#333333',
+                    width: 242,
+                    height: 48,
                     '&:hover': {
                       color: 'primary.main',
                       background: '#FFF262',
@@ -178,7 +184,7 @@ export default function App(props: questions) {
                   variant='contained'
                   color='primary'
                 >
-                  診断をはじめる
+                  送信
                 </Button>
               </Box>
             ) : waitingResult ? (
@@ -189,7 +195,7 @@ export default function App(props: questions) {
                   marginTop: '16px',
                 }}
               >
-                {userName}さんにおすすめのプランを診断中・・・
+                {userName}さんにおすすめのプランを診断中
               </Box>
             ) : (
               <>
@@ -232,7 +238,6 @@ export default function App(props: questions) {
                 </Box>
                 <Box
                   sx={{
-                    // my: 4,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -272,11 +277,15 @@ export default function App(props: questions) {
                   <br />
                   {finishAnswer ? (
                     <>
-                      <SelectBtn
+                      <Button
                         sx={{
                           borderRadius: 16,
                           fontSize: '0.875rem',
                           fontWeight: '700',
+                          marginTop: 1,
+                          backgroundColor: '#333333',
+                          width: 242,
+                          height: 48,
                           '&:hover': {
                             color: 'primary.main',
                             background: '#FFF262',
@@ -287,7 +296,7 @@ export default function App(props: questions) {
                         color='primary'
                       >
                         診断結果を見る
-                      </SelectBtn>
+                      </Button>
                     </>
                   ) : (
                     <Box></Box>

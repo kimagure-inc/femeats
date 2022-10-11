@@ -10,13 +10,11 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import styled from '@mui/system/styled';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import styles from '../styles/Home.module.css';
 
 type category = {
   id: number;
@@ -67,6 +65,7 @@ const Item = styled(Box)(({ theme }) => ({
 
 export default function recommend() {
   const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
   const [category, setCategory] = useState<category>();
   const [products, setProducts] = useState<product[]>();
   const [auth, setAuth] = useState(false);
@@ -84,14 +83,14 @@ export default function recommend() {
   const categoryNum = Number(router.query.category) - 1;
 
   const comment = [
-    'バランスの取れた食事が必要です！',
+    'バランスのとれた食事が必要です！',
     'タンパク質やビタミンを取りましょう！',
     'カルシウムを取りましょう！',
     '鉄やビタミンCを取りましょう！',
   ];
 
   useEffect(() => {
-    if (!router.isReady) return;
+    setLoading(true);
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${router.query.category}`
@@ -107,6 +106,7 @@ export default function recommend() {
       )
       .then((res: AxiosResponse) => {
         setProducts(res.data);
+        setLoading(false);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e));
 
@@ -117,11 +117,9 @@ export default function recommend() {
       }
     };
     loginuser();
-  }, [router.isReady, router.query.category]);
+  }, []);
 
-  console.log(category);
-  console.log(products);
-  console.log(auth);
+  if (isLoading) return;
 
   return (
     <>
@@ -131,11 +129,13 @@ export default function recommend() {
             <StyledBox
               sx={{
                 fontSize: '24px',
-                fontWeight: '700',
-                marginTop: '24px',
+                fontWeight: '500',
+                marginTop: '8px',
               }}
             >
-              {router.query.name}さんの診断結果
+              <span className={styles.marker}>
+                {router.query.name}さんの診断結果
+              </span>
             </StyledBox>
             <StyledBox
               sx={{
@@ -145,42 +145,77 @@ export default function recommend() {
             >
               {comment[categoryNum]}
             </StyledBox>
+            <StyledBox
+              sx={{
+                fontSize: '16px',
+                fontWeight: '700',
+                marginTop: 2,
+              }}
+            >
+              <span className={styles.marker}>おすすめプラン</span>
+            </StyledBox>
           </Stack>
           {products ? (
             <>
-              <StyledBox>
-                <Image
-                  src={products[0].imgUrl}
-                  width={320}
-                  height={320}
-                  style={{ alignSelf: 'center' }}
-                />
-              </StyledBox>
-              <Stack spacing={1}>
-                <StyledBox
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  // alignItems: 'start',
+                }}
+              >
+                <Item sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}>
+                  <Image
+                    src={products[0].imgUrl}
+                    width={134}
+                    height={147}
+                    style={{ alignSelf: 'center', borderRadius: 8 }}
+                  />
+                </Item>
+                <Item
                   sx={{
-                    fontSize: '16px',
-                    fontWeight: '700',
+                    mr: 10,
+                    marginLeft: 80,
+                    display: { xs: 'none', sm: 'block' },
                   }}
                 >
-                  おすすめプラン
-                </StyledBox>
-                <StyledBox
+                  <Image
+                    src={products[0].imgUrl}
+                    width={240}
+                    height={288}
+                    style={{ alignSelf: 'center', borderRadius: 8 }}
+                  />
+                </Item>
+                <Item
+                  width={326}
                   sx={{
-                    fontSize: '16px',
-                    fontWeight: '700',
+                    maxWidth: '326',
+                    justifyContent: 'center',
+                    // alignItems: 'start',
                   }}
                 >
-                  {category ? category.name : ''} plan
-                </StyledBox>
-                <StyledBox
-                  sx={{
-                    fontSize: '14px',
-                    fontWeight: '500',
-                  }}
-                >
-                  {products ? products[0].introduction : ''}
-                </StyledBox>
+                  <StyledBox
+                    sx={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      textAlign: 'left',
+                    }}
+                  >
+                    {category ? category.name : ''} plan
+                  </StyledBox>
+                  <StyledBox
+                    sx={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: 'left',
+                    }}
+                  >
+                    {products ? products[0].introduction : ''}
+                  </StyledBox>
+                </Item>
               </Stack>
             </>
           ) : (
@@ -194,7 +229,6 @@ export default function recommend() {
                     direction={{ xs: 'column', sm: 'row' }}
                     spacing={{ xs: 1, sm: 2, md: 4 }}
                     sx={{
-                      my: 4,
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
@@ -246,14 +280,25 @@ export default function recommend() {
                       }}
                       as='signup'
                     >
-                      <SelectBtn
+                      <Button
+                        sx={{
+                          borderRadius: 16,
+                          fontSize: '0.875rem',
+                          fontWeight: '700',
+                          backgroundColor: '#FFFFFF',
+                          color: '#333333',
+                          width: 242,
+                          height: 48,
+                          marginTop: 4,
+                          '&:hover': {
+                            color: 'primary.main',
+                            background: '#FFF262',
+                          },
+                        }}
                         variant='contained'
-                        color='secondary'
-                        startIcon={<ShoppingCart />}
-                        endIcon={<KeyboardArrowRight />}
                       >
-                        購入手続きへ
-                      </SelectBtn>
+                        購入する
+                      </Button>
                     </Link>
                   </StyledBox>
                 </>
@@ -270,14 +315,26 @@ export default function recommend() {
                     }}
                     as='mypage'
                   >
-                    <SelectBtn
+                    <Button
+                      sx={{
+                        borderRadius: 16,
+                        fontSize: '0.875rem',
+                        fontWeight: '700',
+                        backgroundColor: '#FFFFFF',
+                        color: '#333333',
+                        width: 242,
+                        height: 48,
+                        marginTop: 4,
+                        '&:hover': {
+                          color: 'primary.main',
+                          background: '#FFF262',
+                        },
+                      }}
                       variant='contained'
-                      color='secondary'
-                      startIcon={<ShoppingCart />}
-                      endIcon={<KeyboardArrowRight />}
+                      color='primary'
                     >
-                      契約変更手続きへ
-                    </SelectBtn>
+                      契約変更する
+                    </Button>
                   </Link>
                 </StyledBox>
               )}
@@ -287,13 +344,25 @@ export default function recommend() {
           )}
           <StyledBox>
             <Link href='/questions'>
-              <SelectBtn
+              <Button
+                sx={{
+                  borderRadius: 16,
+                  fontSize: '0.875rem',
+                  fontWeight: '700',
+                  backgroundColor: '#333333',
+                  width: 242,
+                  height: 48,
+                  marginTop: 2,
+                  '&:hover': {
+                    color: 'primary.main',
+                    background: '#FFF262',
+                  },
+                }}
                 variant='contained'
-                color='secondary'
-                startIcon={<KeyboardArrowLeft />}
+                color='primary'
               >
                 もう1度診断する
-              </SelectBtn>
+              </Button>
             </Link>
           </StyledBox>
         </Container>
