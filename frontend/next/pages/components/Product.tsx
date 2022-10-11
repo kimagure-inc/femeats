@@ -69,7 +69,7 @@ const Product = (props: any) => {
                 marginBottom: '48px',
               }}
             >
-              {props.img && <Image src={props.img} width={196} height={216} />}
+              {props.img && <Image src={props.img} width={196} height={216} style={{ borderRadius: 8 }}/>}
             </Box>
           </StyledBox>
         </Grid>

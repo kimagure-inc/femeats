@@ -80,8 +80,6 @@ const Payment: NextPage = () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/shippInfo/timezone`)
       .then((res: AxiosResponse) => {
-        console.log('res :', res);
-        console.log('res.data :', res.data);
         setTimezone(res.data);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e));
