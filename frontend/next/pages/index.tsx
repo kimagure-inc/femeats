@@ -2,10 +2,10 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Layout from '../layout/Layout';
-import Image from '../public/bg_femeats.jpg';
-import resImage from '../public/Frame.png';
+import Image from '../public/top_pc.png';
+import resImage from '../public/top_sp.png';
 import Paper from '@mui/material/Paper';
-import { Card, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -25,6 +25,7 @@ const Home = () => {
           <>
             <Box sx={{ position: 'content' }}>
               <Paper
+                elevation={0}
                 sx={{
                   backgroundImage: `url(${Image.src})`,
                   position: 'absolute',
@@ -44,25 +45,25 @@ const Home = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
+                        marginTop: '255px',
                       }}
                     >
-                      <Box fontSize={36.6316} fontWeight={700}>
-                        食事からカラダをととのえる。
-                      </Box>
                       <Box
-                        textAlign='center'
                         fontSize={36.6316}
                         fontWeight={700}
+                        sx={{
+                          marginBottom: '16px',
+                        }}
                       >
+                        食事からカラダをととのえる。
+                        <br />
                         女性のためのレコメンドお弁当。
                       </Box>
                       <Box fontSize={24}>
                         あなたの状態に合わせたお弁当をおすすめします。
-                      </Box>
-                      <Box fontSize={24}>
+                        <br />
                         ホルモンバランスを整え、身体を温めて、血行を良くするこだわりのプランです。
-                      </Box>
-                      <Box fontSize={24}>
+                        <br />
                         メニューは毎週入れ替わるので、楽しく続けられます。
                       </Box>
                       <Button
@@ -95,8 +96,8 @@ const Home = () => {
             {' '}
             <Layout>
               <Paper
+                elevation={0}
                 sx={{
-                  opacity: 0.4,
                   backgroundImage: `url(${resImage.src})`,
                   position: 'absolute',
                   width: 318,
@@ -107,18 +108,52 @@ const Home = () => {
               >
                 <Box
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
                     textAlign: 'left',
+                    fontSize: '24px',
+                    fontWeight: '700',
+                    marginBottom: '16px',
+                    marginTop: '-17px',
+                    marginLeft: '-8px',
                   }}
                 >
-                  <p>食事からカラダをととのえる。</p>
-                  <p> 女性のためのレコメンドお弁当。</p>
+                  食事からカラダを
+                  <br />
+                  ととのえる。
+                  <br />
+                  女性のための
+                  <br />
+                  レコメンドお弁当。
                 </Box>
-                <div>
-                  あなたの状態に合わせたお弁当をおすすめします。
-                  ホルモンバランスを整え、身体を温めて、血行を良くするこだわりのプランです。メニューは毎週入れ替わるので、楽しく続けられます。
-                </div>
+                <Box
+                  sx={{
+                    textAlign: 'left',
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    marginLeft: '-8px',
+                  }}
+                >
+                  あなたの状態に合わせた
+                  <br />
+                  お弁当をおすすめします。
+                  <Box
+                    sx={{
+                      marginBottom: '16px',
+                    }}
+                  ></Box>
+                  ホルモンバランスを整え、
+                  <br />
+                  身体を温めて、
+                  <br />
+                  血行を良くするこだわりのプランです。
+                  <Box
+                    sx={{
+                      marginBottom: '16px',
+                    }}
+                  ></Box>
+                  メニューは毎週入れ替わるので、
+                  <br />
+                  楽しく続けられます。
+                </Box>
                 <Box
                   sx={{
                     my: 4,
@@ -131,13 +166,16 @@ const Home = () => {
                   <Button
                     sx={{
                       borderRadius: 16,
-                      fontSize: '0.875rem',
+                      fontSize: '16px',
                       fontWeight: '700',
                       color: '#333333',
                       backgroundColor: '#FFF262',
                       '&:hover': {
                         background: '#FFF262',
                       },
+                      width: '242px',
+                      hight: '48px',
+                      marginTop: '131px',
                     }}
                     variant='contained'
                     onClick={Submit}
