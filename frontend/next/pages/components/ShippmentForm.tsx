@@ -20,8 +20,12 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const ShippmentForm = (props: any) => {
+  if (!props) {
+    return null;
+  }
   return (
     <>
+      {console.log(props)}
       <Grid
         container
         alignItems='center'

@@ -1,15 +1,15 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useState } from 'react';
 // import axios, { AxiosResponse, AxiosError } from "axios";
-import Layout from "../layout/Layout";
-import { useRouter } from "next/router";
-import axios from "axios";
-import Link from "next/link";
-import { setCookie } from "cookies-next";
+import Layout from '../layout/Layout';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import Link from 'next/link';
+import { setCookie } from 'cookies-next';
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const Submit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -25,12 +25,12 @@ export default function Login() {
       })
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        setCookie("signedIn", "true");
-        router.push("/mypage");
+        setCookie('signedIn', 'true');
+        router.push('/mypage');
       })
       .catch(function (error) {
         console.log(error);
-        alert("メールアドレスまたはパスワードを確認してください");
+        alert('メールアドレスまたはパスワードを確認してください');
       });
   };
 
@@ -42,8 +42,8 @@ export default function Login() {
           <div>
             <label>メールアドレス</label>
             <input
-              type="text"
-              placeholder="mail@example.com"
+              type='text'
+              placeholder='mail@example.com'
               onInput={(e) => setEmail(e.currentTarget.value)}
               required
             />
@@ -51,20 +51,20 @@ export default function Login() {
           <div>
             <label>パスワード</label>
             <input
-              type="password"
-              placeholder="半角英数字で８文字以上"
+              type='password'
+              placeholder='半角英数字で８文字以上'
               onInput={(e) => setPassword(e.currentTarget.value)}
               required
             />
           </div>
 
-          <button type="submit" onClick={Submit}>
+          <button type='submit' onClick={Submit}>
             ログイン
           </button>
         </form>
         <div>
-          アカウント登録したい方は
-          <Link href="questions">パーソナライズ診断時</Link>に登録できます。
+          femeatsのアカウントを作成する場合は
+          <Link href='questions'>パーソナライズ診断</Link>から
         </div>
       </Layout>
     </>

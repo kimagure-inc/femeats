@@ -5,8 +5,15 @@ import Layout from '../../layout/Layout';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
 
 type userData = {};
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: '#333333',
+}));
 
 export default function Top() {
   const router = useRouter();
@@ -67,19 +74,41 @@ export default function Top() {
     return (
       <Layout>
         <MyPage>
-          <table>
-            <thead>
-              <tr>
-                <th>ご契約プラン情報</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>契約プラン</td>
-                <td>解約しています</td>
-              </tr>
-            </tbody>
-          </table>
+          <Box
+            sx={{
+              width: 310,
+              backgroundColor: '#ffffff',
+              p: '16px',
+              mt: '16px',
+              '@media screen and (min-width:600px)': {
+                width: '432px',
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                fontSize: '16px',
+                fontWeight: 700,
+                mb: '7px',
+              }}
+            >
+              ご契約プラン情報
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                fontSize: '14px',
+                fontWeight: 500,
+                mb: '6px',
+              }}
+            >
+              <div>契約プラン</div>
+              <div> 解約しています</div>
+            </Box>
+          </Box>
         </MyPage>
       </Layout>
     );
@@ -91,65 +120,179 @@ export default function Top() {
           {console.log(data)}
           {!stopState ? (
             <>
-              <Box sx={{ padding: '16px' }}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ご契約プラン情報</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>契約プラン</td>
-                      <td>{data.product.name}</td>
-                    </tr>
-                    <tr>
-                      <td>金額(税込)</td>
-                      <td>{Number(data.product.price).toLocaleString()}円</td>
-                    </tr>
-                    <tr>
-                      <td>配送サイクル</td>
-                      <td>{data.product.deliveryCycle}週間に１回</td>
-                    </tr>
-                    <tr>
-                      <td>次回配送予定日</td>
-                      <td>
-                        {mt}月{dt}日{weekChars[dy]}
-                      </td>
-                      <td>{data.timezone.timezone}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <Image src={data.product.imgUrl} width={272} height={147} />
+              <Box
+                sx={{
+                  width: 310,
+                  backgroundColor: '#ffffff',
+                  p: '16px',
+                  mt: '16px',
+                  '@media screen and (min-width:600px)': {
+                    width: 432,
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    mb: '7px',
+                  }}
+                >
+                  <div>ご契約プラン情報</div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>契約プラン</div>
+                  <div>{data.product.name}</div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>金額(税込)</div>
+                  <div>{Number(data.product.price).toLocaleString()}円</div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>配送サイクル</div>
+                  <div>{data.product.deliveryCycle}週間に１回</div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>次回配送予定日</div>
+                  <div>
+                    {mt}月{dt}日{weekChars[dy]}
+                  </div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row-reverse',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '7px',
+                  }}
+                >
+                  <div>{data.timezone.timezone}</div>
+                </Box>
+                <Box
+                  sx={{
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    height: '147px',
+                    borderRadius: '8px',
+                  }}
+                >
+                  <Image
+                    alt='femeats'
+                    height={147}
+                    width={272}
+                    src={data.product.imgUrl}
+                    style={{ alignSelf: 'center', borderRadius: 8 }}
+                  />
+                </Box>
               </Box>
             </>
           ) : (
             <>
-              <table>
-                <thead>
-                  <tr>
-                    <th>ご契約プラン情報</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>契約プラン</td>
-                    <td>{data.product.name}</td>
-                  </tr>
-                  <tr>
-                    <td>金額(税込)</td>
-                    <td>{Number(data.product.price).toLocaleString()}円</td>
-                  </tr>
-                  <tr>
-                    <td>配送サイクル</td>
-                    <td>{data.product.deliveryCycle}週間に１回</td>
-                  </tr>
-                  <tr>
-                    <td>次回配送予定日</td>
-                    <td>停止中</td>
-                  </tr>
-                </tbody>
-              </table>
+              <Box
+                sx={{
+                  width: 310,
+                  backgroundColor: '#ffffff',
+                  p: '16px',
+                  mt: '16px',
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    mb: '7px',
+                  }}
+                >
+                  ご契約プラン情報
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>契約プラン</div>
+                  <div> {data.product.name}</div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>
+                    金額(税込)<div></div>
+                    {Number(data.product.price).toLocaleString()}円
+                  </div>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>配送サイクル</div>
+                  {data.product.deliveryCycle}週間に１回
+                </Box>{' '}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    mb: '6px',
+                  }}
+                >
+                  <div>次回配送予定日</div> <div>停止中</div>
+                </Box>
+              </Box>
             </>
           )}
         </>
