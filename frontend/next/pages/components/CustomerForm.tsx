@@ -101,6 +101,7 @@ const CustomerForm = (props: any) => {
               type='text'
               {...register('name', { required: true, maxLength: 20 })}
               placeholder='例：山崎 みずえ'
+              autoComplete='off'
               onChange={(e) => props.nameChange(e.target.value)}
             />
             <FormHelperText
@@ -121,6 +122,7 @@ const CustomerForm = (props: any) => {
               郵便番号
             </FormHelperText>
             <StyledTextField
+              autoComplete='off'
               {...register('zipCode', { required: true })}
               // value={zipCode}
               onChange={(e) => {
@@ -140,6 +142,7 @@ const CustomerForm = (props: any) => {
             </FormHelperText>
             <StyledTextField
               type='text'
+              autoComplete='off'
               {...register('prefecture', { required: true })}
               defaultValue={prefecture}
               onChange={(e) => props.address1Change(e.target.value)}
@@ -156,6 +159,7 @@ const CustomerForm = (props: any) => {
             </FormHelperText>
             <StyledTextField
               type='text'
+              autoComplete='off'
               {...register('cityAndTown', { required: true })}
               defaultValue={cityAndTown}
               onChange={(e) => props.address2Change(e.target.value)}
@@ -172,6 +176,7 @@ const CustomerForm = (props: any) => {
             </FormHelperText>
             <StyledTextField
               type='text'
+              autoComplete='off'
               {...register('otherAddresses')}
               onChange={(e) => props.address3Change(e.target.value)}
             />
@@ -187,6 +192,7 @@ const CustomerForm = (props: any) => {
             </FormHelperText>
             <StyledTextField
               type='tel'
+              autoComplete='off'
               {...register('tel', {
                 required: true,
                 minLength: 6,

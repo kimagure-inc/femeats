@@ -158,6 +158,7 @@ export default function App(props: questions) {
                 <p>ニックネームを入力してください</p>
                 <StyledTextField
                   id='outlined-basic'
+                  autoComplete='off'
                   variant='outlined'
                   value={userName}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
