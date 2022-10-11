@@ -176,6 +176,9 @@ export default function Info() {
                 backgroundColor: '#ffffff',
                 p: '40px',
                 mt: '16px',
+                '@media screen and (min-width:600px)': {
+                  width: '432px',
+                },
               }}
             >
               <Box
@@ -203,8 +206,12 @@ export default function Info() {
             </Box>
             <Box
               sx={{
+                width: 350,
                 display: 'flex',
-                justifyContent: 'center',
+                justifyItems: 'center',
+                '@media screen and (min-width:600px)': {
+                  width: '432px',
+                },
               }}
             >
               <Button
@@ -242,7 +249,11 @@ export default function Info() {
           {!stopState ? (
             <>
               <Box
-                sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '32px',
+                }}
               >
                 <Box
                   sx={{
@@ -417,12 +428,17 @@ export default function Info() {
                 </Box>
                 <Box
                   sx={{
+                    width: 350,
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyItems: 'center',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
                   }}
                 >
                   <Button
                     sx={{
+                      m: 'auto',
                       borderRadius: 16,
                       fontSize: '0.875rem',
                       fontWeight: '700',
@@ -444,6 +460,7 @@ export default function Info() {
                     submit={changeSub}
                   />
                 </Box>
+                {/* </Box> */}
               </Box>
             </>
           ) : (
@@ -615,8 +632,12 @@ export default function Info() {
                 </Box>
                 <Box
                   sx={{
+                    width: 350,
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyItems: 'center',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
                   }}
                 >
                   <Button

@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import { hasCookie, getCookies, deleteCookie } from 'cookies-next';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
 import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem';
+import Stack from '@mui/material/Stack';
 
 export default function MyPage({ children }: any) {
   const [data, setData] = useState();
@@ -24,56 +24,53 @@ export default function MyPage({ children }: any) {
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}
-      >
+      <Grid container justifyContent={'center'}>
         <Box
           sx={{
             display: { xs: 'none', sm: 'block' },
           }}
         >
-          <List
-          // sx={{
-          //   display: { xs: 'none', sm: 'block' },
-          // }}
-          >
-            <a>マイページ</a>
-            <ListItem>
-              <Link href='/mypage'>
-                <div>TOP</div>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href='/mypage/profile'>
-                <div>お客様情報</div>
-              </Link>
-            </ListItem>
-            <ListItem>
-              {/* <Link href="/top"> */}
-              <>請求先情報</>
-              {/* </Link> */}
-            </ListItem>
-            <ListItem>
-              <Link href='/mypage/info'>
-                <div>契約情報</div>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href='/questions'>
-                <div>パーソナライズ診断</div>
-              </Link>
-            </ListItem>
-            <ListItem onClick={logout}>ログアウト</ListItem>
-          </List>
+          <Grid item sm={6} md={4}>
+            <List
+              sx={{
+                width: 320,
+              }}
+            >
+              <a>マイページ</a>
+              <ListItem>
+                <Link href='/mypage'>
+                  <div>TOP</div>
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link href='/mypage/profile'>
+                  <div>お客様情報</div>
+                </Link>
+              </ListItem>
+              <ListItem>
+                {/* <Link href="/top"> */}
+                <>請求先情報</>
+                {/* </Link> */}
+              </ListItem>
+              <ListItem>
+                <Link href='/mypage/info'>
+                  <div>契約情報</div>
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link href='/questions'>
+                  <div>パーソナライズ診断</div>
+                </Link>
+              </ListItem>
+              <ListItem onClick={logout}>ログアウト</ListItem>
+            </List>
+          </Grid>
         </Box>
-        <Box>
+
+        <Grid item sm={6} md={8}>
           <main>{children}</main>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </>
   );
 }

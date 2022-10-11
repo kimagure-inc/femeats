@@ -147,7 +147,7 @@ export default function Info() {
                     mb: '16px',
                   }}
                 >
-                  お申し込み中のプラン
+                  変更後のプラン
                 </Box>
 
                 <FormControl
@@ -287,7 +287,7 @@ export default function Info() {
                   variant='contained'
                   onClick={Submit}
                 >
-                  プラン決定
+                  支払いに進む
                 </Button>
               </Box>
             </Box>

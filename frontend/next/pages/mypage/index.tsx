@@ -264,10 +264,8 @@ export default function Top() {
                     mb: '6px',
                   }}
                 >
-                  <div>
-                    金額(税込)<div></div>
-                    {Number(data.product.price).toLocaleString()}円
-                  </div>
+                  <div>金額(税込)</div>
+                  <div>{Number(data.product.price).toLocaleString()}円</div>
                 </Box>
                 <Box
                   sx={{
