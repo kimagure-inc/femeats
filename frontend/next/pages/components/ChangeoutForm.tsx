@@ -23,6 +23,9 @@ export default function ChangeoutForm({ price }) {
     color: 'primary',
     backgroundColor: '#FFFFFF',
     width: '350px',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
     marginBottom: '32px',
     '@media screen and (min-width:600px)': {
       width: '432px',
@@ -32,136 +35,147 @@ export default function ChangeoutForm({ price }) {
   return (
     <>
       {console.log(price)}
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
           alignItems: 'center',
         }}
-      >
-        <StyledBox>
+      > */}
+      <StyledBox>
+        <Box
+          sx={{
+            fontSize: '16px',
+            fontWeight: '700',
+            marginTop: '32px',
+          }}
+        >
+          支払い情報
+        </Box>
+        <Box
+          sx={{
+            fontSize: '14px',
+            fontWeight: '700',
+            marginTop: '8px',
+            marginBottom: '24px',
+          }}
+        >
+          クレジットカード情報
+        </Box>
+        <Box
+          sx={{
+            marginLeft: '16px',
+            marginRight: '16px',
+          }}
+        >
           <Box
             sx={{
-              fontSize: '16px',
-              fontWeight: '700',
-              marginTop: '32px',
+              marginBottom: '48px',
             }}
           >
-            支払い情報
+            <PaymentElement />
           </Box>
-          <Box
+        </Box>
+      </StyledBox>
+      <StyledBox>
+        <Box
+          sx={{
+            fontSize: '16px',
+            fontWeight: '700',
+            marginTop: '32px',
+            marginBottom: '24px',
+          }}
+        >
+          金額
+        </Box>
+        <Box
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            direction: 'column',
+          }}
+        >
+          <TableContainer
             sx={{
               fontSize: '14px',
-              fontWeight: '700',
-              marginTop: '8px',
-              marginBottom: '24px',
+              fontWeight: '500',
+              marginBottom: '48px',
             }}
           >
-            クレジットカード情報
-          </Box>
-          <Box
-            sx={{
-              marginLeft: '16px',
-              marginRight: '16px',
-            }}
-          >
-            <Box
-              sx={{
-                marginBottom: '48px',
-              }}
-            >
-              <PaymentElement />
-            </Box>
-          </Box>
-        </StyledBox>
-        <StyledBox>
-          <Box
-            sx={{
-              fontSize: '16px',
-              fontWeight: '700',
-              marginTop: '32px',
-              marginBottom: '24px',
-            }}
-          >
-            金額
-          </Box>
-          <Box
-            sx={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              direction: 'column',
-            }}
-          >
-            <TableContainer
-              sx={{
-                fontSize: '14px',
-                fontWeight: '500',
-                marginBottom: '48px',
-              }}
-            >
-              <Table sx={{ minWidth: 300 }}>
-                <TableBody>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        border: 'none',
-                      }}
-                    >
-                      小計:
-                    </TableCell>
-                    <TableCell
-                      align='right'
-                      sx={{
-                        border: 'none',
-                      }}
-                    >
-                      {Number(price).toLocaleString()}円
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>送料:</TableCell>
-                    <TableCell align='right'>500円</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        fontWeight: '700',
-                        border: 'none',
-                      }}
-                    >
-                      総合計(税込):
-                    </TableCell>
-                    <TableCell
-                      align='right'
-                      sx={{
-                        fontWeight: '700',
-                        border: 'none',
-                      }}
-                    >
-                      {Number(price + 500).toLocaleString()}円
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-        </StyledBox>
+            <Table sx={{ minWidth: 300 }}>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      border: 'none',
+                    }}
+                  >
+                    小計:
+                  </TableCell>
+                  <TableCell
+                    align='right'
+                    sx={{
+                      border: 'none',
+                    }}
+                  >
+                    {Number(price).toLocaleString()}円
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>送料:</TableCell>
+                  <TableCell align='right'>500円</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      fontWeight: '700',
+                      border: 'none',
+                    }}
+                  >
+                    総合計(税込):
+                  </TableCell>
+                  <TableCell
+                    align='right'
+                    sx={{
+                      fontWeight: '700',
+                      border: 'none',
+                    }}
+                  >
+                    {Number(price + 500).toLocaleString()}円
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </StyledBox>
+      <Box
+        sx={{
+          textAlign: 'center',
+          fontSize: '16px',
+          fontWeight: 700,
+          mb: '16px',
+          '@media screen and (min-width:600px)': {
+            width: '432px',
+          },
+        }}
+      >
         <Button
           sx={{
             borderRadius: 16,
-            fontSize: '0.875rem',
-            fontWeight: '700',
+            height: '32px',
+            fontSize: '12px',
+            width: '168px',
             '&:hover': {
               color: 'primary.main',
               background: '#FFF262',
             },
-            width: '242px',
-            height: '48px',
             '@media screen and (min-width:600px)': {
-              width: '168px',
-              height: '32px',
-              fontSize: '12px',
+              width: '242px',
+              height: '48px',
+              fontSize: '0.875rem',
+              fontWeight: '700',
             },
           }}
           variant='contained'
@@ -185,6 +199,7 @@ export default function ChangeoutForm({ price }) {
           確定
         </Button>
       </Box>
+      {/* </Box> */}
     </>
   );
 }

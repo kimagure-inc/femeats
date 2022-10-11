@@ -137,6 +137,9 @@ export default function Info() {
                   backgroundColor: '#ffffff',
                   p: '40px',
                   mt: '16px',
+                  '@media screen and (min-width:600px)': {
+                    width: '432px',
+                  },
                 }}
               >
                 <Box
@@ -179,6 +182,9 @@ export default function Info() {
                   width: 350,
                   backgroundColor: '#ffffff',
                   p: '40px',
+                  '@media screen and (min-width:600px)': {
+                    width: '432px',
+                  },
                 }}
               >
                 <Box
@@ -269,6 +275,9 @@ export default function Info() {
                   fontSize: '16px',
                   fontWeight: 700,
                   mb: '16px',
+                  '@media screen and (min-width:600px)': {
+                    width: '432px',
+                  },
                 }}
               >
                 <Button
@@ -295,7 +304,17 @@ export default function Info() {
         ) : (
           <>
             {console.log(product)}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <Box
+              sx={{
+                textAlign: 'center',
+                fontSize: '16px',
+                fontWeight: 700,
+                mb: '16px',
+                '@media screen and (min-width:600px)': {
+                  width: '432px',
+                },
+              }}
+            >
               <Box
                 sx={{
                   textAlign: 'center',
