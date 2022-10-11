@@ -89,7 +89,7 @@ export default function Layout({ children, auth }: any, props: Props) {
       <React.Fragment>
         <CssBaseline />
         <ElevationScroll {...props}>
-          <AppBar color='default' sx={{ flexGrow: 1 }}>
+          <AppBar color='transparent' sx={{ flexGrow: 1 }}>
             <Toolbar>
               {auth ? (
                 <>
