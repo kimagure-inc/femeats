@@ -115,7 +115,6 @@ export default function Info() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         setCs(res.data.subsuc.cs);
         setPage(true);
       })
@@ -127,7 +126,6 @@ export default function Info() {
   return (
     <Layout auth={true}>
       <MyPage>
-        <>{console.log(data)}</>
         {!page ? (
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
