@@ -39,7 +39,7 @@ export default function CheckoutForm(props: any) {
       product_id: Number(props.product_id),
       user_id: Number(props.user_id),
       timezone_id: Number(props.delTime),
-      deliveryDate: new Date(props.deliveryDate),
+      deliveryDate: delDate,
       status_id: 1,
       orderDate: orderDate,
     },
