@@ -164,7 +164,6 @@ export default function recommend() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
-                  // alignItems: 'start',
                 }}
               >
                 <Item sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}>
@@ -194,14 +193,14 @@ export default function recommend() {
                   sx={{
                     maxWidth: '326',
                     justifyContent: 'center',
-                    // alignItems: 'start',
                   }}
                 >
                   <StyledBox
                     sx={{
-                      fontSize: '16px',
+                      fontSize: '24px',
                       fontWeight: '700',
                       textAlign: 'left',
+                      marginTop: '8px',
                     }}
                   >
                     {category ? category.name : ''} plan
@@ -211,6 +210,7 @@ export default function recommend() {
                       fontSize: '14px',
                       fontWeight: '500',
                       textAlign: 'left',
+                      marginTop: '16px',
                     }}
                   >
                     {products ? products[0].introduction : ''}
@@ -223,7 +223,7 @@ export default function recommend() {
           )}
           {products ? (
             <>
-              {!auth ? ( //新規の人だったら、プラン選択と配送サイクル選択をしてもらう
+              {!auth ? (
                 <>
                   <Stack
                     direction={{ xs: 'column', sm: 'row' }}
@@ -242,6 +242,9 @@ export default function recommend() {
                         onChange={planChange}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
+                        sx={{
+                          backgroundColor: '#FFF',
+                        }}
                       >
                         <MenuItem value={0}>
                           {products[0].name}{' '}
@@ -262,6 +265,9 @@ export default function recommend() {
                         onChange={cycleChange}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
+                        sx={{
+                          backgroundColor: '#FFF',
+                        }}
                       >
                         <MenuItem value={4}>2週間ごと</MenuItem>
                         <MenuItem value={2}>3週間ごと</MenuItem>
@@ -303,7 +309,7 @@ export default function recommend() {
                   </StyledBox>
                 </>
               ) : (
-                // ログインユーザーだったら、マイページに遷移してから契約変更してもらう
+                // ログインユーザー:マイページに遷移して契約変更
                 <StyledBox>
                   <Link
                     href={{
