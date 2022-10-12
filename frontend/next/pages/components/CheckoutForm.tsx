@@ -19,8 +19,11 @@ export default function CheckoutForm(props: any) {
   const stripe = useStripe();
   const elements = useElements();
 
+  let delDate = new Date(props.deliveryDate);
+  delDate.setDate(delDate.getDate() + 1);
+
   let orderDate = new Date(props.deliveryDate);
-  orderDate.setDate(orderDate.getDate() - 5);
+  orderDate.setDate(orderDate.getDate() - 4);
 
   const data = {
     userData: {
@@ -36,7 +39,7 @@ export default function CheckoutForm(props: any) {
       product_id: Number(props.product_id),
       user_id: Number(props.user_id),
       timezone_id: Number(props.delTime),
-      deliveryDate: new Date(props.deliveryDate),
+      deliveryDate: delDate,
       status_id: 1,
       orderDate: orderDate,
     },
