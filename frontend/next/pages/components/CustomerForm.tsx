@@ -100,7 +100,6 @@ const CustomerForm = (props: any) => {
               variant='outlined'
               type='text'
               {...register('name', { required: true, maxLength: 20 })}
-              placeholder='例：山崎 みずえ'
               autoComplete='off'
               onChange={(e) => props.nameChange(e.target.value)}
             />
