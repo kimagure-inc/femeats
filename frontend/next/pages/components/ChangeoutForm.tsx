@@ -6,84 +6,177 @@ import {
 } from '@stripe/react-stripe-js';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
 
 export default function ChangeoutForm({ price }) {
   const stripe = useStripe();
   const elements = useElements();
 
+  const StyledBox = styled(Box)(({ theme }) => ({
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: 'primary',
+    backgroundColor: '#FFFFFF',
+    width: '350px',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    marginBottom: '32px',
+    '@media screen and (min-width:600px)': {
+      width: '432px',
+    },
+  }));
+
   return (
     <>
       {console.log(price)}
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <PaymentElement />
+      {/* <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      > */}
+      <StyledBox>
         <Box
           sx={{
-            width: 350,
-            backgroundColor: '#ffffff',
-            p: '16px',
-            mt: '16px',
-            '@media screen and (min-width:600px)': {
-              width: '432px',
-            },
+            fontSize: '16px',
+            fontWeight: '700',
+            marginTop: '32px',
+          }}
+        >
+          支払い情報
+        </Box>
+        <Box
+          sx={{
+            fontSize: '14px',
+            fontWeight: '700',
+            marginTop: '8px',
+            marginBottom: '24px',
+          }}
+        >
+          クレジットカード情報
+        </Box>
+        <Box
+          sx={{
+            marginLeft: '16px',
+            marginRight: '16px',
           }}
         >
           <Box
             sx={{
-              fontSize: '16px',
-              fontWeight: '700',
-              textAlign: 'center',
-              mb: '16px',
+              marginBottom: '48px',
             }}
           >
-            金額
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              fontSize: '14px',
-              fontWeight: 500,
-              mb: '6px',
-            }}
-          >
-            <div>小計:</div>
-            <div>{Number(price).toLocaleString()}円(税込)</div>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              fontSize: '14px',
-              fontWeight: 500,
-              mb: '6px',
-            }}
-          >
-            <div>送料:</div> <div>500円(税込)</div>
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              fontSize: '14px',
-              fontWeight: 700,
-              mb: '6px',
-            }}
-          >
-            <div>合計　{Number(price + 500).toLocaleString()}円(税込)</div>
+            <PaymentElement />
           </Box>
         </Box>
+      </StyledBox>
+      <StyledBox>
+        <Box
+          sx={{
+            fontSize: '16px',
+            fontWeight: '700',
+            marginTop: '32px',
+            marginBottom: '24px',
+          }}
+        >
+          金額
+        </Box>
+        <Box
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            direction: 'column',
+          }}
+        >
+          <TableContainer
+            sx={{
+              fontSize: '14px',
+              fontWeight: '500',
+              marginBottom: '48px',
+            }}
+          >
+            <Table sx={{ minWidth: 300 }}>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      border: 'none',
+                    }}
+                  >
+                    小計:
+                  </TableCell>
+                  <TableCell
+                    align='right'
+                    sx={{
+                      border: 'none',
+                    }}
+                  >
+                    {Number(price).toLocaleString()}円
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>送料:</TableCell>
+                  <TableCell align='right'>500円</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      fontWeight: '700',
+                      border: 'none',
+                    }}
+                  >
+                    総合計(税込):
+                  </TableCell>
+                  <TableCell
+                    align='right'
+                    sx={{
+                      fontWeight: '700',
+                      border: 'none',
+                    }}
+                  >
+                    {Number(price + 500).toLocaleString()}円
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </StyledBox>
+      <Box
+        sx={{
+          textAlign: 'center',
+          fontSize: '16px',
+          fontWeight: 700,
+          mb: '16px',
+          '@media screen and (min-width:600px)': {
+            width: '432px',
+          },
+        }}
+      >
         <Button
           sx={{
             borderRadius: 16,
-            fontSize: '0.875rem',
-            fontWeight: '700',
+            height: '32px',
+            fontSize: '12px',
+            width: '168px',
             '&:hover': {
               color: 'primary.main',
               background: '#FFF262',
             },
-            width: '242px',
-            height: '48px',
+            '@media screen and (min-width:600px)': {
+              width: '242px',
+              height: '48px',
+              fontSize: '0.875rem',
+              fontWeight: '700',
+            },
           }}
           variant='contained'
           color='primary'
@@ -103,9 +196,10 @@ export default function ChangeoutForm({ price }) {
             console.log(error);
           }}
         >
-          保存
+          確定
         </Button>
       </Box>
+      {/* </Box> */}
     </>
   );
 }
