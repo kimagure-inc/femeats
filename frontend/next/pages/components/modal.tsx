@@ -23,11 +23,6 @@ export default function Confirmation({ show, close, comment, btName, submit }) {
     <div>
       {show ? (
         <>
-          {console.log(show)}
-          {console.log(close)}
-          {console.log(comment)}
-          {console.log(btName)}
-          {console.log(close)}
           <Modal open={show}>
             <Box sx={style}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>

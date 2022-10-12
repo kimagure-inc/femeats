@@ -108,7 +108,6 @@ export default function Info() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         setStopState(true);
         setModal1(!modal1);
         alert('配送を停止しました');
@@ -124,7 +123,6 @@ export default function Info() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         setModal2(!modal2);
         alert('解約しました');
         router.push('/mypage');
@@ -140,7 +138,6 @@ export default function Info() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         setStopState(false);
         setModal4(!modal4);
         alert('配送を再開しました');
@@ -156,9 +153,7 @@ export default function Info() {
       .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/cancel`, postData, {
         withCredentials: true,
       })
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((e) => {
         console.log(e);
       });

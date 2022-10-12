@@ -117,7 +117,6 @@ export default function Top() {
     <Layout auth={true}>
       <MyPage>
         <>
-          {console.log(data)}
           {!stopState ? (
             <>
               <Box
