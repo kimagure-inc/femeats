@@ -109,7 +109,6 @@ export default function Info() {
   };
 
   const Submit = () => {
-    console.log(postData);
     axios
       .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/cs`, postData, {
         withCredentials: true,
