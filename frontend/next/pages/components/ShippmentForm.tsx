@@ -25,7 +25,6 @@ const ShippmentForm = (props: any) => {
   }
   return (
     <>
-      {console.log(props)}
       <Grid
         container
         alignItems='center'

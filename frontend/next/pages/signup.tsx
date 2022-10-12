@@ -55,11 +55,9 @@ export default function SignUp() {
         password,
         product_id,
       };
-      console.log(data);
       axios
         .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/signup`, data)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           router.push('/email/auth');
         })
         .catch((e) => {
