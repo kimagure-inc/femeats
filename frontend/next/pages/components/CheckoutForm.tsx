@@ -178,7 +178,6 @@ export default function CheckoutForm(props: any) {
                 data
               )
               .then((res: AxiosResponse) => {
-                console.log(res);
               })
               .catch((e: AxiosError<{ error: string }>) => console.log(e));
             const { error } = await stripe.confirmPayment({
