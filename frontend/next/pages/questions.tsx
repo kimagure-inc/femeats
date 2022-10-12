@@ -344,7 +344,7 @@ export default function App(props: questions) {
                         mr: 2,
                         position: 'absolute',
                         top: '16%',
-                        right: '2%',
+                        right: '1%',
                         display: { xs: 'block', sm: 'none' },
                       }}
                     >
