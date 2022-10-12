@@ -230,6 +230,9 @@ export default function Top() {
                   backgroundColor: '#ffffff',
                   p: '16px',
                   mt: '16px',
+                  '@media screen and (min-width:600px)': {
+                    width: 432,
+                  },
                 }}
               >
                 <Box

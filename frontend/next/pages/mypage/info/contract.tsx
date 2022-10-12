@@ -135,7 +135,7 @@ export default function Info() {
                 sx={{
                   width: 350,
                   backgroundColor: '#ffffff',
-                  p: '40px',
+                  p: '48px',
                   mt: '16px',
                   '@media screen and (min-width:600px)': {
                     width: '432px',
@@ -155,7 +155,7 @@ export default function Info() {
 
                 <FormControl
                   sx={{
-                    minWidth: 260,
+                    minWidth: '100%',
                   }}
                 >
                   <FormHelperText
@@ -171,7 +171,7 @@ export default function Info() {
                     {data.product.slice(0, 8).map((value: any) => (
                       <MenuItem key={value.name} value={value.name}>
                         {value.name}
-                        {Number(value.price).toLocaleString()}(税込)
+                        {Number(value.price).toLocaleString()}円(税込)
                       </MenuItem>
                     ))}
                   </Select>
@@ -181,7 +181,7 @@ export default function Info() {
                 sx={{
                   width: 350,
                   backgroundColor: '#ffffff',
-                  p: '40px',
+                  p: '48px',
                   '@media screen and (min-width:600px)': {
                     width: '432px',
                   },
@@ -200,7 +200,7 @@ export default function Info() {
 
                 <FormControl
                   sx={{
-                    minWidth: 260,
+                    minWidth: '100%',
                   }}
                 >
                   <FormHelperText
@@ -222,7 +222,7 @@ export default function Info() {
                 </FormControl>
                 <FormControl
                   sx={{
-                    minWidth: 260,
+                    minWidth: '100%',
                   }}
                 >
                   <FormHelperText
@@ -246,7 +246,7 @@ export default function Info() {
 
                 <FormControl
                   sx={{
-                    minWidth: 260,
+                    minWidth: '100%',
                     mt: '16px',
                   }}
                 >
@@ -285,8 +285,7 @@ export default function Info() {
                     borderRadius: 16,
                     fontSize: '0.875rem',
                     fontWeight: '700',
-                    color: '#333333',
-                    backgroundColor: '#FFF262',
+                    color: 'primary',
                     width: '242px',
                     height: '48px',
                     '&:hover': {

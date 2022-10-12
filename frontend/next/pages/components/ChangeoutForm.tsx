@@ -164,9 +164,10 @@ export default function ChangeoutForm({ price }) {
         <Button
           sx={{
             borderRadius: 16,
-            height: '32px',
-            fontSize: '12px',
-            width: '168px',
+            fontWeight: '700',
+            fontSize: '0.875rem',
+            width: '242px',
+            height: '48px',
             '&:hover': {
               color: 'primary.main',
               background: '#FFF262',
@@ -174,8 +175,6 @@ export default function ChangeoutForm({ price }) {
             '@media screen and (min-width:600px)': {
               width: '242px',
               height: '48px',
-              fontSize: '0.875rem',
-              fontWeight: '700',
             },
           }}
           variant='contained'

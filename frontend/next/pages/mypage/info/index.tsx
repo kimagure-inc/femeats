@@ -96,6 +96,7 @@ export default function Info() {
   const restartTg = () => {
     setModal4(!modal4);
   };
+
   const postData = {
     id: data.user.stripe_sub_id,
     userId: data.id,
@@ -148,7 +149,6 @@ export default function Info() {
         console.log(e);
       });
     console.log('再開');
-    close();
   };
 
   const changeSub = () => {
@@ -197,45 +197,43 @@ export default function Info() {
                   justifyContent: 'space-between',
                   fontSize: '14px',
                   fontWeight: 500,
-                  mb: '6px',
+                  mb: '16px',
                 }}
               >
                 <div>サービスの解約</div>
                 <div>解約中</div>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                width: 350,
-                display: 'flex',
-                justifyItems: 'center',
-                '@media screen and (min-width:600px)': {
-                  width: '432px',
-                },
-              }}
-            >
-              <Button
+
+              <Box
                 sx={{
-                  borderRadius: 16,
-                  fontSize: '0.875rem',
-                  fontWeight: '700',
-                  backgroundColor: '#333333',
-                  width: '242px',
-                  height: '48px',
+                  display: 'flex',
                 }}
-                variant='contained'
-                color='primary'
-                onClick={() => Toggle()}
               >
-                変更
-              </Button>
-              <Confirmation
-                show={modal}
-                close={Toggle}
-                comment={start}
-                btName={startbt}
-                submit={changeSub}
-              />
+                <Button
+                  sx={{
+                    m: 'auto',
+                    mt: '8px',
+                    borderRadius: 16,
+                    fontSize: '0.875rem',
+                    fontWeight: '700',
+                    backgroundColor: '#333333',
+                    width: '168px',
+                    height: '32px',
+                  }}
+                  variant='contained'
+                  color='primary'
+                  onClick={() => Toggle()}
+                >
+                  変更
+                </Button>
+                <Confirmation
+                  show={modal}
+                  close={Toggle}
+                  comment={start}
+                  btName={startbt}
+                  submit={changeSub}
+                />
+              </Box>
             </Box>
           </Box>
         </MyPage>
@@ -302,23 +300,14 @@ export default function Info() {
                       {Number(data.product.price).toLocaleString()}円(税込)
                     </div>
                   </Box>
-                </Box>
-                <Box
-                  sx={{
-                    width: 350,
-                    backgroundColor: '#ffffff',
-                    p: '40px',
-                    '@media screen and (min-width:600px)': {
-                      width: '432px',
-                    },
-                  }}
-                >
+
                   <Box
                     sx={{
                       textAlign: 'center',
                       fontSize: '16px',
                       fontWeight: 700,
                       mb: '16px',
+                      mt: '24px',
                     }}
                   >
                     お届けサイクル
@@ -329,6 +318,7 @@ export default function Info() {
                       justifyContent: 'space-between',
                       fontSize: '14px',
                       fontWeight: 500,
+                      mb: '16px',
                     }}
                   >
                     <div>サイクル</div>
@@ -336,6 +326,33 @@ export default function Info() {
                       {data.product.deliveryCycle}週間おき{''}
                       {''} {weekChars[dy]}
                     </div>
+                  </Box>
+
+                  <Box sx={{ display: 'flex' }}>
+                    <Button
+                      sx={{
+                        m: 'auto',
+                        mt: '8px',
+                        borderRadius: 16,
+                        fontSize: '0.875rem',
+                        fontWeight: '700',
+                        backgroundColor: '#333333',
+                        width: '168px',
+                        height: '32px',
+                      }}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => Toggle()}
+                    >
+                      変更
+                    </Button>
+                    <Confirmation
+                      show={modal}
+                      close={Toggle}
+                      comment={change}
+                      btName={name}
+                      submit={changeSub}
+                    />
                   </Box>
                 </Box>
                 <Box
@@ -426,40 +443,7 @@ export default function Info() {
                     submit={cancelSub}
                   />
                 </Box>
-                <Box
-                  sx={{
-                    width: 350,
-                    display: 'flex',
-                    justifyItems: 'center',
-                    '@media screen and (min-width:600px)': {
-                      width: '432px',
-                    },
-                  }}
-                >
-                  <Button
-                    sx={{
-                      m: 'auto',
-                      borderRadius: 16,
-                      fontSize: '0.875rem',
-                      fontWeight: '700',
-                      backgroundColor: '#333333',
-                      width: '242px',
-                      height: '48px',
-                    }}
-                    variant='contained'
-                    color='primary'
-                    onClick={() => Toggle()}
-                  >
-                    変更
-                  </Button>
-                  <Confirmation
-                    show={modal}
-                    close={Toggle}
-                    comment={change}
-                    btName={name}
-                    submit={changeSub}
-                  />
-                </Box>
+
                 {/* </Box> */}
               </Box>
             </>
@@ -474,6 +458,9 @@ export default function Info() {
                     backgroundColor: '#ffffff',
                     p: '40px',
                     mt: '16px',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
                   }}
                 >
                   <Box
@@ -512,14 +499,6 @@ export default function Info() {
                       {Number(data.product.price).toLocaleString()}円(税込)
                     </div>
                   </Box>
-                </Box>
-                <Box
-                  sx={{
-                    width: 350,
-                    backgroundColor: '#ffffff',
-                    p: '40px',
-                  }}
-                >
                   <Box
                     sx={{
                       textAlign: 'center',
@@ -536,6 +515,7 @@ export default function Info() {
                       justifyContent: 'space-between',
                       fontSize: '14px',
                       fontWeight: 500,
+                      mb: '16px',
                     }}
                   >
                     <div>サイクル</div>
@@ -543,13 +523,47 @@ export default function Info() {
                       {data.product.deliveryCycle}週間おき{''}
                       {''} {weekChars[dy]}
                     </div>
+                  </Box>{' '}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                    }}
+                  >
+                    <Button
+                      sx={{
+                        m: 'auto',
+                        mt: '8px',
+                        borderRadius: 16,
+                        fontSize: '0.875rem',
+                        fontWeight: '700',
+                        backgroundColor: '#333333',
+                        width: '168px',
+                        height: '32px',
+                      }}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => Toggle()}
+                    >
+                      変更
+                    </Button>
+                    <Confirmation
+                      show={modal}
+                      close={Toggle}
+                      comment={change}
+                      btName={name}
+                      submit={changeSub}
+                    />
                   </Box>
                 </Box>
+
                 <Box
                   sx={{
                     width: 350,
                     backgroundColor: '#ffffff',
-                    p: '32px',
+                    p: '40px',
+                    '@media screen and (min-width:600px)': {
+                      width: '432px',
+                    },
                   }}
                 >
                   <Box
@@ -557,7 +571,7 @@ export default function Info() {
                       textAlign: 'center',
                       fontSize: '16px',
                       fontWeight: 700,
-                      m: '8px',
+                      mb: '16px',
                     }}
                   >
                     サービスの利用状況 <div>(再開・解約申込)</div>
@@ -628,39 +642,6 @@ export default function Info() {
                     comment={cancel}
                     btName={name2}
                     submit={cancelSub}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    width: 350,
-                    display: 'flex',
-                    justifyItems: 'center',
-                    '@media screen and (min-width:600px)': {
-                      width: '432px',
-                    },
-                  }}
-                >
-                  <Button
-                    sx={{
-                      borderRadius: 16,
-                      fontSize: '0.875rem',
-                      fontWeight: '700',
-                      backgroundColor: '#333333',
-                      width: '242px',
-                      height: '48px',
-                    }}
-                    variant='contained'
-                    color='primary'
-                    onClick={() => Toggle()}
-                  >
-                    変更
-                  </Button>
-                  <Confirmation
-                    show={modal}
-                    close={Toggle}
-                    comment={change}
-                    btName={name}
-                    submit={changeSub}
                   />
                 </Box>
               </Box>
