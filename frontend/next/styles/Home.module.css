@@ -1,3 +1,22 @@
 .marker {
   background: linear-gradient(transparent 50%, #fff262 50%);
 }
+
+.fuwafuwa {
+  animation: fuwafuwa 3s infinite ease-in-out 0.8s alternate;
+  background: url(/left.png) no-repeat center center / 60px auto;
+  display: inline-block;
+  transition: 1.5s ease-in-out;
+}
+
+@keyframes fuwafuwa {
+  0% {
+    transform: translate(0, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate(0, -7px) rotate(0deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(7deg);
+  }
+}
