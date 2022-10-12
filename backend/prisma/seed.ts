@@ -154,7 +154,7 @@ async function main() {
         imgUrl:
           'https://s3.ap-northeast-3.amazonaws.com/kimagure.inc-app/balance.jpg',
         category_id: 1,
-        stripe_id: 'price_1Lpk8SAdWjJU6gVuXGvz0L11',
+        stripe_id: 'price_1Ls3ktAdWjJU6gVuvLpZNcPW',
         deliveryCycle: 3,
       },
       {
@@ -176,7 +176,7 @@ async function main() {
         imgUrl:
           'https://s3.ap-northeast-3.amazonaws.com/kimagure.inc-app/beauty.jpg',
         category_id: 2,
-        stripe_id: 'price_1LpkAQAdWjJU6gVuHohf7qik',
+        stripe_id: 'price_1Ls3nmAdWjJU6gVu0rTiuxPQ',
         deliveryCycle: 3,
       },
       {
