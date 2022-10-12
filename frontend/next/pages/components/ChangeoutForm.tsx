@@ -34,15 +34,6 @@ export default function ChangeoutForm({ price }) {
 
   return (
     <>
-      {console.log(price)}
-      {/* <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      > */}
       <StyledBox>
         <Box
           sx={{
