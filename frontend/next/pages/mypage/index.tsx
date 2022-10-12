@@ -124,7 +124,7 @@ export default function Top() {
                 sx={{
                   width: 310,
                   backgroundColor: '#ffffff',
-                  p: '16px',
+                  p: '24px',
                   mt: '16px',
                   '@media screen and (min-width:600px)': {
                     width: 432,
@@ -208,14 +208,12 @@ export default function Top() {
                     position: 'relative',
                     display: 'flex',
                     justifyContent: 'center',
-                    height: '147px',
-                    borderRadius: '8px',
                   }}
                 >
                   <Image
                     alt='femeats'
-                    height={147}
-                    width={272}
+                    width={156}
+                    height={168}
                     src={data.product.imgUrl}
                     style={{ alignSelf: 'center', borderRadius: 8 }}
                   />

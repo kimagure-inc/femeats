@@ -292,6 +292,7 @@ export default function Info() {
                       justifyContent: 'space-between',
                       fontSize: '14px',
                       fontWeight: 500,
+                      mb: '6px',
                     }}
                   >
                     <div>金額(税込)</div>
@@ -303,17 +304,6 @@ export default function Info() {
 
                   <Box
                     sx={{
-                      textAlign: 'center',
-                      fontSize: '16px',
-                      fontWeight: 700,
-                      mb: '16px',
-                      mt: '24px',
-                    }}
-                  >
-                    お届けサイクル
-                  </Box>
-                  <Box
-                    sx={{
                       display: 'flex',
                       justifyContent: 'space-between',
                       fontSize: '14px',
@@ -321,7 +311,7 @@ export default function Info() {
                       mb: '16px',
                     }}
                   >
-                    <div>サイクル</div>
+                    <div>お届けサイクル</div>
                     <div>
                       {data.product.deliveryCycle}週間おき{''}
                       {''} {weekChars[dy]}
