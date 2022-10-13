@@ -19,6 +19,7 @@ export default function MyPage({ children }: any) {
     });
     console.log('logout');
     deleteCookie('signedIn');
+    deleteCookie('jwt');
     await router.push('/login');
   };
 
