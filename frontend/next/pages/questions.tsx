@@ -207,7 +207,6 @@ export default function App(props: questions) {
                       position: 'absolute',
                       top: '10%',
                       right: '50%',
-                      // transform: 'translate(-50%, -50%)',
                       display: { xs: 'block', sm: 'none' },
                     }}
                   >
@@ -239,11 +238,13 @@ export default function App(props: questions) {
                     sx={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      marginTop: '80px',
+                      marginTop: '96px',
                       display: { xs: 'block', sm: 'none' },
                     }}
                   >
-                    {userName}さんにおすすめのプランを診断中
+                    {userName}さんに
+                    <br />
+                    おすすめのプランを診断中
                   </Box>
                   <Box
                     sx={{
@@ -259,7 +260,7 @@ export default function App(props: questions) {
                     sx={{
                       mr: 2,
                       position: 'absolute',
-                      top: '35%',
+                      top: '55%',
                       right: '5%',
                       display: { xs: 'block', sm: 'none' },
                     }}
@@ -343,8 +344,8 @@ export default function App(props: questions) {
                       sx={{
                         mr: 2,
                         position: 'absolute',
-                        top: '16%',
-                        right: '1%',
+                        top: '15%',
+                        right: '0%',
                         display: { xs: 'block', sm: 'none' },
                       }}
                     >
