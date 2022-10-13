@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -51,10 +52,14 @@ const SelectBtn = styled(Button, {
 })({
   width: 360,
   height: 48,
-  margin: 16,
-  borderRadius: 2,
+  margin: 8,
+  borderRadius: 8,
   fontWeight: '600',
+  backgroundColor: '#FFFFFF',
   '&:hover': {
+    background: '#FFFFFF',
+  },
+  '&:active': {
     background: '#FFF262',
   },
 });
@@ -109,7 +114,6 @@ export default function App(props: questions) {
         data: allAnswer,
       })
       .then((res: AxiosResponse) => {
-        console.log('Posting data', res);
         showResult(res.data);
       })
       .catch((e: AxiosError<{ error: string }>) => console.log(e.message, 500));
@@ -124,7 +128,7 @@ export default function App(props: questions) {
         },
         'recommend'
       );
-    }, 3 * 1000);
+    }, 5 * 1000);
   };
 
   return (
@@ -151,10 +155,11 @@ export default function App(props: questions) {
                   fontSize: '14px',
                 }}
               >
-                <h2>パーソナライズ診断</h2>
-                <p>お名前を教えてください（ニックネーム可）</p>
+                <h2>診断をはじめる</h2>
+                <p>ニックネームを入力してください</p>
                 <StyledTextField
                   id='outlined-basic'
+                  autoComplete='off'
                   variant='outlined'
                   value={userName}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -169,6 +174,9 @@ export default function App(props: questions) {
                     fontSize: '0.875rem',
                     fontWeight: '700',
                     top: 40,
+                    backgroundColor: '#333333',
+                    width: 242,
+                    height: 48,
                     '&:hover': {
                       color: 'primary.main',
                       background: '#FFF262',
@@ -178,19 +186,111 @@ export default function App(props: questions) {
                   variant='contained'
                   color='primary'
                 >
-                  診断をはじめる
+                  送信
                 </Button>
               </Box>
             ) : waitingResult ? (
-              <Box
-                sx={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  marginTop: '16px',
-                }}
-              >
-                {userName}さんにおすすめのプランを診断中・・・
-              </Box>
+              <Container maxWidth='lg'>
+                <Box
+                  sx={{
+                    my: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 8,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      mr: 2,
+                      position: 'absolute',
+                      top: '10%',
+                      right: '50%',
+                      display: { xs: 'block', sm: 'none' },
+                    }}
+                  >
+                    <Image
+                      src='/left.png'
+                      width={200}
+                      height={120}
+                      className={styles.fuwafuwa}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      mr: 2,
+                      position: 'absolute',
+                      top: '20%',
+                      right: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      display: { xs: 'none', sm: 'block' },
+                    }}
+                  >
+                    <Image
+                      src='/left.png'
+                      width={200}
+                      height={120}
+                      className={styles.fuwafuwa}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      marginTop: '96px',
+                      display: { xs: 'block', sm: 'none' },
+                    }}
+                  >
+                    {userName}さんに
+                    <br />
+                    おすすめのプランを診断中
+                  </Box>
+                  <Box
+                    sx={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      marginTop: '80px',
+                      display: { xs: 'none', sm: 'block' },
+                    }}
+                  >
+                    {userName}さんにおすすめのプランを診断中
+                  </Box>
+                  <Box
+                    sx={{
+                      mr: 2,
+                      position: 'absolute',
+                      top: '55%',
+                      right: '5%',
+                      display: { xs: 'block', sm: 'none' },
+                    }}
+                  >
+                    <Image
+                      src='/right.png'
+                      width={180}
+                      height={120}
+                      className={styles.fuwafuwa}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      mr: 2,
+                      position: 'absolute',
+                      top: '45%',
+                      left: '65%',
+                      transform: 'translate(-50%, -50%)',
+                      display: { xs: 'none', sm: 'block' },
+                    }}
+                  >
+                    <Image
+                      src='/right.png'
+                      width={180}
+                      height={120}
+                      className={styles.fuwafuwa}
+                    />
+                  </Box>
+                </Box>
+              </Container>
             ) : (
               <>
                 <Box
@@ -204,14 +304,64 @@ export default function App(props: questions) {
                   }}
                 >
                   <Stack spacing={1}>
+                    <Box
+                      sx={{
+                        mr: 2,
+                        position: 'absolute',
+                        top: '17%',
+                        right: '59%',
+                        display: { xs: 'block', sm: 'none' },
+                      }}
+                    >
+                      <Image src='/left.png' width={150} height={90} />
+                    </Box>
                     <StyledBox
                       sx={{
                         fontSize: '24px',
                         fontWeight: '700',
                       }}
                     >
+                      <Box
+                        sx={{
+                          mr: 2,
+                          position: 'absolute',
+                          top: '20%',
+                          right: '53%',
+                          display: { xs: 'none', sm: 'block' },
+                        }}
+                      >
+                        <Image src='/left.png' width={150} height={90} />
+                      </Box>
+                      <StyledBox
+                        sx={{
+                          fontSize: '24px',
+                          fontWeight: '700',
+                        }}
+                      ></StyledBox>
                       Question
                     </StyledBox>
+                    <Box
+                      sx={{
+                        mr: 2,
+                        position: 'absolute',
+                        top: '15%',
+                        right: '0%',
+                        display: { xs: 'block', sm: 'none' },
+                      }}
+                    >
+                      <Image src='/right.png' width={144} height={96} />
+                    </Box>
+                    <Box
+                      sx={{
+                        mr: 2,
+                        position: 'absolute',
+                        top: '20%',
+                        right: '36%',
+                        display: { xs: 'none', sm: 'block' },
+                      }}
+                    >
+                      <Image src='/right.png' width={144} height={96} />
+                    </Box>
                     <StyledBox
                       sx={{
                         fontSize: '24px',
@@ -232,7 +382,6 @@ export default function App(props: questions) {
                 </Box>
                 <Box
                   sx={{
-                    // my: 4,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -272,11 +421,15 @@ export default function App(props: questions) {
                   <br />
                   {finishAnswer ? (
                     <>
-                      <SelectBtn
+                      <Button
                         sx={{
                           borderRadius: 16,
                           fontSize: '0.875rem',
                           fontWeight: '700',
+                          marginTop: 1,
+                          backgroundColor: '#333333',
+                          width: 242,
+                          height: 48,
                           '&:hover': {
                             color: 'primary.main',
                             background: '#FFF262',
@@ -287,7 +440,7 @@ export default function App(props: questions) {
                         color='primary'
                       >
                         診断結果を見る
-                      </SelectBtn>
+                      </Button>
                     </>
                   ) : (
                     <Box></Box>

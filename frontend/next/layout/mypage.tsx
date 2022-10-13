@@ -3,49 +3,75 @@ import Layout from './Layout';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { hasCookie, getCookies } from 'cookies-next';
+import { hasCookie, getCookies, deleteCookie } from 'cookies-next';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem';
+import Stack from '@mui/material/Stack';
 
 export default function MyPage({ children }: any) {
   const [data, setData] = useState();
-  return (
-    <div>
-      <nav>
-        <div>
-          <a>マイページ</a>
+  const router = useRouter();
+  const logout = async () => {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/logout`, {
+      withCredentials: true,
+    });
+    console.log('logout');
+    deleteCookie('signedIn');
+    deleteCookie('jwt');
+    await router.push('/login');
+  };
 
-          <div id='navbarCollapse'>
-            <ul>
-              <li>
+  return (
+    <>
+      <Grid container justifyContent={'center'}>
+        <Box
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+          }}
+        >
+          <Grid item sm={6} md={4}>
+            <List
+              sx={{
+                width: 320,
+              }}
+            >
+              <a>マイページ</a>
+              <ListItem>
                 <Link href='/mypage'>
                   <div>TOP</div>
                 </Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href='/mypage/profile'>
                   <div>お客様情報</div>
                 </Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 {/* <Link href="/top"> */}
                 <>請求先情報</>
                 {/* </Link> */}
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href='/mypage/info'>
                   <div>契約情報</div>
                 </Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href='/questions'>
-                  <div>パーソナル診断</div>
+                  <div>パーソナライズ診断</div>
                 </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+              </ListItem>
+              <ListItem onClick={logout}>ログアウト</ListItem>
+            </List>
+          </Grid>
+        </Box>
 
-      <main>{children}</main>
-    </div>
+        <Grid item sm={6} md={8}>
+          <main>{children}</main>
+        </Grid>
+      </Grid>
+    </>
   );
 }

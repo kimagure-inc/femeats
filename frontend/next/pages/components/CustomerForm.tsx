@@ -3,6 +3,12 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import Grid from '@mui/material/Grid';
 
 interface Inputs {
   name: string;
@@ -12,6 +18,30 @@ interface Inputs {
   otherAddresses: string;
   tel: number;
 }
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: 'primary',
+  backgroundColor: '#FFFFFF',
+  width: '350px',
+  marginBottom: '32px',
+  '@media screen and (min-width:600px)': {
+    width: '432px',
+  },
+}));
+
+const StyledTextField = styled(TextField, {
+  name: 'StyledTextField',
+})({
+  backgroundColor: 'white',
+  width: 288,
+  marginTop: 8,
+  '& .MuiInputBase-root': {
+    height: 40,
+  },
+  marginBottom: '24px',
+});
 
 const CustomerForm = (props: any) => {
   const {
@@ -38,77 +68,140 @@ const CustomerForm = (props: any) => {
 
   return (
     <>
-      <div>{errors.zipCode && '郵便番号を入力してください'}</div>
-      <div>{errors.prefecture && '都道府県を入力してください'}</div>
-      <div>{errors.cityAndTown && '市区町村番地・号を入力してください'}</div>
-      <div>{errors.tel && '電話番号を入力してください'}</div>
-      <div>
-        <label>お名前</label>
-        <input
-          type='text'
-          {...register('name', { required: true, maxLength: 20 })}
-          placeholder='例：山崎 みずえ'
-          onChange={(e) => props.nameChange(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>郵便番号</label>
-        <input
-          {...register('zipCode', { required: true })}
-          // value={zipCode}
-          onChange={(e) => {
-            // setZipCode(e.target.value);
-            props.postcodeChange(e.target.value);
-          }}
-        />
-        {/* <button onClick={handleChange}>住所検索</button> */}
-      </div>
-      <div>
-        <div>
-          <label>都道府県</label>
-          <input
-            type='text'
-            {...register('prefecture', { required: true })}
-            defaultValue={prefecture}
-            onChange={(e) => props.address1Change(e.target.value)}
-          />
-        </div>
-      </div>
-      <div>
-        <div>
-          <label>市区町村番地・号</label>
-          <input
-            type='text'
-            {...register('cityAndTown', { required: true })}
-            defaultValue={cityAndTown}
-            onChange={(e) => props.address2Change(e.target.value)}
-          />
-        </div>
-      </div>
-      <div>
-        <div>
-          <label>建物名・号室</label>
-          <input
-            type='text'
-            {...register('otherAddresses')}
-            onChange={(e) => props.address3Change(e.target.value)}
-          />
-        </div>
-      </div>
-      <div>
-        <div>
-          <label>お電話番号</label>
-          <input
-            type='tel'
-            {...register('tel', {
-              required: true,
-              minLength: 6,
-              maxLength: 12,
-            })}
-            onChange={(e) => props.telChange(e.target.value)}
-          />
-        </div>
-      </div>
+      <Grid
+        container
+        alignItems='center'
+        justifyContent='center'
+        direction='column'
+      >
+        <StyledBox>
+          <Box
+            sx={{
+              fontSize: '16px',
+              fontWeight: '700',
+              marginTop: '32px',
+            }}
+          >
+            お客様情報
+          </Box>
+          <FormControl sx={{ m: 1, minWidth: 288 }}>
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '700',
+                marginTop: '24px',
+                marginBottom: '8px',
+              }}
+            >
+              お名前
+            </FormHelperText>
+            <StyledTextField
+              id='outlined-basic'
+              variant='outlined'
+              type='text'
+              {...register('name', { required: true, maxLength: 20 })}
+              autoComplete='off'
+              onChange={(e) => props.nameChange(e.target.value)}
+            />
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '700',
+              }}
+            >
+              ご住所（お届け先）
+            </FormHelperText>
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginBottom: '8px',
+              }}
+            >
+              郵便番号
+            </FormHelperText>
+            <StyledTextField
+              autoComplete='off'
+              {...register('zipCode', { required: true })}
+              // value={zipCode}
+              onChange={(e) => {
+                // setZipCode(e.target.value);
+                props.postcodeChange(e.target.value);
+              }}
+            />
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginTop: '8px',
+                marginBottom: '8px',
+              }}
+            >
+              都道府県
+            </FormHelperText>
+            <StyledTextField
+              type='text'
+              autoComplete='off'
+              {...register('prefecture', { required: true })}
+              defaultValue={prefecture}
+              onChange={(e) => props.address1Change(e.target.value)}
+            />
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginTop: '8px',
+                marginBottom: '8px',
+              }}
+            >
+              市区町村番地・号
+            </FormHelperText>
+            <StyledTextField
+              type='text'
+              autoComplete='off'
+              {...register('cityAndTown', { required: true })}
+              defaultValue={cityAndTown}
+              onChange={(e) => props.address2Change(e.target.value)}
+            />
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginTop: '8px',
+                marginBottom: '8px',
+              }}
+            >
+              建物名・号室
+            </FormHelperText>
+            <StyledTextField
+              type='text'
+              autoComplete='off'
+              {...register('otherAddresses')}
+              onChange={(e) => props.address3Change(e.target.value)}
+            />
+            <FormHelperText
+              sx={{
+                fontSize: '14px',
+                fontWeight: '500',
+                marginTop: '8px',
+                marginBottom: '8px',
+              }}
+            >
+              お電話番号
+            </FormHelperText>
+            <StyledTextField
+              type='tel'
+              autoComplete='off'
+              {...register('tel', {
+                required: true,
+                minLength: 6,
+                maxLength: 12,
+              })}
+              onChange={(e) => props.telChange(e.target.value)}
+            />
+          </FormControl>
+        </StyledBox>
+      </Grid>
     </>
   );
 };

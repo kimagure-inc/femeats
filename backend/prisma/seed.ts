@@ -32,10 +32,10 @@ async function main() {
   await prisma.category.deleteMany();
   await prisma.category.createMany({
     data: [
-      { name: 'balance' },
-      { name: 'beauty' },
-      { name: 'relax' },
-      { name: 'energy' },
+      { name: 'Balance' },
+      { name: 'Beauty' },
+      { name: 'Relax' },
+      { name: 'Energy' },
     ],
   });
 
@@ -48,7 +48,7 @@ async function main() {
   await prisma.product.createMany({
     data: [
       {
-        name: 'balance 5食セット',
+        name: 'Balance 5食セット',
         introduction:
           '生理前・生理中に必要となる栄養をバランス良く組み合わせています。野菜たっぷり♪当店自慢のプランです。',
         price: 3000,
@@ -59,7 +59,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'balance 10食セット',
+        name: 'Balance 10食セット',
         introduction:
           '生理前・生理中に必要となる栄養をバランス良く組み合わせています。野菜たっぷり♪当店自慢のプランです。',
         price: 5800,
@@ -70,7 +70,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'beauty 5食セット',
+        name: 'Beauty 5食セット',
         introduction:
           '緑黄色野菜たっぷりのメニューでビタミンや食物繊維を豊富に含んでいます。お肌の悩みが気になる方におすすめのプランです。',
         price: 3000,
@@ -81,7 +81,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'beauty 10食セット',
+        name: 'Beauty 10食セット',
         introduction:
           '緑黄色野菜たっぷりのメニューでビタミンや食物繊維を豊富に含んでいます。お肌の悩みが気になる方におすすめのプランです。',
         price: 5800,
@@ -92,7 +92,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'relax 5食セット',
+        name: 'Relax 5食セット',
         introduction:
           '神経を落ち着かせるはたらきのあるカルシウムを豊富に含んでいます。心が不安定になりやすい方におすすめのプランです。',
         price: 3000,
@@ -103,7 +103,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'relax 10食セット',
+        name: 'Relax 10食セット',
         introduction:
           '神経を落ち着かせるはたらきのあるカルシウムを豊富に含んでいます。心が不安定になりやすい方におすすめのプランです。',
         price: 5800,
@@ -114,7 +114,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'energy 5食セット',
+        name: 'Energy 5食セット',
         introduction:
           'ホルモンバランスを整えつつ、身体の疲労をとる栄養をたっぷり含んでいます。生理期間でも、いつでも元気に過ごしたい方におすすめのプランです。',
         price: 3000,
@@ -125,7 +125,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'energy 10食セット',
+        name: 'Energy 10食セット',
         introduction:
           'ホルモンバランスを整えつつ、身体の疲労をとる栄養をたっぷり含んでいます。生理期間でも、いつでも元気に過ごしたい方におすすめのプランです。',
         price: 5800,
@@ -136,7 +136,7 @@ async function main() {
         deliveryCycle: 4,
       },
       {
-        name: 'balance 5食セット',
+        name: 'Balance 5食セット',
         introduction:
           '生理前・生理中に必要となる栄養をバランス良く組み合わせています。野菜たっぷり♪当店自慢のプランです。',
         price: 3000,
@@ -147,14 +147,14 @@ async function main() {
         deliveryCycle: 3,
       },
       {
-        name: 'balance 10食セット',
+        name: 'Balance 10食セット',
         introduction:
           '生理前・生理中に必要となる栄養をバランス良く組み合わせています。野菜たっぷり♪当店自慢のプランです。',
         price: 5800,
         imgUrl:
           'https://s3.ap-northeast-3.amazonaws.com/kimagure.inc-app/balance.jpg',
         category_id: 1,
-        stripe_id: 'price_1Lpk8SAdWjJU6gVuXGvz0L11',
+        stripe_id: 'price_1Ls3ktAdWjJU6gVuvLpZNcPW',
         deliveryCycle: 3,
       },
       {
@@ -169,18 +169,18 @@ async function main() {
         deliveryCycle: 3,
       },
       {
-        name: 'beauty 10食セット',
+        name: 'Beauty 10食セット',
         introduction:
           '緑黄色野菜たっぷりのメニューでビタミンや食物繊維を豊富に含んでいます。お肌の悩みが気になる方におすすめのプランです。',
         price: 5800,
         imgUrl:
           'https://s3.ap-northeast-3.amazonaws.com/kimagure.inc-app/beauty.jpg',
         category_id: 2,
-        stripe_id: 'price_1LpkAQAdWjJU6gVuHohf7qik',
+        stripe_id: 'price_1Ls3nmAdWjJU6gVu0rTiuxPQ',
         deliveryCycle: 3,
       },
       {
-        name: 'relax 5食セット',
+        name: 'Relax 5食セット',
         introduction:
           '神経を落ち着かせるはたらきのあるカルシウムを豊富に含んでいます。心が不安定になりやすい方におすすめのプランです。',
         price: 3000,
@@ -191,7 +191,7 @@ async function main() {
         deliveryCycle: 3,
       },
       {
-        name: 'relax 10食セット',
+        name: 'Relax 10食セット',
         introduction:
           '神経を落ち着かせるはたらきのあるカルシウムを豊富に含んでいます。心が不安定になりやすい方におすすめのプランです。',
         price: 5800,
@@ -202,7 +202,7 @@ async function main() {
         deliveryCycle: 3,
       },
       {
-        name: 'energy 5食セット',
+        name: 'Energy 5食セット',
         introduction:
           'ホルモンバランスを整えつつ、身体の疲労をとる栄養をたっぷり含んでいます。生理期間でも、いつでも元気に過ごしたい方におすすめのプランです。',
         price: 3000,
@@ -213,7 +213,7 @@ async function main() {
         deliveryCycle: 3,
       },
       {
-        name: 'energy 10食セット',
+        name: 'Energy 10食セット',
         introduction:
           'ホルモンバランスを整えつつ、身体の疲労をとる栄養をたっぷり含んでいます。生理期間でも、いつでも元気に過ごしたい方におすすめのプランです。',
         price: 5800,
@@ -224,7 +224,7 @@ async function main() {
         deliveryCycle: 3,
       },
       {
-        name: 'balance 5食セット',
+        name: 'Balance 5食セット',
         introduction:
           '生理前・生理中に必要となる栄養をバランス良く組み合わせています。野菜たっぷり♪当店自慢のプランです。',
         price: 3000,
@@ -235,7 +235,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'balance 10食セット',
+        name: 'Balance 10食セット',
         introduction:
           '生理前・生理中に必要となる栄養をバランス良く組み合わせています。野菜たっぷり♪当店自慢のプランです。',
         price: 5800,
@@ -246,7 +246,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'beauty 5食セット',
+        name: 'Beauty 5食セット',
         introduction:
           '緑黄色野菜たっぷりのメニューでビタミンや食物繊維を豊富に含んでいます。お肌の悩みが気になる方におすすめのプランです。',
         price: 3000,
@@ -257,7 +257,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'beauty 10食セット',
+        name: 'Beauty 10食セット',
         introduction:
           '緑黄色野菜たっぷりのメニューでビタミンや食物繊維を豊富に含んでいます。お肌の悩みが気になる方におすすめのプランです。',
         price: 5800,
@@ -268,7 +268,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'relax 5食セット',
+        name: 'Relax 5食セット',
         introduction:
           '神経を落ち着かせるはたらきのあるカルシウムを豊富に含んでいます。心が不安定になりやすい方におすすめのプランです。',
         price: 3000,
@@ -279,7 +279,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'relax 10食セット',
+        name: 'Relax 10食セット',
         introduction:
           '神経を落ち着かせるはたらきのあるカルシウムを豊富に含んでいます。心が不安定になりやすい方におすすめのプランです。',
         price: 5800,
@@ -290,7 +290,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'energy 5食セット',
+        name: 'Energy 5食セット',
         introduction:
           'ホルモンバランスを整えつつ、身体の疲労をとる栄養をたっぷり含んでいます。生理期間でも、いつでも元気に過ごしたい方におすすめのプランです。',
         price: 3000,
@@ -301,7 +301,7 @@ async function main() {
         deliveryCycle: 2,
       },
       {
-        name: 'energy 10食セット',
+        name: 'Energy 10食セット',
         introduction:
           'ホルモンバランスを整えつつ、身体の疲労をとる栄養をたっぷり含んでいます。生理期間でも、いつでも元気に過ごしたい方におすすめのプランです。',
         price: 5800,
