@@ -45,9 +45,18 @@ const Home = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
-                        marginTop: '255px',
+                        marginTop: '180px',
                       }}
                     >
+                      <Box
+                        fontSize={12}
+                        fontWeight={500}
+                        sx={{
+                          marginBottom: '48px',
+                        }}
+                      >
+                        ※これは技術を身につけるために作成されたサンプルサイトです。実際に商品は届きません、ご了承ください。
+                      </Box>
                       <Box
                         fontSize={36.6316}
                         fontWeight={700}
@@ -95,6 +104,15 @@ const Home = () => {
           <>
             {' '}
             <Layout>
+              <Box
+                fontSize={14}
+                fontWeight={500}
+                sx={{
+                  marginBottom: '24px',
+                }}
+              >
+                ※これは技術を身につけるために作成されたサンプルサイトです。実際に商品は届きません、ご了承ください。
+              </Box>
               <Paper
                 elevation={0}
                 sx={{
