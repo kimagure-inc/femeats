@@ -1,12 +1,10 @@
 # femeats
 
-生理の症状に合わせた栄養士監修のお弁当を、生理周期に合わせて宅配するサービスです
+「女性の健康」を目的とした、レコメンドお弁当のサブスクサービス
 
-# DEMO
+![Top](https://github.com/yuko1113/image/blob/main/femeats-top.png)
 
-in preparation
-
-# Features
+## Features
 
 - メール認証、ユーザー登録
 - 決済
@@ -14,52 +12,60 @@ in preparation
 - プラン変更、一時停止
 - パーソナライズ診断
 
-# Requirement
+## Built With
 
-- docker
-- docker-compose
-- node.js
-- Next.js
-- TypeScript
-- Nest.js
-- Mysql
+- [Next.js](https://nextjs.org/): 12.3.0
+- [TypeScript](https://www.typescriptlang.org/): 4.8.3
+- [MUI](https://mui.com/): 5.10.8
+- [Nest.js](https://nestjs.com/): 9.0.0
+- [Node.js](https://nodejs.org/ja/): 16.17.0
+- [Prisma](https://www.prisma.io/): 4.3.1
+- [MySQL](https://www.mysql.com/jp/): 8.0
+- [Docker](https://www.docker.com/): 20.10.17
+- [Stripe](https://stripe.com/jp): 10.11.0
+- [AWS EC2,RDS,S3](https://aws.amazon.com/jp/)
 
-# Project structure
+## Getting Started
 
-```
-├── backend
-│   ├── src
-│   └── ...
-├── db
-├── frontend
-│   ├── next
-│   └── ...
-├── docker-compose.yml
-└── README.md
-```
-
-# Usage
-
-in preparation
+1.Clone this repository
 
 ```bash
-git clone
+$ git clone https://github.com/kimagure-inc/femeats.git
 ```
+
+2.Move to the root directory
 
 ```bash
-docker-compose run -w /usr/src/app/next --rm app npm install
+$ cd femeats
 ```
+
+3.Download dependencies
 
 ```bash
-docker-compose up -d
+$ docker-compose run -w /app/next --rm frontend npm install
+
+$ docker-compose run -w /api --rm backend npm install
 ```
 
-After the application start, navigate to http://localhost:8080 in your browser.
+4.Add password file and Enter any password there
 
-# Note
+```bash
+$ cd db
+$ touch password.txt
+```
 
-in preparation
+5.Run the App
 
-# Author
+```bash
+$ docker-compose up -d
+```
+
+6.Open http://localhost:8080 with your browser to see the App
+
+## Project Structure
+
+![Architecture](https://github.com/yuko1113/image/blob/main/architecture.png)
+
+## Author
 
 Kimagure.inc
