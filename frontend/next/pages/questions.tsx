@@ -129,7 +129,7 @@ export default function App(props: questions) {
         },
         'recommend'
       );
-    }, 5 * 1000);
+    }, 30 * 1000);
   };
 
   return (
@@ -191,56 +191,31 @@ export default function App(props: questions) {
                 </Button>
               </Box>
             ) : waitingResult ? (
-              <Container maxWidth='lg'>
-                <Box
-                  sx={{
-                    my: 4,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '10%',
-                      right: '50%',
-                      display: { xs: 'block', sm: 'none' },
-                    }}
-                  >
-                    <Image
-                      src='/left.png'
-                      width={200}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '20%',
-                      right: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      display: { xs: 'none', sm: 'block' },
-                    }}
-                  >
-                    <Image
-                      src='/left.png'
-                      width={200}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
+              <>
+                <Container fixed>
+                  <Grid container spacing={1}>
+                    <Grid item xs={0} md={2}></Grid>
+                    <Grid item xs={5} md={4}>
+                      <Box>
+                        <Image
+                          src='/left.png'
+                          width={150}
+                          height={90}
+                          className={styles.fuwafuwa}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={7} md={6}></Grid>
+                  </Grid>
+
                   <Box
                     sx={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      marginTop: '96px',
+                      textAlign: 'center',
                       display: { xs: 'block', sm: 'none' },
+                      marginTop: '32px',
+                      marginBottom: '40px',
                     }}
                   >
                     {userName}さんに
@@ -251,47 +226,30 @@ export default function App(props: questions) {
                     sx={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      marginTop: '80px',
+                      textAlign: 'center',
                       display: { xs: 'none', sm: 'block' },
+                      marginTop: '32px',
+                      marginBottom: '40px',
                     }}
                   >
                     {userName}さんにおすすめのプランを診断中
                   </Box>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '55%',
-                      right: '5%',
-                      display: { xs: 'block', sm: 'none' },
-                    }}
-                  >
-                    <Image
-                      src='/right.png'
-                      width={180}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '45%',
-                      left: '65%',
-                      transform: 'translate(-50%, -50%)',
-                      display: { xs: 'none', sm: 'block' },
-                    }}
-                  >
-                    <Image
-                      src='/right.png'
-                      width={180}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
-                </Box>
-              </Container>
+                  <Grid container spacing={1}>
+                    <Grid item xs={3} md={4}></Grid>
+                    <Grid item xs={4} md={4}></Grid>
+                    <Grid item xs={5} md={4}>
+                      <Box>
+                        <Image
+                          src='/right.png'
+                          width={150}
+                          height={90}
+                          className={styles.fuwafuwa}
+                        />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </>
             ) : (
               <>
                 <Box
@@ -348,8 +306,6 @@ export default function App(props: questions) {
                 >
                   {questions[currentQuestion].question}
                 </Box>
-                {/* </Stack> */}
-                {/* </Box> */}
                 <Box
                   sx={{
                     display: 'flex',
