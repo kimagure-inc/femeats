@@ -129,7 +129,7 @@ export default function App(props: questions) {
         },
         'recommend'
       );
-    }, 30 * 1000);
+    }, 5 * 1000);
   };
 
   return (
