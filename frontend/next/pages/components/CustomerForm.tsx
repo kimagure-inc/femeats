@@ -43,7 +43,34 @@ const StyledTextField = styled(TextField, {
   marginBottom: '24px',
 });
 
-const CustomerForm = (props: any) => {
+type Props = {
+  address1: string;
+  address2: string;
+  address3: string;
+  delTime: number;
+  deliveryDate: string;
+  postcode: string;
+  price: number;
+  product_id: string;
+  stripe_sub_id: string;
+  tel: string;
+  userName: string;
+  user_id: string;
+  setUserName: React.Dispatch<React.SetStateAction<string>>;
+  setPostcode: React.Dispatch<React.SetStateAction<string>>;
+  setAddress1: React.Dispatch<React.SetStateAction<string>>;
+  setAddress2: React.Dispatch<React.SetStateAction<string>>;
+  setAddress3: React.Dispatch<React.SetStateAction<string>>;
+  setTel: React.Dispatch<React.SetStateAction<string>>;
+  nameChange: Function;
+  postcodeChange: Function;
+  address1Change: Function;
+  address2Change: Function;
+  address3Change: Function;
+  telChange: Function;
+};
+
+const CustomerForm = (props: Props) => {
   const {
     register,
     formState: { errors },
@@ -54,7 +81,7 @@ const CustomerForm = (props: any) => {
   const [prefecture, setPrefecture] = useState('');
   const [cityAndTown, setCityAndTown] = useState('');
 
-  const handleChange = async (e: any) => {
+  const handleChange = async (e: { target: { value: number; }; }) => {
     console.log(e.target.value);
     const res = await axios.get(
       'https://api.zipaddress.net/?zipcode=' + zipCode
