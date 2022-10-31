@@ -16,7 +16,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const Product = (props: any) => {
+type Props = {
+  img: string;
+  productName: string;
+  price: string;
+  deliveryCycle: string;
+}
+
+const Product = (props: Props) => {
   return (
     <>
       <Grid

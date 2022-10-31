@@ -19,7 +19,15 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ShippmentForm = (props: any) => {
+type Props = {
+  timezone: never[];
+  setDeliveryDate: React.Dispatch<React.SetStateAction<string>>;
+  setDelTime: React.Dispatch<React.SetStateAction<number>>;
+  deliveryDateChange: Function;
+  delTimeChange: Function;
+}
+
+const ShippmentForm = (props: Props) => {
   if (!props) {
     return null;
   }
@@ -57,7 +65,7 @@ const ShippmentForm = (props: any) => {
                 name='datelist'
                 onChange={(e) => props.deliveryDateChange(e.target.value)}
               >
-                {dataSet.map((value: any) => (
+                {dataSet.map((value) => (
                   <MenuItem key={value} value={value}>
                     {value}
                   </MenuItem>
@@ -82,7 +90,7 @@ const ShippmentForm = (props: any) => {
                   marginBottom: '48px',
                 }}
               >
-                {props.timezone.map((value: any) => (
+                {props.timezone.map((value: {id: number; timezone: string}) => (
                   <MenuItem value={value.id} key={value.id}>
                     {value.timezone}
                   </MenuItem>
@@ -100,7 +108,7 @@ export default ShippmentForm;
 
 // 5日後の日程から2週間表示させる（例：今日10/1 => 10/6~10/20の日程）
 const days = ['日', '月', '火', '水', '木', '金', '土'];
-const dataSet: any[] = [];
+const dataSet: string[] = [];
 let start = Date.now() + 5 * 86400000; // 基準日=5日後の日程
 let max = 14; // 何回繰り返すか
 for (let i = 0; i < max; i++) {

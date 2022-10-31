@@ -137,6 +137,18 @@ const Payment: NextPage = () => {
             address2Change={address2Change}
             address3Change={address3Change}
             telChange={telChange}
+            address1={''}
+            address2={''}
+            address3={''}
+            delTime={0}
+            deliveryDate={''}
+            postcode={''}
+            price={0}
+            product_id={''}
+            stripe_sub_id={''}
+            tel={''}
+            userName={''}
+            user_id={''}
           />
           <ShippmentForm
             timezone={timezone}

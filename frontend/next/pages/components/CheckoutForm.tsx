@@ -15,7 +15,22 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 
-export default function CheckoutForm(props: any) {
+type Props = {
+  stripe_sub_id: string | string[] | undefined;
+  product_id: string | string[] | undefined;
+  user_id: string | string[] | undefined;
+  price: string;
+  userName: string;
+  postcode: string;
+  address1: string;
+  address2: string;
+  address3: string;
+  tel: string;
+  deliveryDate: string;
+  delTime: number;
+};
+
+export default function CheckoutForm(props: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -177,8 +192,7 @@ export default function CheckoutForm(props: any) {
                 `${process.env.NEXT_PUBLIC_API_BASE_URL}/subscribe/user/${props.user_id}`,
                 data
               )
-              .then((res: AxiosResponse) => {
-              })
+              .then((res: AxiosResponse) => {})
               .catch((e: AxiosError<{ error: string }>) => console.log(e));
             const { error } = await stripe.confirmPayment({
               elements,
