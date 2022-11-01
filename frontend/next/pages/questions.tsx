@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import styled from '@mui/system/styled';
+import Grid from '@mui/material/Grid';
 
 type questions = {
   questions: question[];
@@ -190,56 +191,31 @@ export default function App(props: questions) {
                 </Button>
               </Box>
             ) : waitingResult ? (
-              <Container maxWidth='lg'>
-                <Box
-                  sx={{
-                    my: 4,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '10%',
-                      right: '50%',
-                      display: { xs: 'block', sm: 'none' },
-                    }}
-                  >
-                    <Image
-                      src='/left.png'
-                      width={200}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '20%',
-                      right: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      display: { xs: 'none', sm: 'block' },
-                    }}
-                  >
-                    <Image
-                      src='/left.png'
-                      width={200}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
+              <>
+                <Container fixed>
+                  <Grid container spacing={1}>
+                    <Grid item xs={0} md={2}></Grid>
+                    <Grid item xs={5} md={4}>
+                      <Box>
+                        <Image
+                          src='/left.png'
+                          width={150}
+                          height={90}
+                          className={styles.fuwafuwa}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={7} md={6}></Grid>
+                  </Grid>
+
                   <Box
                     sx={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      marginTop: '96px',
+                      textAlign: 'center',
                       display: { xs: 'block', sm: 'none' },
+                      marginTop: '32px',
+                      marginBottom: '40px',
                     }}
                   >
                     {userName}さんに
@@ -250,47 +226,30 @@ export default function App(props: questions) {
                     sx={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      marginTop: '80px',
+                      textAlign: 'center',
                       display: { xs: 'none', sm: 'block' },
+                      marginTop: '32px',
+                      marginBottom: '40px',
                     }}
                   >
                     {userName}さんにおすすめのプランを診断中
                   </Box>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '55%',
-                      right: '5%',
-                      display: { xs: 'block', sm: 'none' },
-                    }}
-                  >
-                    <Image
-                      src='/right.png'
-                      width={180}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      position: 'absolute',
-                      top: '45%',
-                      left: '65%',
-                      transform: 'translate(-50%, -50%)',
-                      display: { xs: 'none', sm: 'block' },
-                    }}
-                  >
-                    <Image
-                      src='/right.png'
-                      width={180}
-                      height={120}
-                      className={styles.fuwafuwa}
-                    />
-                  </Box>
-                </Box>
-              </Container>
+                  <Grid container spacing={1}>
+                    <Grid item xs={3} md={4}></Grid>
+                    <Grid item xs={4} md={4}></Grid>
+                    <Grid item xs={5} md={4}>
+                      <Box>
+                        <Image
+                          src='/right.png'
+                          width={150}
+                          height={90}
+                          className={styles.fuwafuwa}
+                        />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </>
             ) : (
               <>
                 <Box
@@ -303,82 +262,49 @@ export default function App(props: questions) {
                     fontSize: '14px',
                   }}
                 >
-                  <Stack spacing={1}>
-                    <Box
-                      sx={{
-                        mr: 2,
-                        position: 'absolute',
-                        top: '17%',
-                        right: '59%',
-                        display: { xs: 'block', sm: 'none' },
-                      }}
-                    >
+                  <Grid
+                    container
+                    sx={{
+                      alignItems: 'center',
+                      justify: 'center',
+                    }}
+                  >
+                    <Grid item xs={4} md={4}>
                       <Image src='/left.png' width={150} height={90} />
-                    </Box>
-                    <StyledBox
-                      sx={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          mr: 2,
-                          position: 'absolute',
-                          top: '20%',
-                          right: '53%',
-                          display: { xs: 'none', sm: 'block' },
-                        }}
-                      >
-                        <Image src='/left.png' width={150} height={90} />
-                      </Box>
-                      <StyledBox
-                        sx={{
-                          fontSize: '24px',
-                          fontWeight: '700',
-                        }}
-                      ></StyledBox>
-                      Question
-                    </StyledBox>
-                    <Box
-                      sx={{
-                        mr: 2,
-                        position: 'absolute',
-                        top: '15%',
-                        right: '0%',
-                        display: { xs: 'block', sm: 'none' },
-                      }}
-                    >
-                      <Image src='/right.png' width={144} height={96} />
-                    </Box>
-                    <Box
-                      sx={{
-                        mr: 2,
-                        position: 'absolute',
-                        top: '20%',
-                        right: '36%',
-                        display: { xs: 'none', sm: 'block' },
-                      }}
-                    >
-                      <Image src='/right.png' width={144} height={96} />
-                    </Box>
-                    <StyledBox
-                      sx={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                      }}
-                    >
-                      0{currentQuestion + 1}
-                    </StyledBox>
-                    <StyledBox
-                      sx={{
-                        fontSize: '15px',
-                        fontWeight: '600',
-                      }}
-                    >
-                      {questions[currentQuestion].question}
-                    </StyledBox>
-                  </Stack>
+                    </Grid>
+                    <Grid item xs={4} md={4}>
+                      <Stack spacing={1}>
+                        <StyledBox
+                          sx={{
+                            fontSize: '24px',
+                            fontWeight: '700',
+                          }}
+                        >
+                          Question
+                        </StyledBox>
+                        <StyledBox
+                          sx={{
+                            fontSize: '24px',
+                            fontWeight: '700',
+                          }}
+                        >
+                          0{currentQuestion + 1}
+                        </StyledBox>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={4} md={4}>
+                      <Image src='/right.png' width={140} height={96} />
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box
+                  sx={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    marginBottom: '32px',
+                  }}
+                >
+                  {questions[currentQuestion].question}
                 </Box>
                 <Box
                   sx={{
