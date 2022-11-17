@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import MyPage from '../../../layout/mypage';
 import axios from 'axios';
 import Layout from '../../../layout/Layout';
@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import Product from '../../components/Product';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import ShippmentForm from '../../components/ShippmentForm';
 import ChangeoutForm from '../../components/ChangeoutForm';
 import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,9 +13,22 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { autocompleteClasses } from '@mui/material';
 
-type userData = {};
+type productObj = {
+  category_id: number;
+  deliveryCycle: number;
+  id: number;
+  imgUrl: string;
+  introduction: string;
+  name: string;
+  price: number;
+  stripe_id: string;
+};
+
+type timeZoneObj = {
+  id: number;
+  timezone: string;
+};
 
 export default function Info() {
   const router = useRouter();
@@ -24,11 +36,10 @@ export default function Info() {
   const [isLoading, setLoading] = useState(false);
   const [selectPlan, setSelectPlan] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
-  const [delTime, setDelTime] = useState(1);
+  const [delTime, setDelTime] = useState('');
   const [page, setPage] = useState(false);
   const [selectCycle, setSelectCycle] = useState('');
   const [cs, setCs] = useState('');
-  const [contract, setContract] = useState(false);
   let product;
 
   useEffect(() => {
@@ -77,7 +88,7 @@ export default function Info() {
     setDeliveryDate(e.target.value);
   };
 
-  const delTimeChange = (e) => {
+  const delTimeChange = (e: SelectChangeEvent) => {
     setDelTime(e.target.value);
   };
 
@@ -165,7 +176,7 @@ export default function Info() {
                     契約プラン
                   </FormHelperText>
                   <Select name='datelist' onChange={planChange}>
-                    {data.product.slice(0, 8).map((value: any) => (
+                    {data.product.slice(0, 8).map((value: productObj) => (
                       <MenuItem key={value.name} value={value.name}>
                         {value.name}
                         {Number(value.price).toLocaleString()}円(税込)
@@ -233,7 +244,7 @@ export default function Info() {
                     初回お届け日
                   </FormHelperText>
                   <Select name='datelist' onChange={deliveryDateChange}>
-                    {dataSet.map((value: any) => (
+                    {dataSet.map((value: string) => (
                       <MenuItem key={value} value={value}>
                         {value}
                       </MenuItem>
@@ -258,7 +269,7 @@ export default function Info() {
                   </FormHelperText>
 
                   <Select name='timezone' onChange={delTimeChange}>
-                    {data.timezone.map((value: any) => (
+                    {data.timezone.map((value: timeZoneObj) => (
                       <MenuItem value={value.id} key={value.id}>
                         {value.timezone}
                       </MenuItem>
@@ -299,7 +310,6 @@ export default function Info() {
           </>
         ) : (
           <>
-            {console.log(product)}
             <Box
               sx={{
                 textAlign: 'center',
@@ -345,7 +355,7 @@ export default function Info() {
 
 // 5日後の日程から2週間表示させる（例：今日10/1 => 10/6~10/20の日程）
 const days = ['日', '月', '火', '水', '木', '金', '土'];
-const dataSet: any[] = [];
+const dataSet: string[] = [];
 let start = Date.now() + 5 * 86400000; // 基準日=5日後の日程
 let max = 14; // 何回繰り返すか
 for (let i = 0; i < max; i++) {
