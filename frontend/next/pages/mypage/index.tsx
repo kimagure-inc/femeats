@@ -5,15 +5,6 @@ import Layout from '../../layout/Layout';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
-import styled from '@mui/system/styled';
-
-type userData = {};
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: '#333333',
-}));
 
 export default function Top() {
   const router = useRouter();
