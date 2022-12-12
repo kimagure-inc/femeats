@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { Container } from '@mui/material';
-import Grid from '@mui/material/Grid';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,16 +16,24 @@ const style = {
   borderRadius: '4px',
 };
 
-export default function Confirmation({ show, close, comment, btName, submit }) {
+type Props = {
+  show: boolean;
+  close: () => void;
+  comment: string;
+  btName: string;
+  submit: () => void;
+};
+
+const Confirmation = (props: Props) => {
   return (
     <div>
-      {show ? (
+      {props.show ? (
         <>
-          <Modal open={show}>
+          <Modal open={props.show}>
             <Box sx={style}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Typography variant='subtitle1' component='h2'>
-                  {comment}
+                  {props.comment}
                 </Typography>
               </Box>
               <Box
@@ -65,9 +71,9 @@ export default function Confirmation({ show, close, comment, btName, submit }) {
                         background: '#FFF262',
                       },
                     }}
-                    onClick={submit}
+                    onClick={props.submit}
                   >
-                    {btName}
+                    {props.btName}
                   </Button>
                 </Stack>
               </Box>
@@ -77,4 +83,6 @@ export default function Confirmation({ show, close, comment, btName, submit }) {
       ) : null}
     </div>
   );
-}
+};
+
+export default Confirmation;
